@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ramban 8 — Bilingual Concept Clarity &amp; Instant Quiz | TGT CS DSSSB by HARIS SAIFI</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Noto Sans Devanagari', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Devanagari', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    pre.code-block {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col antialiased">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center font-extrabold text-sm shadow-sm shrink-0">
+          R8
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-extrabold tracking-tight truncate">
+            RAMBAN 8 &bull; TGT CS DSSSB
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+            Bilingual Notes (EN + हिंदी) &amp; Part-Wise Quiz &bull; by <span class="font-bold text-indigo-600 dark:text-indigo-400">HARIS SAIFI</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <div id="overallScorePill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-bold">
+          0 / 200 Done
+        </div>
+        <button
+          id="themeToggleBtn"
+          type="button"
+          aria-label="Toggle dark mode"
+          class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer"
+        >
+          <svg id="sunIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+          </svg>
+          <svg id="moonIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Part Selector Strip (10 Parts) -->
+    <div class="border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/60">
+      <div class="max-w-5xl mx-auto px-4 py-2">
+        <div id="partNav" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5" role="tablist" aria-label="Select Ramban 8 Part">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-5 sm:py-7">
+
+    <!-- Active Part Banner + Live Part Score -->
+    <section class="rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-700 text-white p-5 shadow-md mb-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
+            <span id="partGroupBadge" class="px-2.5 py-0.5 rounded-full bg-white/15 text-[11px] font-semibold uppercase tracking-wider">Part A · General</span>
+            <span id="partRangeBadge" class="px-2.5 py-0.5 rounded-full bg-black/20 text-[11px] font-semibold">Q1 – Q20</span>
+          </div>
+          <h2 id="partTitleHeading" class="text-xl sm:text-2xl font-extrabold tracking-tight">Part 1 · Reasoning</h2>
+          <p class="text-xs sm:text-sm text-indigo-100 mt-1">
+            Review high-yield Concept Clarity notes first, then test yourself with instant answers &amp; explanations (+1.00 / &minus;0.25).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-white/15 backdrop-blur-sm rounded-xl p-3 border border-white/15 text-center sm:min-w-[240px]">
+          <div>
+            <div id="partDoneVal" class="text-base sm:text-lg font-extrabold">0/20</div>
+            <div class="text-[10px] uppercase tracking-wider text-indigo-100">Attempted</div>
+          </div>
+          <div>
+            <div id="partMarksVal" class="text-base sm:text-lg font-extrabold">0.00</div>
+            <div class="text-[10px] uppercase tracking-wider text-indigo-100">Marks</div>
+          </div>
+          <div>
+            <div id="partAccVal" class="text-base sm:text-lg font-extrabold">0%</div>
+            <div class="text-[10px] uppercase tracking-wider text-indigo-100">Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mode Switcher & Quiz Filter Bar -->
+    <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+      <div class="inline-flex p-1 rounded-xl bg-slate-200/70 dark:bg-slate-800/90 self-start" role="tablist" aria-label="View Mode">
+        <button id="modeConceptBtn" type="button" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all cursor-pointer">
+          Concept Clarity
+        </button>
+        <button id="modeQuizBtn" type="button" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all cursor-pointer">
+          Instant Quiz (20 Qs)
+        </button>
+      </div>
+
+      <div id="quizControls" class="flex flex-wrap items-center gap-1.5">
+        <button type="button" data-qfilter="all" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer">All</button>
+        <button type="button" data-qfilter="unanswered" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer">Unanswered</button>
+        <button type="button" data-qfilter="wrong" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer">Wrong Only</button>
+        <button id="resetPartBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-colors cursor-pointer">
+          Reset Part
+        </button>
+      </div>
+    </section>
+
+    <!-- Concept Clarity Panel -->
+    <section id="conceptPanel" class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5">
+        <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Concept Notes Language / नोट्स की भाषा:</span>
+        <div id="noteLangGroup" class="inline-flex items-center gap-1" role="group" aria-label="Concept notes language">
+          <button type="button" data-nlang="both" class="nlang-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer">Both (EN + हिंदी)</button>
+          <button type="button" data-nlang="en" class="nlang-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">English</button>
+          <button type="button" data-nlang="hi" class="nlang-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">हिंदी</button>
+        </div>
+      </div>
+      <div id="conceptGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="pt-2 flex justify-center">
+        <button id="startPartQuizBtn" type="button" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm transition-colors cursor-pointer">
+          <span>Start Instant Quiz for this Part (20 Qs)</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Instant Quiz Panel -->
+    <section id="quizPanel" class="hidden space-y-4">
+      <div id="questionsContainer" class="space-y-4">
+        <!-- Populated by JS -->
+      </div>
+
+      <div id="emptyQuizFilter" class="hidden text-center py-10 px-4 rounded-2xl bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-700">
+        <p class="text-sm font-bold text-slate-800 dark:text-slate-200">No questions match this filter.</p>
+        <button id="clearQFilterBtn" type="button" class="mt-3 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 cursor-pointer">
+          Show All 20 Questions
+        </button>
+      </div>
+    </section>
+
+    <!-- Previous / Next Part Footer Navigation -->
+    <nav class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3" aria-label="Part pagination">
+      <button id="prevPartBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+        &larr; Previous Part
+      </button>
+      <span id="partFooterCounter" class="text-xs font-semibold text-slate-500 dark:text-slate-400">Part 1 of 10</span>
+      <button id="nextPartBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+        Next Part &rarr;
+      </button>
+    </nav>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60">
+    <div class="max-w-5xl mx-auto px-4 py-4 text-center text-xs text-slate-500 dark:text-slate-400">
+      <strong class="text-slate-700 dark:text-slate-300">Ramban 8 (Mock 08)</strong> &bull; DSSSB TGT Computer Science by <span class="font-bold text-indigo-600 dark:text-indigo-400">HARIS SAIFI</span> &bull; 10 Parts &bull; 200 Instant-Answer MCQs
+    </div>
+  </footer>
+
+  <!-- Reset Part Modal -->
+  <div id="resetModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-sm w-full p-5 shadow-2xl">
+      <h3 id="resetModalTitle" class="text-base font-bold">Reset This Part?</h3>
+      <p class="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
+        This will clear your selected answers for the current 20-question part so you can re-attempt it fresh.
+      </p>
+      <div class="mt-5 flex items-center justify-end gap-2">
+        <button id="cancelResetBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Cancel</button>
+        <button id="confirmResetBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 cursor-pointer">Yes, Reset Part</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"sections": [{"id": 1, "code": "Part 1", "group": "Part A · General", "title": "Reasoning", "range": "Q1 – Q20", "concepts": [{"title": "Coding, Letter Clusters, Series & Number Sets", "title_hi": "कोडिंग, अक्षर-समूह, श्रृंखला और संख्या समुच्चय", "points": [{"en": "Common-letter coding (DINE=4619, EDIT=6412): cancel shared letters (D, I, E ↔ 4, 6, 1) to isolate the unique letter (T = 2).", "hi": "समान-अक्षर कोडिंग (DINE/EDIT) में साझा अक्षर हटाकर अकेले बचे अक्षर का कोड (T = 2) सीधे निकालें।"}, {"en": "Series & Odd-one-out: test fixed position shifts (−2/+2, −4/−5/−4, +4/+3, +2/+4, −3/−3), increasing differences (+11, +22, +33, +44, +55), or whole-number rules (×2+3; (÷7)+4; (n, n², n/2)).", "hi": "श्रृंखला व असंगत छाँटना: निश्चित अक्षर अंतर (+4/+3, +2/+4, −3), बढ़ते अंतर (+11, +22, +33...) या पूर्ण-संख्या नियम (×2+3; ÷7+4; n, n², n/2) जाँचें।"}]}, {"title": "Seating, Ranking, Box Puzzles & Symbol Sequences", "title_hi": "बैठक व्यवस्था, रैंकिंग, बॉक्स पहेली और प्रतीक क्रम", "points": [{"en": "Ranking in a row: Position from right = Total − Position from left + 1 (e.g., 103 − 80 + 1 = 24th).", "hi": "पंक्ति में स्थान: दाएँ से स्थान = कुल संख्या − बाएँ से स्थान + 1 (जैसे 103 − 80 + 1 = 24वाँ)।"}, {"en": "Circular (8 facing centre: Clockwise = Left, Anticlockwise = Right) & Linear (north-facing): fix end clues first ('No one to right of D' ⇒ D is rightmost).", "hi": "गोलाकार मेज (दक्षिणावर्त = बायाँ, वामावर्त = दायाँ) व सीधी पंक्ति में पहले अंतिम छोर के संकेत ('D के दाएँ कोई नहीं') बैठाएँ।"}, {"en": "Drop-and-count sequences: cleanly strike out all dropped characters (letters/symbols) and count strictly from left to right.", "hi": "प्रतीक श्रृंखला में हटाए जाने वाले अक्षरों/प्रतीकों को अलग करके बाएँ से दाएँ सावधानी से गिनें।"}]}], "questions": [{"id": 1, "topic": "Coding–Decoding", "q": "In a certain code language, 'DINE' is coded as '4619' and 'EDIT' as '6412'. What is the code for 'T'?", "options": ["2", "4", "1", "6"], "ans": 0, "exp": "D, I and E are common to both words and correspond to 4, 6 and 1. The remaining digit in EDIT is 2 ⇒ T = 2."}, {"id": 2, "topic": "Seating Arrangement & Puzzles", "q": "Kavita, Geeta, Heena, Jai, Farheen, Ira, Deep and Kuldeep sit around a circular table facing the centre. Kavita is 3rd to the left of Heena. Deep is 2nd to the right of Farheen, who is 2nd to the right of Heena. Jai is the nearest neighbour of Ira and Kavita. Geeta is the nearest neighbour of Deep. Who sits 3rd to the right of Geeta?", "options": ["Kavita / कविता", "Kuldeep / कुलदीप", "Jai / जय", "Deep / दीप"], "ans": 2, "exp": "Clockwise (left) order: Heena → Ira → Jai → Kavita → Deep → Geeta → Farheen → Kuldeep. Moving right (anticlockwise) from Geeta: Deep (1), Kavita (2), Jai (3) ⇒ Jai."}, {"id": 3, "topic": "Number & Letter Series", "q": "Complete the series logically:\nR20B, P20D, N20F, ?", "options": ["L20H", "K20L", "H20L", "K20H"], "ans": 0, "exp": "1st letter −2 (R→P→N→L), middle number stays 20, last letter +2 (B→D→F→H) ⇒ L20H."}, {"id": 4, "topic": "Ranking & Order", "q": "(Left) TEN  PAT  SHE  APE (Right)\nHow many letters lie between the 2nd letter of the 1st word from the left and the 2nd letter of the 1st word from the right in English alphabetical order?", "options": ["8", "7", "9", "10"], "ans": 3, "exp": "TEN → E (5); APE → P (16). Letters between E and P = 16 − 5 − 1 = 10."}, {"id": 5, "topic": "Analogy", "q": "Following a whole-number logic, 78 is related to 159 and 56 is related to 115. To which number is 99 related?", "options": ["241", "201", "212", "236"], "ans": 1, "exp": "Logic: × 2 + 3. 78×2+3 = 159; 56×2+3 = 115; 99×2+3 = 201."}, {"id": 6, "topic": "Direction & Distance", "q": "In a row of 103 students facing north, ABC is 16th from the left end. If PQR is 64th to the right of ABC, what is PQR's position from the right end?", "options": ["29th", "27th", "24th", "21st"], "ans": 2, "exp": "PQR from left = 16 + 64 = 80. From right = 103 − 80 + 1 = 24th."}, {"id": 7, "topic": "Ranking & Order", "q": "Three of the four letter-clusters follow the same alphabetical pattern. Which one DOES NOT belong?", "options": ["UZB", "TXA", "QUX", "DHK"], "ans": 0, "exp": "TXA, QUX and DHK follow (+4, +3), while UZB follows (+5, +2) ⇒ UZB."}, {"id": 8, "topic": "Number & Letter Series", "q": "Select the INCORRECT letter-cluster in the series:\nBZK, XUG, TPC, QLY, LFU, HAQ", "options": ["TPC", "XUG", "HAQ", "QLY"], "ans": 3, "exp": "Each position shifts (−4, −5, −4): T−4=P, P−5=K, C−4=Y ⇒ 4th term should be PKY, so QLY is incorrect."}, {"id": 9, "topic": "Mathematical Operations", "q": "If 'A' = '÷', 'B' = '×', 'C' = '+' and 'D' = '−', which expression evaluates to 33?", "options": ["9 B 4 D 72 A 9 C 5", "9 C 4 A 72 D 9 B 5", "9 A 4 C 72 B 9 D 5", "9 D 4 A 72 C 9 B 5"], "ans": 0, "exp": "(a) 9 × 4 − 72 ÷ 9 + 5 = 36 − 8 + 5 = 33."}, {"id": 10, "topic": "Mathematical Operations", "q": "Select the pair related in the same whole-number way as (77, 15) and (42, 10):", "options": ["84, 18", "35, 7", "49, 13", "56, 12"], "ans": 3, "exp": "Logic: (first ÷ 7) + 4. 77÷7+4 = 15; 42÷7+4 = 10; 56÷7+4 = 12."}, {"id": 11, "topic": "Ranking & Order", "q": "Three of the four letter-cluster pairs follow the same rule. Which one does NOT belong?", "options": ["WY - XZ", "AB - DE", "KL - NO", "TU - WX"], "ans": 0, "exp": "AB-DE, KL-NO and TU-WX consist of consecutive-letter pairs shifted by +3. WY is not consecutive ⇒ WY - XZ."}, {"id": 12, "topic": "Seating Arrangement & Puzzles", "q": "Seven boxes B, D, E, O, V, W, X are stacked. Only two boxes are above O. Exactly three boxes are between O and W. Only two boxes are between W and D. B is immediately above O. X is immediately below E. How many boxes are between O and E?", "options": ["Two / दो", "None / एक भी नहीं", "One / एक", "Three / तीन"], "ans": 2, "exp": "Top to bottom: 1-V, 2-B, 3-O, 4-D, 5-E, 6-X, 7-W. Between O and E is only D ⇒ One."}, {"id": 13, "topic": "Ranking & Order", "q": "Which letter-cluster does NOT belong to the group?", "options": ["DFJ", "GIL", "LNR", "SUY"], "ans": 1, "exp": "DFJ, LNR and SUY follow (+2, +4), whereas GIL follows (+2, +3) ⇒ GIL."}, {"id": 14, "topic": "Ranking & Order", "q": "Which letter-cluster pair does NOT belong to the group?", "options": ["NJ - KG", "YU - VR", "VR - SO", "SO - PK"], "ans": 3, "exp": "NJ→KG, YU→VR and VR→SO shift both letters by −3; in SO→PK, S−3=P but O−4=K ⇒ SO - PK."}, {"id": 15, "topic": "Mathematical Operations", "q": "Select the set related in the same whole-number way as (22, 484, 11) and (12, 144, 6):", "options": ["(35, 1225, 17)", "(24, 576, 12)", "(27, 729, 13)", "(18, 361, 9)"], "ans": 1, "exp": "Logic: (n, n², n/2). For n = 24: (24, 576, 12)."}, {"id": 16, "topic": "Alphabet & Dictionary Order", "q": "Words: MIX  ERA  REV  YOU.\nEach vowel is changed to the immediate previous letter and each consonant to the immediate next letter. How many resulting clusters have NO vowel?", "options": ["Two / दो", "One / एक", "Four / चार", "Three / तीन"], "ans": 2, "exp": "MIX→NHY, ERA→DSZ, REV→SDW, YOU→ZNT. None of the four clusters contains a vowel ⇒ Four."}, {"id": 17, "topic": "Direction & Distance", "q": "Seven people A, B, C, D, G, H, I sit in a row facing north. Only three sit between C and H. B is immediate left of H. No one sits right of D. Only two sit between D and B. I is immediate right of G. How many people sit between A and I?", "options": ["Two / दो", "Three / तीन", "Four / चार", "One / एक"], "ans": 0, "exp": "Left to right: C, G, I, B, H, A, D. Between I and A sit B and H ⇒ Two."}, {"id": 18, "topic": "Number, Letter & Symbol Sequence", "q": "(Left) 9 * A D @ 2 B © K € M 1 Q # N ! 4 F $ 7 P & (Right)\nIf all letters and symbols are dropped, which digit is 3rd from the left?", "options": ["9", "2", "1", "4"], "ans": 2, "exp": "Remaining digits: 9, 2, 1, 4, 7. Third from the left is 1."}, {"id": 19, "topic": "Number & Letter Series", "q": "What should come in place of '?' in the series?\n128, 139, 161, 194, 238, ?", "options": ["293", "291", "297", "295"], "ans": 0, "exp": "Differences: +11, +22, +33, +44, +55 ⇒ 238 + 55 = 293."}, {"id": 20, "topic": "Number, Letter & Symbol Sequence", "q": "(Left) S 7 & Y U 3 P © 2 & B 2 V A $ W 7 V * © I A (Right)\nIf all letters are dropped, which element is 8th from the left?", "options": ["$", "©", "2", "&"], "ans": 0, "exp": "After dropping letters: 7, &, 3, ©, 2, &, 2, $, 7, *, ©. The 8th element from the left is $."}]}, {"id": 2, "code": "Part 2", "group": "Part A · General", "title": "General Awareness", "range": "Q21 – Q40", "concepts": [{"title": "Polity, Constitution, NITI Aayog & History", "title_hi": "राजव्यवस्था, संविधान, नीति आयोग और इतिहास", "points": [{"en": "Key Polity: Art. 345 (State official languages — Uttarakhand made Sanskrit 2nd official language in 2010); Art. 368 (Amendment procedure; bill can be introduced in EITHER House, no joint sitting); State Cabinet = core state decision-making body; NITI Aayog Governing Council has LGs/Administrators for UTs without Legislative Assemblies.", "hi": "राजव्यवस्था: अनुच्छेद 345 (राज्य राजभाषा — उत्तराखंड 2010 में संस्कृत); अनुच्छेद 368 (संविधान संशोधन — किसी भी सदन में पेश, संयुक्त बैठक नहीं); राज्य मंत्रिमंडल प्रमुख नीति-निर्माता; नीति आयोग में बिना विधानसभा वाले UTs का प्रतिनिधित्व उप-राज्यपाल करते हैं।"}, {"en": "History & Static GK: 1st INC Session (1885) = Gokuldas Tejpal Sanskrit College, Bombay (W.C. Bonnerjee); Dadra & Nagar Haveli merged with Daman & Diu (26 Jan 2020); Sodium bicarbonate = baking soda (NOT a preservative); Shab-e-Barat = 8th Islamic month (Sha'ban).", "hi": "इतिहास व GK: प्रथम कांग्रेस अधिवेशन 1885 (गोकुलदास तेजपाल संस्कृत कॉलेज, बॉम्बे); सोडियम बाइकार्बोनेट संरक्षक नहीं है; शब-ए-बरात इस्लामी कैलेंडर के 8वें महीने (शाबान) में।"}]}, {"title": "Geography, Dance & 2026 Current Affairs", "title_hi": "भूगोल, नृत्य और 2026 करंट अफेयर्स", "points": [{"en": "Geography: Kosi = Sorrow of Bihar; Summer monsoon blows ocean → land; Loo = hot dry wind in May–June; Jelep La (Sikkim) linked Kalimpong to Lhasa; Minicoy lies SOUTH (not north) of 9° Channel (10° Channel separates Andaman & Nicobar).", "hi": "भूगोल: कोसी (बिहार का दुःख); ग्रीष्म मानसून महासागर से स्थल की ओर; लू (मई–जून); जेलेप ला (कलिम्पोंग–ल्हासा); मिनिकॉय 9° चैनल के दक्षिण में स्थित है।"}, {"en": "Culture & 2026 Current Affairs: Bagurumba = Bodo dance (Assam); Kathakali (Kerala, Guru Kunchu Kurup); 72nd National Film Awards (Sep 2026) — future editions across different states/cities; Uday Kotak Padma Bhushan 2026 (Trade & Industry); Carlos Alcaraz (2026 Laureus Sportsman); Jamaica (mixed 4×100m relay WR 39.62s at Gaborone 26).", "hi": "संस्कृति व करंट अफेयर्स: बागुरुम्बा (बोडो, असम); कथकली (केरल, गुरु कुंचू कुरुप); 72वें राष्ट्रीय फिल्म पुरस्कार (आगामी संस्करण अलग-अलग राज्यों में); उदय कोटक पद्म भूषण 2026 (व्यापार व उद्योग); कार्लोस अल्कराज (लॉरियस 2026); जमैका (4×100m रिले रिकॉर्ड)।"}]}], "questions": [{"id": 21, "topic": "General Knowledge", "q": "Which of the following substances is NOT used as a preservative? / निम्नलिखित में से कौन-सा पदार्थ संरक्षक के रूप में उपयोग नहीं किया जाता?", "options": ["Sodium Bicarbonate / सोडियम बाइकार्बोनेट", "Sugar / चीनी", "Salt / नमक", "Potassium Meta Bisulphite (KMS)"], "ans": 0, "exp": "Sodium bicarbonate (baking soda) is a leavening agent/antacid, whereas sugar, salt and KMS are food preservatives."}, {"id": 22, "topic": "Art & Culture", "q": "In which month of the Islamic calendar is the Shab-e-Barat festival celebrated?", "options": ["Eighth month / आठवां महीना", "Last month / अंतिम महीना", "Ninth month / नौवां महीना", "Seventh month / सातवां महीना"], "ans": 0, "exp": "Shab-e-Barat falls on the 14th–15th of Sha'ban, the eighth month of the Islamic calendar."}, {"id": 23, "topic": "Geography", "q": "Which river is referred to as the 'Sorrow of Bihar'? / किस नदी को 'बिहार का दुःख' कहा जाता है?", "options": ["Kosi / कोसी", "Ganga / गंगा", "Yamuna / यमुना", "Brahmaputra / ब्रह्मपुत्र"], "ans": 0, "exp": "The Kosi River is called the 'Sorrow of Bihar' due to frequent floods and shifting courses."}, {"id": 24, "topic": "Indian Polity", "q": "Under Article ______ of the Indian Constitution, Uttarakhand made Hindi the official language and Sanskrit its second official language in 2010.", "options": ["345", "199", "310", "234"], "ans": 0, "exp": "Article 345 empowers a State Legislature to adopt one or more official languages for the State."}, {"id": 25, "topic": "General Knowledge", "q": "The Administrator of Dadra and Nagar Haveli also administers which Union Territory?", "options": ["Lakshadweep", "Daman and Diu / दमन और दीव", "Andaman and Nicobar Islands", "Puducherry"], "ans": 1, "exp": "Dadra and Nagar Haveli and Daman and Diu shared an administrator and were merged into one UT on 26 January 2020."}, {"id": 26, "topic": "INC Sessions", "q": "The first session of the Indian National Congress (1885) was held at which venue?", "options": ["Fergusson College, Poona", "Elphinstone College, Bombay", "Gokuldas Tejpal Sanskrit College, Bombay", "Town Hall, Calcutta"], "ans": 2, "exp": "Held in December 1885 at Gokuldas Tejpal Sanskrit College, Bombay, presided over by W. C. Bonnerjee."}, {"id": 27, "topic": "Atmosphere", "q": "Which accurately describes the direction of monsoon winds during the Indian summer season?", "options": ["They blow from the ocean toward the land / ये महासागर से स्थल की ओर प्रवाहित होती हैं", "They blow only over the ocean surface", "They blow only within the landmass", "They blow from land toward the ocean"], "ans": 0, "exp": "Summer heating creates low pressure over land, drawing moisture-laden south-west monsoon winds from the ocean toward the land."}, {"id": 28, "topic": "Atmosphere", "q": "During which months are the hot, dry winds known as 'Loo' most commonly experienced in northern India?", "options": ["September and October", "July and August", "May and June / मई और जून", "November and December"], "ans": 2, "exp": "The Loo blows over the northern plains primarily in May and June."}, {"id": 29, "topic": "Indian Polity", "q": "Which smaller body within the State Council of Ministers serves as the primary policy-formulating and core decision-making authority of a State Government?", "options": ["Governor's Secretariat", "Legislative Council", "State Cabinet / राज्य मंत्रिमंडल", "State Planning Board"], "ans": 2, "exp": "The State Cabinet (senior ministers within the Council of Ministers) is the core policy-making authority."}, {"id": 30, "topic": "Mountains & Plateaus", "q": "Which Himalayan pass historically linked Kalimpong (near Darjeeling) with Lhasa in Tibet?", "options": ["Jelep La / जेलेप ला", "Burzil Pass / बुरज़िल दर्रा", "Shipki La / शिपकी ला", "Zoji La / ज़ोजी ला"], "ans": 0, "exp": "Jelep La pass in Sikkim linked Kalimpong with Lhasa via the Chumbi valley."}, {"id": 31, "topic": "Continent & Ocean", "q": "Which statement is NOT correct regarding India's island groups?", "options": ["Lakshadweep Islands lie in the Arabian Sea.", "Ten Degree Channel separates the Andaman and Nicobar Islands.", "Minicoy Island lies north of the Nine Degree Channel.", "Indira Point is located on Great Nicobar Island."], "ans": 2, "exp": "Minicoy lies SOUTH (not north) of the Nine Degree Channel, which separates it from the main Lakshadweep group."}, {"id": 32, "topic": "Constitutional Amendments", "q": "Where can a Constitutional Amendment Bill be introduced in the Indian Parliament?", "options": ["Only in the Rajya Sabha", "Either House of the Parliament / संसद के किसी भी सदन में", "Only in the Lok Sabha", "A joint sitting of the Parliament"], "ans": 1, "exp": "A Constitutional Amendment Bill can be introduced in either House of Parliament (no joint sitting allowed)."}, {"id": 33, "topic": "Constitutional Amendments", "q": "Which Article of the Constitution of India lays down the procedure for its amendment?", "options": ["Article 356", "Article 370", "Article 368", "Article 365"], "ans": 2, "exp": "Article 368 (Part XX) defines Parliament's power and procedure to amend the Constitution."}, {"id": 34, "topic": "Non-Constitutional Bodies", "q": "Which category of Union Territories is represented in the Governing Council of NITI Aayog by its Lieutenant Governor or Administrator?", "options": ["No Union Territories are represented by LGs", "Only island Union Territories", "Union Territories without Legislative Assemblies / बिना विधान सभा वाले केंद्र-शासित प्रदेश", "Union Territories with Legislative Assemblies"], "ans": 2, "exp": "UTs with legislatures are represented by their CMs; UTs without legislatures are represented by their LG/Administrator."}, {"id": 35, "topic": "Classical & Folk Dance", "q": "Which dance is traditionally performed by the Bodo community of Assam?", "options": ["Ghoomar / घूमर", "Garba / गरबा", "Bagurumba / बागुरुम्बा", "Rouf / रऊफ़"], "ans": 2, "exp": "Bagurumba ('butterfly dance') is the traditional dance of the Bodo community of Assam."}, {"id": 36, "topic": "Current Affairs", "q": "Ahead of the 72nd National Film Awards (September 2026), what policy change did the Ministry of Information & Broadcasting announce?", "options": ["Consolidating Film Awards with Padma Awards", "Future editions would be held across different states and cities", "Restricting future ceremonies to New Delhi", "Presenting awards exclusively at international film festivals"], "ans": 1, "exp": "The Ministry announced that future editions of the National Film Awards will be hosted across different states and cities."}, {"id": 37, "topic": "Current Affairs", "q": "Shri Uday Sureshkumar Kotak was conferred the Padma Bhushan in 2026 in which field?", "options": ["Public Affairs and Service", "Literature and Education", "Science and Engineering", "Trade and Industry / व्यापार और उद्योग"], "ans": 3, "exp": "Banker Uday Kotak received the 2026 Padma Bhushan in Trade and Industry."}, {"id": 38, "topic": "Current Affairs", "q": "Which tennis player won the 2026 Laureus World Sportsman of the Year Award in Madrid?", "options": ["Carlos Alcaraz / कार्लोस अल्कराज", "Tadej Pogacar", "Jannik Sinner", "Novak Djokovic"], "ans": 0, "exp": "Spanish tennis star Carlos Alcaraz won the 2026 Laureus World Sportsman of the Year Award."}, {"id": 39, "topic": "Sports & Games", "q": "Which country set a new mixed 4×100m relay world record of 39.62 seconds at World Athletics Relays Gaborone 26?", "options": ["Canada", "Great Britain", "United States", "Jamaica / जमैका"], "ans": 3, "exp": "Jamaica improved the mixed 4×100m relay world record to 39.62s in Gaborone (Botswana), 2026."}, {"id": 40, "topic": "Classical & Folk Dance", "q": "Which classical dance-drama of Kerala is associated with Guru Kunchu Kurup and known for elaborate costumes and storytelling?", "options": ["Kathak / कथक", "Kuchipudi / कुचिपुड़ी", "Odissi / ओडिसी", "Kathakali / कथकली"], "ans": 3, "exp": "Kathakali is Kerala's classical dance-drama; Guru Kunchu Kurup was one of its legendary exponents."}]}, {"id": 3, "code": "Part 3", "group": "Part A · General", "title": "Numerical Ability", "range": "Q41 – Q60", "concepts": [{"title": "Ratio, Inverse Variation, Average & Percentages", "title_hi": "अनुपात, व्युत्क्रमानुपात, औसत और प्रतिशत", "points": [{"en": "Ratio & Proportion: Fourth proportional to a, b, c is (b×c)/a; Inverse variation ⇒ O₁×A₁ = O₂×A₂; Average of first n even natural numbers = n + 1.", "hi": "अनुपात व औसत: a, b, c का चतुर्थानुपाती = (b×c)/a; व्युत्क्रमानुपात में O₁×A₁ = O₂×A₂; प्रथम n सम प्राकृत संख्याओं का औसत = n + 1।"}, {"en": "Successive % & Profit/Loss: multiply successive factors (e.g., 0.70 × 0.75 × 0.85 × 1.40); when stock is damaged, divide required total SP by remaining usable quantity.", "hi": "क्रमिक प्रतिशत व लाभ-हानि: क्रमिक गुणकों का गुणा करें; माल नष्ट होने पर आवश्यक कुल विक्रय मूल्य को शेष बची मात्रा से भाग दें।"}]}, {"title": "Mensuration 2D/3D, Trains, Alternate Work & Discount", "title_hi": "क्षेत्रमिति 2D/3D, ट्रेन, एकांतर कार्य और छूट", "points": [{"en": "Mensuration: Rhombus area = ½ × d₁ × d₂; Hemisphere volume = (2/3)πr³, CSA = 2πr²; Cylinder volume = πr²h. Take floor integer for 'vessels filled to the brim'.", "hi": "क्षेत्रमिति: समचतुर्भुज क्षेत्रफल = ½ × d₁ × d₂; अर्धगोले का आयतन = (2/3)πr³, वक्र पृष्ठ = 2πr²; बेलन आयतन = πr²h।"}, {"en": "Trains & Alternate Work: Crossing two tunnels L₁, L₂ in t₁, t₂ ⇒ Speed = (L₁−L₂)/(t₁−t₂), Train length = Speed×t₂ − L₂; Alternate days: pair 2-day cycles via LCM work.", "hi": "ट्रेन व एकांतर कार्य: दो सुरंगों हेतु चाल = (L₁−L₂)/(t₁−t₂); एकांतर दिनों में LCM कुल कार्य से 2-दिन के चक्र गिनें।"}]}], "questions": [{"id": 41, "topic": "Ratio & Proportion", "q": "A sum is divided among M, N, P, Q with M:N = 2:3, N:P = 3:4, P:Q = 1:2. If Q − N = ₹1,225, find the total sum.", "options": ["₹4,500", "₹4,165", "₹5,100", "₹5,000"], "ans": 1, "exp": "M:N:P:Q = 2:3:4:8 (sum = 17 parts). Q − N = 5 parts = 1225 ⇒ 1 part = 245 ⇒ Total = 17 × 245 = ₹4,165."}, {"id": 42, "topic": "Statistics", "q": "Find the arithmetic mean of: 12, 46, 83, 43, 97, 34, 31, 33, 26.", "options": ["43", "50", "45", "51"], "ans": 2, "exp": "Sum = 405; Count = 9 ⇒ Mean = 405 / 9 = 45."}, {"id": 43, "topic": "Simplification", "q": "Evaluate: 5 × (8 × 3²) ÷ 4 + 62 − 11", "options": ["135", "145", "134", "141"], "ans": 3, "exp": "5 × (8 × 9) ÷ 4 + 62 − 11 = 5 × 72 ÷ 4 + 51 = 90 + 51 = 141."}, {"id": 44, "topic": "Mensuration 3D", "q": "A hemispherical bowl (r = 14 cm) is full of water. How many cylindrical vessels (r = 7 cm, h = 10 cm) can be filled completely to the brim from it?", "options": ["5", "2", "3", "4"], "ans": 2, "exp": "Number = [(2/3)π(14)³] / [π(7)²(10)] = 5488 / 1470 ≈ 3.73 ⇒ 3 full vessels."}, {"id": 45, "topic": "Mensuration 2D", "q": "The diagonals of a rhombus are 12 cm and 8 cm. Find its area (in cm²).", "options": ["96", "12", "44", "48"], "ans": 3, "exp": "Area = ½ × 12 × 8 = 48 cm²."}, {"id": 46, "topic": "Partnership", "q": "Abdul and Mohsin invested ₹56,000 together. Out of ₹16,000 profit, Mohsin got ₹2,700. Find the difference of their investments.", "options": ["₹38,670", "₹37,100", "₹36,122", "₹38,052"], "ans": 1, "exp": "Abdul:Mohsin = 13300:2700 = 133:27 (160 parts). 1 part = 56000/160 = 350 ⇒ Difference = 106 × 350 = ₹37,100."}, {"id": 47, "topic": "Train", "q": "A train crosses two tunnels of lengths 2133 m and 1357 m in 90 s and 60 s respectively. What is the train's length?", "options": ["189 m", "204 m", "188 m", "195 m"], "ans": 3, "exp": "Speed = (2133 − 1357)/(90 − 60) = 776/30 m/s. Length = 60 × (776/30) − 1357 = 1552 − 1357 = 195 m."}, {"id": 48, "topic": "Algebra", "q": "Divide 595 into two parts so that 15 times the first plus 5 times the second equals 3975. Find the ratio of the first part to the second.", "options": ["25 : 79", "25 : 97", "20 : 79", "20 : 99"], "ans": 3, "exp": "15x + 5(595 − x) = 3975 ⇒ 10x = 1000 ⇒ x = 100, y = 495 ⇒ Ratio = 100 : 495 = 20 : 99."}, {"id": 49, "topic": "Data Interpretation", "svg": "DI_Q49", "q": "From the car production bar graph (2000: 3,50,000 total; 2001: 4,40,000 total; Type S = 10% in each year), if 85% of S-type cars were sold each year, how many S-type cars remain unsold?", "options": ["11,850", "7,650", "12,250", "9,350"], "ans": 0, "exp": "Total S produced = 35,000 + 44,000 = 79,000. Unsold = 15% of 79,000 = 11,850."}, {"id": 50, "topic": "Average", "q": "The average of the first 26 even natural numbers is:", "options": ["28", "29", "27", "26"], "ans": 2, "exp": "Average of first n even natural numbers = n + 1 = 26 + 1 = 27."}, {"id": 51, "topic": "Time & Work", "q": "A and B finish a work in 21 and 24 days. They work alternately starting with A for 8 days, then A leaves. How many days does B take for the remaining work?", "options": ["15 3/7", "13 1/7", "14 3/7", "12 1/7"], "ans": 0, "exp": "LCM = 168 (A=8, B=7). In 8 alternate days (4 each): 4×8 + 4×7 = 60 units. Remaining 108 units by B = 108/7 = 15 3/7 days."}, {"id": 52, "topic": "Discount", "q": "Two suppliers quote ₹2,400/unit for LED lamps (220 usable lamps needed). Supplier A: 20% trade + 5% cash discount. Supplier B: 2 free per 20 bought + 2% cash discount. Find the minimum total payable (in ₹).", "options": ["4,01,280", "3,81,280", "4,11,280", "3,91,280"], "ans": 0, "exp": "Supplier A: 220 × (2400 × 0.80 × 0.95) = 220 × 1824 = ₹4,01,280. Supplier B: buy 200 (+20 free) × 2400 × 0.98 = ₹4,70,400. Minimum = ₹4,01,280."}, {"id": 53, "topic": "Ratio & Proportion", "q": "What is the fourth proportional to 0.2, 0.12, 0.3?", "options": ["0.15", "0.18", "0.17", "0.12"], "ans": 1, "exp": "Fourth proportional = (0.12 × 0.3) / 0.2 = 0.18."}, {"id": 54, "topic": "Percentage", "q": "If 80% of 3,500 eligible voters cast their votes, how many did NOT vote?", "options": ["2,800", "1,200", "2,100", "700"], "ans": 3, "exp": "20% of 3,500 = 700 people did not vote."}, {"id": 55, "topic": "Percentage", "q": "Fuel price decreases by 30%, 25% and 15% in three months, then increases by 40% in the 4th month. What is the net percentage decrease?", "options": ["35.24%", "37.53%", "38.67%", "41.91%"], "ans": 1, "exp": "100 × 0.70 × 0.75 × 0.85 × 1.40 = 62.475 ⇒ Decrease = 100 − 62.475 = 37.525% ≈ 37.53%."}, {"id": 56, "topic": "Percentage", "q": "In a college election, 95% of students voted and the winner got 80% of polled votes. What % of total votes did the winner receive?", "options": ["76%", "72%", "70%", "74%"], "ans": 0, "exp": "80% of 95% = 76%."}, {"id": 57, "topic": "Ratio & Proportion", "q": "Machine B's output varies inversely with its age. At age 2 years it makes 80 parts in 4 h. How many parts will it make in 4 h at age 1 year?", "options": ["40", "160", "80", "120"], "ans": 1, "exp": "O₁ × A₁ = O₂ × A₂ ⇒ 80 × 2 = O₂ × 1 ⇒ O₂ = 160."}, {"id": 58, "topic": "Data Interpretation", "svg": "DI_Q58", "q": "From the birds-spotted bar graph (Park A=20, B=35, C=40, D=15, E=30), by how many birds does Park C exceed Park E?", "options": ["10 birds", "5 birds", "15 birds", "20 birds"], "ans": 0, "exp": "Park C (40) − Park E (30) = 10 birds."}, {"id": 59, "topic": "Mensuration 3D", "q": "A hemispherical tank (outer radius 14 m) is painted on its outer curved surface at ₹15/m². Find the total cost.", "options": ["₹20,200", "₹18,480", "₹16,500", "₹15,800"], "ans": 1, "exp": "CSA = 2πr² = 2 × (22/7) × 14 × 14 = 1232 m². Cost = 1232 × 15 = ₹18,480."}, {"id": 60, "topic": "Profit & Loss", "q": "A grocer buys 80 kg rice at ₹120/kg. 8 kg is lost in transit. At what price/kg must the rest be sold for 12.5% overall profit?", "options": ["₹175 per kg", "₹165 per kg", "₹200 per kg", "₹150 per kg"], "ans": 3, "exp": "CP = 80×120 = ₹9,600; Target SP = 1.125 × 9600 = ₹10,800; Left = 72 kg ⇒ Rate = 10800/72 = ₹150/kg."}]}, {"id": 4, "code": "Part 4", "group": "Part A · General", "title": "English", "range": "Q61 – Q80", "concepts": [{"title": "Adjectives, Articles, Stative Verbs & Indirect Speech", "title_hi": "विशेषण, आर्टिकल्स, स्टेटिव क्रिया और अप्रत्यक्ष कथन", "points": [{"en": "Adjectives & Degrees: Comparing 2 items uses comparative ('the better qualified', not 'best'); comparing all uses superlative ('the most feasible'); 'ideal' is absolute (no 'most'); nouns take adjectives ('most critical examiner', not 'critically').", "hi": "विशेषण के नियम: दो की तुलना में comparative ('better qualified'); सभी की तुलना में superlative; 'ideal' के पहले 'most' नहीं लगता; संज्ञा के लिए adjective ('critical examiner')।"}, {"en": "Verbs & Articles: 'want' is stative (use 'wants', not 'is wanting'); 'The' before singular class noun ('The human brain'); nationality plural = 'The Swedes' (not 'An Swedish'); 'might' stays unchanged in indirect speech.", "hi": "क्रिया व आर्टिकल: 'want' का continuous रूप नहीं होता; पूरी जाति हेतु 'The human brain'; 'might' अप्रत्यक्ष कथन में नहीं बदलता।"}]}, {"title": "Proverbs, Idioms, One-Word & ISS Passage", "title_hi": "कहावतें, मुहावरे, एक-शब्द और ISS गद्यांश", "points": [{"en": "Vocab & One-Word: Epidemiologist (studies disease spread in populations), Feminism (advocacy of women's rights), Pilgrimage (religious journey), Rudimentary × Advanced.", "hi": "शब्दावली: Epidemiologist (महामारी विशेषज्ञ), Feminism (नारीवाद), Pilgrimage (तीर्थयात्रा), Rudimentary (प्राथमिक) × Advanced (उन्नत)।"}, {"en": "Idioms & Proverbs: 'Don't count your chickens before they hatch' (don't assume results early); 'A lazy sheep thinks its wool heavy' (exaggerating burdens to avoid work); 'came out of the blue' (completely unexpected).", "hi": "कहावतें व मुहावरे: परिणाम से पहले डींग न मारें; आलसी काम से बचने को बोझ बढ़ा-चढ़ाकर बताता है; 'came out of the blue' = अचानक/अप्रत्याशित।"}]}], "questions": [{"id": 61, "topic": "Sentence Rearrangement", "q": "Arrange A, B, C, D:\nA. Not a single bird called, nor did the wind stir the leaves.\nB. It was the kind of silence that made one's skin crawl.\nC. Something about the silence was unnatural, almost expectant.\nD. As they stepped into the clearing, they sensed the air change.", "options": ["DACB", "CDAB", "ADCB", "BCDA"], "ans": 0, "exp": "D (stepped into clearing) → A (no bird/wind) → C (unnatural silence) → B ('the kind of silence') ⇒ DACB."}, {"id": 62, "topic": "Vocabulary", "q": "Select the proverb for: 'Rohit bragged about winning a competition before the results were announced, but he lost.'", "options": ["Don't count your chickens before they hatch", "Actions speak louder than words", "All that glitters is not gold", "The pen is mightier than the sword"], "ans": 0, "exp": "'Don't count your chickens before they hatch' warns against assuming success before it happens."}, {"id": 63, "topic": "Fill in the Blanks", "q": "Fill in the blank: 'The Headmaster ________ to speak to you.'", "options": ["wants", "was wanting", "is wanting", "wanting"], "ans": 0, "exp": "'Want' is a stative verb and takes simple present 'wants' with a singular subject."}, {"id": 64, "topic": "Fill in the Blanks", "q": "Fill in the blank: '_____ human brain remains one of the most complex structures in nature.'", "options": ["A", "No article required", "An", "The"], "ans": 3, "exp": "'The' precedes a singular noun representing a whole class or species ('The human brain')."}, {"id": 65, "topic": "Error Detection", "q": "Select the erroneous part: 'An Swedish have / one of the best / parental leave / policies in the world.'", "options": ["one of the best", "policies in the world", "An Swedish have", "parental leave"], "ans": 2, "exp": "Correct phrasing for the people is 'The Swedes have' (also 'An' is wrong before consonant sound)."}, {"id": 66, "topic": "Vocabulary", "q": "One-word substitute: A person who studies the causes, patterns, transmission, prevention, and control of diseases in large groups of people.", "options": ["Microbiologist", "Virologist", "Epidemiologist", "Pathologist"], "ans": 2, "exp": "An Epidemiologist studies disease distribution, outbreaks and control in populations."}, {"id": 67, "topic": "Vocabulary", "q": "One-word substitute for: 'active participation in movements aimed at securing rights for women'", "options": ["Pluralism", "Patriotism", "Humanism", "Feminism"], "ans": 3, "exp": "Feminism advocates women's rights on the basis of equality of the sexes."}, {"id": 68, "topic": "Error Detection", "q": "Identify the adjective error in: 'The committee found the proposed solution more feasible than every other innovative and promising idea presented during the session.'", "options": ["Replace 'every' with 'each'", "Replace 'more feasible' with 'the most feasible' because the comparison is among all ideas, not just two", "Change 'feasible' to 'feasiblest'", "Use a comma instead of 'and'"], "ans": 1, "exp": "Comparing one idea against all others requires the superlative 'the most feasible'."}, {"id": 69, "topic": "Mixed Grammar & Usage", "q": "Identify the erroneous part: 'Between the two candidates, she is the best qualified.'", "options": ["Between the", "two candidates,", "she is", "the best qualified."], "ans": 3, "exp": "Comparing only two people requires the comparative degree: 'the better qualified'."}, {"id": 70, "topic": "Vocabulary", "q": "What does the proverb 'A lazy sheep thinks its wool heavy' mean?", "options": ["Hardworking people don't complain about duties", "People exaggerate their burdens to avoid work", "Heavy responsibilities are always difficult to manage", "A sheep with thick wool moves slowly"], "ans": 1, "exp": "It means lazy people exaggerate their burdens to avoid doing work."}, {"id": 71, "topic": "Error Detection", "q": "Identify the error: (A) The revised policy introduced more effective regulatory / (B) measures than the previous framework, / (C) making it the most ideal solution for long-term governance.", "options": ["No Error", "C", "B", "A"], "ans": 1, "exp": "'Ideal' is an absolute adjective and cannot take 'most' → 'making it the ideal solution'."}, {"id": 72, "topic": "Error Detection", "q": "Identify the erroneous part: 'Her explanation was / detailed enough to / satisfy even the / most critically examiner.'", "options": ["detailed enough to", "Her explanation was", "most critically examiner.", "satisfy even the"], "ans": 2, "exp": "'Examiner' is a noun and must be modified by adjective 'critical', not adverb 'critically'."}, {"id": 73, "topic": "Vocabulary", "q": "Replace 'completely unexpected and surprising' with an idiom:\n'The manager's sudden change in attitude was [completely unexpected and surprising].'", "options": ["beat around the bush", "hit the nail on the head", "barked up the wrong tree", "came out of the blue"], "ans": 3, "exp": "'Came out of the blue' means happened suddenly and unexpectedly."}, {"id": 74, "topic": "Vocabulary", "q": "One-word substitute for 'a journey made for a religious purpose':", "options": ["Cruise", "Safari", "Pilgrimage", "Excursion"], "ans": 2, "exp": "A Pilgrimage is a journey to a sacred place for religious purposes."}, {"id": 75, "topic": "Fill in the Blanks", "q": "Report accurately: Dr. Patel remarked, \"The preliminary findings might suggest a need for further sampling.\"", "options": ["Dr. Patel remarked that the preliminary findings will suggest a need for further sampling.", "Dr. Patel remarked that the preliminary findings might suggest a need for further sampling.", "Dr. Patel remarked that the preliminary findings might suggest a need for additional analysis.", "Dr. Patel insisted that the preliminary findings suggest a need for further sampling."], "ans": 1, "exp": "'Might' does not change in indirect speech, and the exact wording ('further sampling') is preserved."}, {"id": 76, "topic": "Reading Comprehension", "passage": "ENG_RC_8", "q": "Identify the most suitable title for the passage.", "options": ["ISS – A Past History of International Space Initiatives", "ISS – A Solid Foundation for New Space Tourism", "ISS – A Stunning Truth about New Space Research", "ISS – A New Avenue for Commerce and Research"], "ans": 3, "exp": "The passage frames the ISS from opening to close around emerging opportunities for commerce and academic research."}, {"id": 77, "topic": "Reading Comprehension", "passage": "ENG_RC_8", "q": "According to the passage, which option is NOT a fact?", "options": ["The first station was created by linking two Russian Soyuz vehicles.", "The ISS is five times the size of the Russian space station Mir.", "The ISS took 10 years and more than 30 missions to assemble.", "The space station is approximately the size of a football field."], "ans": 1, "exp": "The passage states ISS is about FOUR times as large as Mir (and five times as large as U.S. Skylab)."}, {"id": 78, "topic": "Reading Comprehension", "passage": "ENG_RC_8", "q": "Identify the correct inference from the passage.", "options": ["The ISS is an exclusive project.", "The ISS is a privately funded project.", "The International Space Station is a cooperative project.", "The ISS is a totally defunct project."], "ans": 2, "exp": "It is described as 'unprecedented scientific and engineering collaboration among five space agencies representing 15 countries'."}, {"id": 79, "topic": "Reading Comprehension", "passage": "ENG_RC_8", "q": "Identify the tone of the passage.", "options": ["Objective", "Speculative", "Calculative", "Subjective"], "ans": 0, "exp": "The passage presents factual history and developments neutrally ⇒ Objective."}, {"id": 80, "topic": "Reading Comprehension", "passage": "ENG_RC_8", "q": "Find the ANTONYM of the word 'rudimentary'.", "options": ["Advanced", "Basic", "Simple", "Elementary"], "ans": 0, "exp": "'Rudimentary' means basic/undeveloped; its antonym is 'Advanced'."}]}, {"id": 5, "code": "Part 5", "group": "Part A · General", "title": "Hindi", "range": "Q81 – Q100", "concepts": [{"title": "अनेकार्थक, पर्यायवाची, तत्सम और वर्तनी शुद्धि", "title_hi": "Polysemy, Synonyms, Tatsam & Spelling Correction", "points": [{"en": "Polysemy & Synonyms: 'जीभ' अर्थ 'चपला' का है (न कि 'चपल' का); नाजुक = कोमल; विशाल = विराट/दीर्घ/महान ('तरु' = वृक्ष); गधा = रासभ/गर्दभ/खर; जिसे शब्दों में व्यक्त न किया जा सके = अनिर्वचनीय।", "hi": "अनेकार्थक व पर्यायवाची: चपला = लक्ष्मी/बिजली/जीभ; नाजुक = कोमल; गधा = रासभ; शब्दों में अव्यक्त = अनिर्वचनीय।"}, {"en": "Tatsam, Antonyms & Spelling: अनागत (तत्सम); डर × निडर; उन्नति × अवनति; शुद्ध वर्तनी = 'महत्त्वाकांक्षा' (महत्त्व + आकांक्षा), 'धैर्य' और 'मेहनत' (न कि 'मेहनता/दैर्य')।", "hi": "तत्सम, विलोम व वर्तनी: अनागत तत्सम है; उन्नति × अवनति; शुद्ध वर्तनी = महत्त्वाकांक्षा, धैर्य।"}]}, {"title": "मुहावरे, लोकोक्ति, व्याकरण और भारतेंदु युग गद्यांश", "title_hi": "Idioms, Proverbs, Grammar & Bhartendu Era RC", "points": [{"en": "Idioms & Grammar: 'कोल्हू का बैल बनना' = काम में पूरी तरह जुटे रहना; 'करे सेवा, पावे मेवा' = सेवा कार्य का फल अच्छा होता है; 'सफलता' स्त्रीलिंग ⇒ 'चाहती है'; 'प्रचुर' = परिमाणवाचक विशेषण।", "hi": "मुहावरे व व्याकरण: कोल्हू का बैल (लगातार कठिन परिश्रम); करे सेवा पावे मेवा (सेवा का अच्छा फल); सफलता (स्त्रीलिंग) → चाहती है; प्रचुर = परिमाणवाचक विशेषण।"}, {"en": "RC Core: भारतेंदु युगीन लेखकों का मोहभंग धन-निकासी, नौकरी न मिलने व उद्योग-धंधे चौपट होने से हुआ; उन्होंने स्वयं भारतीयों द्वारा प्रयास और स्वदेशी की भावना जगाने पर बल दिया।", "hi": "गद्यांश सार: भारतेंदु युग के साहित्यकारों ने कारीगरों के उत्थान हेतु स्वदेशी की भावना जगाने और स्वयं भारतीयों द्वारा प्रयास करने को आवश्यक माना।"}]}], "questions": [{"id": 81, "topic": "शब्द भंडार", "q": "अनेकार्थक शब्दों की दृष्टि से कौन-सा विकल्प अनुपयुक्त है?", "options": ["चक्र = पहिया, वृत्त, घेरा", "चपला = लक्ष्मी, बिजली, स्त्री", "खग = पक्षी, गन्धर्व, सूर्य", "चपल = चंचल, पारा, जीभ"], "ans": 3, "exp": "'जीभ' अर्थ 'चपला' का होता है, 'चपल' (चंचल, पारा, तेज) का नहीं।"}, {"id": 82, "topic": "वाक्य", "q": "उचित क्रम वाला वाक्य चुनें:", "options": ["हिन्दी आज समस्त विश्व के ज्ञान-विज्ञान रखती है को अभिव्यक्त करने की सामर्थ्य।", "ज्ञान-विज्ञान को हिन्दी आज समस्त विश्व के अभिव्यक्त करने की सामर्थ्य रखती है।", "हिन्दी आज समस्त विश्व के ज्ञान-विज्ञान को अभिव्यक्त करने की सामर्थ्य रखती है।", "हिन्दी अभिव्यक्त करने की सामर्थ्य रखती है आज समस्त विश्व के ज्ञान-विज्ञान को।"], "ans": 2, "exp": "विकल्प (c) कर्ता–काल–कर्म–क्रिया के स्वाभाविक और शुद्ध क्रम में है।"}, {"id": 83, "topic": "अनेक शब्दों के लिए एक शब्द", "q": "रेखांकित वाक्यांश के लिए सार्थक शब्द: 'जिसे [शब्दों में व्यक्त नहीं किया जा सकता]'", "options": ["अनिर्वचनीय", "अचिन्त्य", "अश्वारोही", "अनायास"], "ans": 0, "exp": "जिसे शब्दों में व्यक्त न किया जा सके = 'अनिर्वचनीय'।"}, {"id": 84, "topic": "पर्यायवाची शब्द", "q": "रेखांकित शब्द का पर्यायवाची बताइए: 'बच्चे का शरीर बहुत [नाजुक] होता है।'", "options": ["छोटा", "सुन्दर", "कोमल", "निर्मल"], "ans": 2, "exp": "'नाजुक' का पर्यायवाची 'कोमल' (मृदु, सुकुमार) है।"}, {"id": 85, "topic": "पर्यायवाची शब्द", "q": "कौन-सा विकल्प 'विशाल' का पर्यायवाची शब्द नहीं है?", "options": ["विराट", "तरु", "दीर्घ", "महान"], "ans": 1, "exp": "'तरु' का अर्थ 'वृक्ष' होता है; विराट, दीर्घ और महान 'विशाल' के पर्यायवाची हैं।"}, {"id": 86, "topic": "रिक्त स्थान", "q": "उचित क्रिया से वाक्य पूर्ण करें: 'सफलता का कोई रहस्य नहीं है बस वह अति परिश्रम ______ है।'", "options": ["चाहे", "चाहती", "चाहता", "चाहते"], "ans": 1, "exp": "'सफलता' स्त्रीलिंग एकवचन है, अतः क्रिया 'चाहती' होगी।"}, {"id": 87, "topic": "वाक्य", "q": "वाक्य-खंडों का सही क्रम चुनें:\nअ. जो निर्देशक प्रेम की भावनाओं को सामाजिक   ब. यथार्थ, पारिवारिक संबंधों और मानवीय मूल्यों से   स. जोड़कर प्रस्तुत करते हैं, उनकी फिल्में लंबे   द. समय तक दर्शकों की स्मृति में बनी रहती हैं", "options": ["अ, ब, स, द", "स, अ, द, ब", "ब, अ, द, स", "द, अ, स, ब"], "ans": 0, "exp": "अ, ब, स, द क्रम से अर्थपूर्ण और सुगठित वाक्य बनता है।"}, {"id": 88, "topic": "मुहावरे", "q": "'कोल्हू का बैल बनना' मुहावरे का सही अर्थ है:", "options": ["काम में पूरी तरह जुटे रहना", "हर समय सावधानी से रहना", "अपना घर बहुत सुंदर सजाना", "दूसरों के रहन-सहन की नकल करना"], "ans": 0, "exp": "'कोल्हू का बैल बनना' = बिना रुके लगातार कठिन परिश्रम करना / काम में पूरी तरह जुटे रहना।"}, {"id": 89, "topic": "पर्यायवाची शब्द", "q": "'गधा' का पर्यायवाची क्या होगा?", "options": ["भार्या", "रासभ", "विपन्न", "सुरभि"], "ans": 1, "exp": "'गधा' के पर्यायवाची रासभ, गर्दभ और खर हैं (भार्या = पत्नी, विपन्न = गरीब, सुरभि = गाय/सुगंध)।"}, {"id": 90, "topic": "लोकोक्तियाँ / कहावतें", "q": "लोकोक्ति 'करे सेवा, पावे मेवा' का सही अर्थ है:", "options": ["दूसरों की सेवा करने से धन नष्ट होना", "सेवा कार्य का फल अच्छा होता है", "कठिन कार्य करने पर भी इच्छित फल न मिलना", "बिना परिश्रम के फल प्राप्ति होना"], "ans": 1, "exp": "'करे सेवा, पावे मेवा' का अर्थ सेवा कार्य का फल अच्छा मिलना है।"}, {"id": 91, "topic": "शब्द के भेद", "q": "निम्नलिखित विकल्प में से तत्सम शब्द की पहचान कीजिए–", "options": ["बयार", "बहू", "अनागत", "बछड़ा"], "ans": 2, "exp": "'अनागत' तत्सम है; बयार (वायु), बहू (वधू) और बछड़ा (वत्स) तद्भव हैं।"}, {"id": 92, "topic": "विलोम", "q": "बिना डरे रिपोर्टिंग करने वाले के संदर्भ में 'डर' का उपयुक्त विलोम शब्द क्या है?", "options": ["संकोची", "लापरवाह", "निर्लज्ज", "निडर"], "ans": 3, "exp": "बिना डरे काम करने वाले के लिए उपयुक्त शब्द 'निडर' है।"}, {"id": 93, "topic": "अशुद्धि शोधन", "q": "शुद्ध वर्तनी वाला वाक्य चुनिए:", "options": ["जीवन में अत्यधिक महात्वाकांक्षा विनाश का मूल कारण है।", "जीवन में अत्यधिक महत्वकनक्ष विनाश का मूल कारण है।", "जीवन में अत्यधिक महत्त्वाकांक्षा विनाश का मूल कारण है।", "जीवन में अत्यधिक महत्वाकांशा विनाश का मूल कारण है।"], "ans": 2, "exp": "शुद्ध वर्तनी 'महत्त्वाकांक्षा' (महत्त्व + आकांक्षा) है।"}, {"id": 94, "topic": "अशुद्धि शोधन", "q": "वर्तनी के आधार पर शुद्ध वाक्य अंकित कीजिए:", "options": ["सफलता पाने के लिए धैर्य और मेहनता आवश्यक है।", "सफलता पाने के लिए दैर्य और मेहनत आवश्यक है।", "सफलता पीने के लिए धैर्य और मेहनत आवश्यक है।", "सफलता पाने के लिए धैर्य और मेहनत आवश्यक है।"], "ans": 3, "exp": "वाक्य (d) पूर्णतः शुद्ध है (अन्य में मेहनता, दैर्य, पीने अशुद्ध हैं)।"}, {"id": 95, "topic": "रिक्त स्थान", "q": "उचित परिमाणवाचक विशेषण चुनें: 'इस खेत में इस बार ______ धान की फसल हुई है।'", "options": ["प्रचुर", "हमारे", "महंगे", "सुंदर"], "ans": 0, "exp": "'प्रचुर' अनिश्चित परिमाणवाचक विशेषण है जो मात्रा दर्शाता है।"}, {"id": 96, "topic": "अपठित गद्यांश", "passage": "HIN_RC_8", "q": "भारतेंदु युगीन साहित्यकारों के राजभक्त होने के पीछे निम्न में से कौन-सा कारण नहीं था?", "options": ["महारानी के शासनाधीन रहकर इंग्लैण्ड के समान तरक़्क़ी की आशा।", "इंग्लैण्ड की जनता के समान ही भारतीयों के अधिकारों के संरक्षण की आशा।", "अंग्रेज़ी सरकार द्वारा भारत में अनेक उद्योग-धंधों की स्थापना करना।", "उनका अंग्रेज़ी राज्य की स्थापना को दैवीय वरदान मानना।"], "ans": 2, "exp": "गद्यांश में अंग्रेज़ों द्वारा उद्योग स्थापित करने की बात नहीं है; उलटे परम्परागत उद्योग चौपट हो रहे थे।"}, {"id": 97, "topic": "अपठित गद्यांश", "passage": "HIN_RC_8", "q": "भारतेंदु युगीन साहित्यकारों के अंग्रेज़ी राज्य से मोहभंग होने के कारणों में से असत्य है–", "options": ["अंग्रेज़ों का भारत की प्रगति के लिए विशेष कार्य करना।", "भारतीयों को सरकारी नौकरी न मिलना।", "भारत से विभिन्न करों के रूप में धन की निकासी।", "परम्परागत उद्योग-धंधों का विनाश और किसानों की बर्बादी।"], "ans": 0, "exp": "गद्यांश के अनुसार उन्नति के लिए 'ठोस क़दम नहीं उठाये जा रहे' थे, अतः कथन (a) असत्य है।"}, {"id": 98, "topic": "अपठित गद्यांश", "passage": "HIN_RC_8", "q": "भारतेंदु युगीन साहित्यकारों ने भारतीय कारीगरों के उत्थान के लिए जनता से आह्वान किया–", "options": ["नये उद्योग धंधे लगाने का।", "अंग्रेज़ों के विरुद्ध संघर्ष करने का।", "कारीगरों को आर्थिक सहायता देने का।", "स्वयं में स्वदेशी की भावना जगाने का।"], "ans": 3, "exp": "गद्यांश के अनुसार कारीगरों की बेकारी ने साहित्यकारों को स्वदेशी की भावना जगाने हेतु प्रेरित किया।"}, {"id": 99, "topic": "अपठित गद्यांश", "passage": "HIN_RC_8", "q": "भारतेंदु युगीन साहित्यकारों ने भारत की उन्नति के लिए आवश्यक माना–", "options": ["अंग्रेज़ी साम्राज्य की समाप्ति", "स्वयं भारतीयों द्वारा प्रयास करना", "विदेशों से सहायता माँगना", "अंग्रेज़ों से सहायता प्राप्त करना"], "ans": 1, "exp": "गद्यांश के अनुसार 'अगर भारत को भी उन्नत होना है तो खुद भारतीयों को आगे आना होगा।'"}, {"id": 100, "topic": "अपठित गद्यांश", "passage": "HIN_RC_8", "q": "निम्न में से 'उन्नति' का विलोम शब्द है–", "options": ["पतन", "अवनति", "प्रगति", "अनुन्नत"], "ans": 1, "exp": "'उन्नति' (उत् + नति) का सटीक विलोम 'अवनति' (अव + नति) है।"}]}, {"id": 6, "code": "Part 6", "group": "Part B · Computer Science", "title": "CS 1 · OS, .NET, Web & KM", "range": "Q101 – Q120", "concepts": [{"title": "OS, System Software, .NET & Web Fundamentals", "title_hi": "OS, सिस्टम सॉफ्टवेयर, .NET और वेब फंडामेंटल्स", "points": [{"en": "OS & Translators: Defragmentation makes files contiguous; Formatting creates a file system; Segmentation = variable-sized logical units; Process = active program with PCB; Multiprogramming (CPU busy), Time-sharing (time slices), Multiprocessing (≥2 CPUs); Interpreter produces NO object file.", "hi": "OS व ट्रांसलेटर: डीफ्रैगमेंटेशन फाइलों को क्रमबद्ध करता है; फॉर्मेटिंग फाइल सिस्टम बनाता है; सेगमेंटेशन = परिवर्तनीय तार्किक इकाइयाँ; इंटरप्रेटर ऑब्जेक्ट फाइल नहीं बनाता।"}, {"en": ".NET, Web & Hardware: C# compiles to MSIL (not directly to native code), CTS unifies .NET types; HTML is front-end (not back-end); JS events: onclick, onload, onmouseover, onchange; SIPO shift register enters 1 bit at a time & outputs all bits simultaneously; MySQL = open source by Oracle.", "hi": ".NET व वेब: C# पहले MSIL में कम्पाइल होता है; HTML फ्रंट-एंड है; SIPO में सीरियल इनपुट व पैरेलल आउटपुट; MySQL ओरेकल का ओपन-सोर्स DBMS है।"}]}, {"title": "Graphics (AR/DDA), UPI, Mobile Agents & Management", "title_hi": "ग्राफिक्स (AR/DDA), UPI, मोबाइल एजेंट और प्रबंधन", "points": [{"en": "AR & DDA: AR overlays digital info on real world; DDA uses floating-point rounding (slower than Bresenham's integer algorithm; for |m|>1, y increases by 1); Mobile agent migrates across hosts; (x + 3/x²)⁹ has n+1 = 10 terms.", "hi": "AR व DDA: AR वास्तविक दृश्य पर डिजिटल जानकारी जोड़ता है; DDA फ्लोटिंग-पॉइंट उपयोग करता है (|m|>1 पर y को 1 से बढ़ाते हैं); (a+b)⁹ में 10 पद होते हैं।"}, {"en": "UPI, E-Commerce & Management: UPI is operated by NPCI (not directly by RBI); Technical e-commerce barrier = poor internet/payment security; Controlling = Standards → Measure → Compare → Corrective action (recruiting is Staffing); KM systems = Enterprise-wide, Knowledge work, Intelligent techniques.", "hi": "UPI व प्रबंधन: UPI का संचालन NPCI करता है (RBI सीधे नहीं); नियंत्रण (Controlling) में भर्ती शामिल नहीं है; KM सिस्टम के 3 प्रमुख प्रकार हैं।"}]}], "questions": [{"id": 101, "topic": "Mathematics", "q": "Find the number of terms in the binomial expansion of (x + 3/x²)⁹.", "options": ["10", "18", "9", "11"], "ans": 0, "exp": "(a + b)ⁿ has n + 1 terms ⇒ 9 + 1 = 10 terms."}, {"id": 102, "topic": "Management", "q": "Poor ________ between management and employees can lower morale and damage the corporate image of a business.", "options": ["inventory", "communication", "depreciation", "taxation"], "ans": 1, "exp": "Clear two-way communication maintains morale and corporate image."}, {"id": 103, "topic": "AI & Graphics", "q": "Augmented Reality (AR) ________ digital information on the user's view of the real world.", "options": ["deletes", "replaces", "overlays", "compresses"], "ans": 2, "exp": "AR overlays digital content onto the real world (VR replaces the real world)."}, {"id": 104, "topic": "Operating Systems", "q": "Rearranging fragmented file parts into contiguous regions is ________, and preparing a new disk by creating a file system is ________.", "options": ["formatting; defragmentation", "defragmentation; formatting", "compaction; partitioning", "paging; formatting"], "ans": 1, "exp": "Defragmentation consolidates scattered file blocks; formatting writes a file system (NTFS/FAT32) onto a disk."}, {"id": 105, "topic": "Computer Fundamentals", "q": "Truthfulness:\ni) Assembler translates assembly to machine code.\nii) Linker combines object files & libraries into an executable.\niii) Interpreter produces a complete object file before execution.\niv) Loader places program in main memory.", "options": ["i-True, ii-True, iii-False, iv-True", "i-True, ii-True, iii-True, iv-True", "i-True, ii-False, iii-False, iv-True", "i-False, ii-True, iii-True, iv-True"], "ans": 0, "exp": "An interpreter executes line-by-line and produces NO object file (iii is False); i, ii and iv are True."}, {"id": 106, "topic": "DBMS & SQL", "q": "Which DBMS is open source and maintained by Oracle Corporation?", "options": ["SQL Server", "DB2", "MySQL", "MS Access"], "ans": 2, "exp": "MySQL is open source and maintained by Oracle Corporation."}, {"id": 107, "topic": "Computer Fundamentals", "q": "In a ________ shift register, data enters one bit at a time and all stored bits are available at the outputs simultaneously.", "options": ["Parallel-In Parallel-Out", "Serial-In Parallel-Out", "Serial-In Serial-Out", "Parallel-In Serial-Out"], "ans": 1, "exp": "SIPO (Serial-In Parallel-Out) shifts bits in serially and outputs all bits simultaneously."}, {"id": 108, "topic": "Web Technologies", "q": "Which of the following is NOT a back-end (server-side or database) technology?", "options": ["PHP", "PL/SQL", "Node.js", "HTML"], "ans": 3, "exp": "HTML is a front-end markup language rendered by the browser (PHP, Node.js, PL/SQL are back-end)."}, {"id": 109, "topic": "Cyber Security & E-Commerce", "q": "Features of UPI:\ni) Instant 24×7 settlement including bank holidays.\nii) VPA can be used instead of account number & IFSC.\niii) Operated directly by RBI.\niv) Multiple bank accounts can link to one UPI app.", "options": ["ii, iii and iv only", "i, ii and iii only", "i, ii and iv only", "i, ii, iii and iv"], "ans": 2, "exp": "UPI is operated by NPCI (regulated by RBI, not directly operated by RBI), so iii is false ⇒ i, ii and iv only."}, {"id": 110, "topic": "Java & OOP", "q": "A/An ________ is an instance of a class that occupies memory and has its own copy of data members.", "options": ["interface", "package", "method", "object"], "ans": 3, "exp": "An object is a concrete memory instance of a class."}, {"id": 111, "topic": "Operating Systems", "q": "Which memory management technique divides a process into variable-sized logical units such as code, data and stack?", "options": ["Paging", "Spooling", "Swapping", "Segmentation"], "ans": 3, "exp": "Segmentation divides a process into variable-sized logical segments (Paging uses fixed-size physical pages)."}, {"id": 112, "topic": "Operating Systems", "q": "A ________ is a program in execution, with its own address space and Process Control Block (PCB).", "options": ["thread", "file", "library", "process"], "ans": 3, "exp": "A process is an active program in execution with its own address space and PCB."}, {"id": 113, "topic": "Operating Systems", "q": "Match:\na) Multiprogramming  b) Multitasking (time-sharing)  c) Multiprocessing\ni) CPU shared in small time slices  ii) Several programs in memory so CPU stays busy  iii) Two or more CPUs work together", "options": ["a-iii, b-i, c-ii", "a-i, b-ii, c-iii", "a-ii, b-i, c-iii", "a-ii, b-iii, c-i"], "ans": 2, "exp": "Multiprogramming→ii, Multitasking→i, Multiprocessing→iii ⇒ a-ii, b-i, c-iii."}, {"id": 114, "topic": "Management", "q": "Activities under 'Controlling':\ni) Setting standards  ii) Measuring performance  iii) Comparing with standards  iv) Taking corrective action  v) Recruiting & training", "options": ["i, ii, iii, iv and v", "ii, iii and v only", "i, ii, iii and iv only", "i, iv and v only"], "ans": 2, "exp": "Recruiting and training belong to Staffing, not Controlling ⇒ i, ii, iii and iv only."}, {"id": 115, "topic": "C, C++ & .NET", "q": "Truthfulness:\ni) C# is an OOP language on .NET.\nii) C# compiles directly to native code without intermediate language.\niii) CTS lets different .NET languages interoperate.", "options": ["i-True, ii-True, iii-False", "i-True, ii-False, iii-True", "i-False, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 1, "exp": "C# compiles first to MSIL/CIL (then JIT-compiled by CLR), so ii is False ⇒ i-True, ii-False, iii-True."}, {"id": 116, "topic": "Cyber Security & E-Commerce", "q": "Which of the following is a technical barrier to e-commerce?", "options": ["Lack of reliable internet infrastructure and secure payment systems", "Customers' preference to touch and feel goods", "Lack of trust in online sellers", "Unclear legal framework for online contracts"], "ans": 0, "exp": "Internet infrastructure and secure payment systems are technical barriers; trust, touch-and-feel and legal issues are non-technical."}, {"id": 117, "topic": "Computer Networks", "q": "In mobile computing, a ________ is a program that can migrate from one host to another in a network and continue execution there.", "options": ["daemon", "static agent", "proxy server", "mobile agent"], "ans": 3, "exp": "A mobile agent carries its code and state across hosts to execute near the data."}, {"id": 118, "topic": "AI & Graphics", "q": "Which statements are INCORRECT about the DDA line drawing algorithm?\ni) Uses floating-point arithmetic & rounding.\nii) Slower than Bresenham's.\niii) Uses only integer addition/subtraction/comparison.\niv) For |m| > 1, x increases by 1 at every step.", "options": ["Only iii", "iii and iv only", "i and iv only", "ii and iii only"], "ans": 1, "exp": "iii describes Bresenham (not DDA), and for |m| > 1, y (not x) increments by 1 ⇒ iii and iv are incorrect."}, {"id": 119, "topic": "Web Technologies", "q": "Match JavaScript Events:\na) onclick  b) onload  c) onmouseover  d) onchange\ni) Page finishes loading  ii) User clicks element  iii) Input value changes  iv) Mouse pointer moves onto element", "options": ["a-i, b-ii, c-iii, d-iv", "a-ii, b-i, c-iv, d-iii", "a-ii, b-iv, c-i, d-iii", "a-iii, b-i, c-iv, d-ii"], "ans": 1, "exp": "onclick→ii, onload→i, onmouseover→iv, onchange→iii ⇒ a-ii, b-i, c-iv, d-iii."}, {"id": 120, "topic": "Management & KM", "q": "Major types of Knowledge Management Systems:\ni) Enterprise-wide KM  ii) Knowledge work systems  iii) Intelligent techniques  iv) Spreadsheet macros", "options": ["i, ii and iii only", "iv only", "i and iv only", "i, ii, iii and iv"], "ans": 0, "exp": "Laudon's three major KM systems are Enterprise-wide KM, Knowledge work systems, and Intelligent techniques."}]}, {"id": 7, "code": "Part 7", "group": "Part B · Computer Science", "title": "CS 2 · OS, Networks, XML & Mgmt", "range": "Q121 – Q140", "concepts": [{"title": "OS (Disk/Linux), Networks, Java & XML/HTML", "title_hi": "OS (डिस्क/लिनक्स), नेटवर्क्स, जावा और XML/HTML", "points": [{"en": "OS & Linux: FCFS disk head movement sums |curr − next| (40→50→82→30→70 = 134); Linux pipe '|' sends stdout to stdin; File-viewing commands = cat, more, less, head (mkdir/rmdir manage directories); Cache > Main memory speed; ROM is non-volatile; Synchronous counter clocks all FFs together.", "hi": "OS व लिनक्स: FCFS डिस्क मूवमेंट = 134; पाइप '|' आउटपुट को अगले कमांड के इनपुट में भेजता है; cat, more, less, head फाइल दिखाते हैं; ROM नॉन-वोलेटाइल है।"}, {"en": "Networks, Java & Web: Stateful firewall tracks active connection state; Black hole attack in MANET advertises fake shortest route & drops packets; Java is platform-independent, JDK = JRE + tools, && needs both true; Perl is NOT a .NET language; HTML id is unique, class reusable; XML Schema (XSD) is in XML & supports data types (DTD does not).", "hi": "नेटवर्क्स, जावा व वेब: स्टेटफुल फ़ायरवॉल कनेक्शन स्टेट ट्रैक करता है; MANET में ब्लैक होल अटैक पैकेट गिरा देता है; जावा प्लेटफॉर्म-स्वतंत्र है; Perl .NET भाषा नहीं है; XML Schema डेटा टाइप सपोर्ट करता है।"}]}, {"title": "Math, Physics, C Pointers & Business Management", "title_hi": "गणित, भौतिकी, C पॉइंटर्स और व्यवसाय प्रबंधन", "points": [{"en": "Math & Physics: Mutually exclusive ⇒ P(A∩B)=0; Independent ⇒ P(A∩B)=P(A)×P(B); Streamline flow velocity < critical velocity; Young's = longitudinal, Bulk = volumetric, Rigidity = shear.", "hi": "गणित व भौतिकी: परस्पर अपवर्जी ⇒ P(A∩B)=0; स्वतंत्र ⇒ P(A)×P(B); धारा-रेखीय प्रवाह क्रांतिक वेग से कम होता है; यंग (अनुदैर्ध्य), आयतन (वॉल्यूमेट्रिक), दृढ़ता (अपरूपण)।"}, {"en": "Management & Accounting: Formal communication = Downward, Upward, Horizontal (Grapevine is informal); CRM manages customers/sales; ESS gives senior executives KPI dashboards; Financial accounting uses historical cost (not current market value).", "hi": "प्रबंधन व लेखांकन: अंगूरलता (Grapevine) अनौपचारिक संचार है; CRM ग्राहक संबंध प्रबंधन करता है; ESS वरिष्ठ अधिकारियों को KPI डैशबोर्ड देता है; वित्तीय लेखांकन ऐतिहासिक लागत पर आधारित है।"}]}], "questions": [{"id": 121, "topic": "Mathematics", "q": "If A = {1, 2, 3, 4, 5}, B = {4, 5, 6} and C = {5, 6, 7}, find (A − B) ∪ (C − B).", "options": ["{1, 2, 3, 7}", "{1, 2, 3}", "{4, 5, 6, 7}", "{1, 2, 3, 6, 7}"], "ans": 0, "exp": "A − B = {1, 2, 3} and C − B = {7} ⇒ Union = {1, 2, 3, 7}."}, {"id": 122, "topic": "Mathematics", "q": "Truthfulness:\ni) Mutually exclusive ⇒ P(A ∩ B) = 0.\nii) Independent ⇒ P(A ∩ B) = P(A) + P(B).\niii) Sampling error = population parameter − sample statistic.", "options": ["i-True, ii-True, iii-False", "i-True, ii-False, iii-True", "i-False, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 1, "exp": "Independent events satisfy P(A ∩ B) = P(A) × P(B), so ii is False ⇒ i-True, ii-False, iii-True."}, {"id": 123, "topic": "Management", "q": "Channels of formal communication in an organisation:\ni) Downward  ii) Upward  iii) Horizontal  iv) Grapevine", "options": ["i, ii, iii and iv", "iv only", "i and iv only", "i, ii and iii only"], "ans": 3, "exp": "Grapevine is informal communication; downward, upward and horizontal are formal channels."}, {"id": 124, "topic": "C & Programming Basics", "q": "Output of C code?\nint a = 7, b = 3, *p1 = &a, *p2 = &b;\n*p1 = *p1 - *p2;\n*p2 = *p1 + *p2;\n*p1 = *p2 - *p1;\nprintf(\"a=%d b=%d\", a, b);", "options": ["a=7 b=3", "a=3 b=7", "a=4 b=7", "a=3 b=4"], "ans": 1, "exp": "Swaps a and b via pointers without a temp variable: a becomes 4, b becomes 7, a becomes 3 ⇒ a=3 b=7."}, {"id": 125, "topic": "Management & Commerce", "q": "Which software manages customer interactions, sales leads and after-sales service?", "options": ["CRM software", "Compiler", "Antivirus software", "Device driver"], "ans": 0, "exp": "CRM (Customer Relationship Management) tracks customer data, sales leads and support."}, {"id": 126, "topic": "Physics & General Science", "q": "Associated with streamline (laminar) flow:\ni) Every particle follows the exact path of the particle ahead.\nii) Velocity of liquid is greater than its critical velocity.", "options": ["Both (i) and (ii)", "Only (i)", "Neither (i) nor (ii)", "Only (ii)"], "ans": 1, "exp": "Streamline flow occurs BELOW critical velocity (exceeding it causes turbulent flow) ⇒ Only (i)."}, {"id": 127, "topic": "Physics & General Science", "q": "Match Moduli of Elasticity:\na) Young's  b) Bulk  c) Rigidity\ni) Shear stress / shear strain  ii) Longitudinal stress / strain  iii) Volumetric stress / strain", "options": ["a-ii, b-i, c-iii", "a-i, b-ii, c-iii", "a-iii, b-ii, c-i", "a-ii, b-iii, c-i"], "ans": 3, "exp": "Young's→ii, Bulk→iii, Rigidity→i ⇒ a-ii, b-iii, c-i."}, {"id": 128, "topic": "Digital Electronics", "q": "A ________ counter is one in which all flip-flops are clocked simultaneously by the same clock pulse.", "options": ["ripple", "synchronous", "asynchronous", "cascaded"], "ans": 1, "exp": "In a synchronous counter, a common clock triggers all flip-flops simultaneously."}, {"id": 129, "topic": "Computer Fundamentals", "q": "Truthfulness:\ni) Cache memory is faster than main memory.\nii) ROM is a volatile memory.", "options": ["i-True, ii-False", "i-True, ii-True", "i-False, ii-True", "i-False, ii-False"], "ans": 0, "exp": "Cache (SRAM) is faster than main memory (DRAM); ROM is non-volatile ⇒ i-True, ii-False."}, {"id": 130, "topic": "Computer Networks", "q": "Which firewall tracks active connection states and allows only packets belonging to a valid connection?", "options": ["Stateful inspection firewall", "Packet-filtering firewall", "Application-level gateway", "Circuit-level gateway"], "ans": 0, "exp": "A stateful inspection firewall maintains a state table of active connections."}, {"id": 131, "topic": "Commerce & Accounting", "q": "Limitations of financial accounting:\ni) Records only monetary transactions  ii) Based on historical cost  iii) No per-product/job cost  iv) Shows exact current market value of assets  v) Results known only at period end", "options": ["i, ii, iii and v only", "i, ii and iv only", "ii, iii, iv and v only", "i, ii, iii, iv and v"], "ans": 0, "exp": "Financial accounting records historical cost, NOT current market value (iv is false) ⇒ i, ii, iii and v only."}, {"id": 132, "topic": "Java & OOP", "q": "Truthfulness:\ni) JVM converts bytecode to host machine code.\nii) Java is platform-dependent.\niii) JDK includes JRE and tools like javac.\niv) && returns true if at least one operand is true.", "options": ["i-True, ii-True, iii-True, iv-False", "i-True, ii-False, iii-True, iv-False", "i-False, ii-False, iii-True, iv-True", "i-True, ii-False, iii-False, iv-True"], "ans": 1, "exp": "Java is platform-independent (ii False) and && requires BOTH operands true (iv False) ⇒ i-True, ii-False, iii-True, iv-False."}, {"id": 133, "topic": "Operating Systems", "q": "Disk requests: 50, 82, 30, 70; head starts at 40. Find total head movements using FCFS.", "options": ["142", "120", "94", "134"], "ans": 3, "exp": "|40−50| + |50−82| + |82−30| + |30−70| = 10 + 32 + 52 + 40 = 134 cylinders."}, {"id": 134, "topic": "C, C++ & .NET", "q": "Which of the following is NOT a .NET language?", "options": ["VB.NET", "Perl", "F#", "C#"], "ans": 1, "exp": "VB.NET, C# and F# target the .NET CLR; Perl is an independent scripting language."}, {"id": 135, "topic": "Operating Systems", "q": "Which Linux shell symbol sends the output of one command as the input to another?", "options": ["<", ">", "|", "&"], "ans": 2, "exp": "The pipe symbol (|) connects stdout of one command to stdin of the next."}, {"id": 136, "topic": "Operating Systems", "q": "Which Linux commands display file contents?\ni) cat  ii) more  iii) less  iv) head  v) mkdir  vi) rmdir", "options": ["iv only", "v and vi only", "i and v only", "i, ii, iii and iv only"], "ans": 3, "exp": "cat, more, less and head display file contents; mkdir/rmdir create/remove directories."}, {"id": 137, "topic": "Management & MIS", "q": "Main purpose of a/an ________ is to give senior executives summarised KPI information with graphics and drill-down.", "options": ["Office Automation System", "Transaction Processing System", "Executive Support System", "Expert System"], "ans": 2, "exp": "An Executive Support System (ESS/EIS) serves top executives with KPI dashboards and drill-down."}, {"id": 138, "topic": "Computer Networks", "q": "In a ________ attack on a MANET, a malicious node falsely advertises the shortest route and drops all packets it receives.", "options": ["worm hole", "black hole", "snooping", "phishing"], "ans": 1, "exp": "A black hole attack advertises a fake optimal route to attract and drop packets."}, {"id": 139, "topic": "Web Technologies", "q": "Truthfulness:\ni) HTML id must be unique per page.\nii) HTML is used for server-side form processing.\niii) Same class can apply to many elements, and one element can have multiple classes.", "options": ["i-True, ii-False, iii-True", "i-True, ii-True, iii-False", "i-False, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 0, "exp": "HTML is client-side markup, not server-side processing (ii False) ⇒ i-True, ii-False, iii-True."}, {"id": 140, "topic": "Web Technologies", "q": "Truthfulness:\ni) XML Schema is written in XML syntax & supports data types.\nii) DTD supports integer and date data types.\niii) XML element names can begin with a digit.", "options": ["i-False, ii-False, iii-True", "i-True, ii-True, iii-False", "i-True, ii-False, iii-False", "i-True, ii-False, iii-True"], "ans": 2, "exp": "Only XML Schema (XSD) supports rich data types (DTD does not), and XML names cannot start with digits ⇒ i-True, ii-False, iii-False."}]}, {"id": 8, "code": "Part 8", "group": "Part B · Computer Science", "title": "CS 3 · Web, .NET, Graphics & SE", "range": "Q141 – Q160", "concepts": [{"title": "Web, Email, Security, .NET & Programming", "title_hi": "वेब, ईमेल, सुरक्षा, .NET और प्रोग्रामिंग", "points": [{"en": "Networks, Security & Web: Email retrieval = POP3 & IMAP (SMTP sends); Data integrity ensures no alteration in transit; HTML lists: <ol> ordered, <ul> unordered, <dl> description, <li> list item.", "hi": "नेटवर्क्स व वेब: ईमेल प्राप्त करने हेतु POP3 व IMAP (SMTP भेजता है); Data integrity डेटा में बदलाव रोकता है; <ol>, <ul>, <dl>, <li> HTML सूची टैग हैं।"}, {"en": ".NET, Programming & SE: WCF = Windows Communication Foundation; CLR GC frees unreferenced objects & assemblies hold MSIL+metadata+manifest (MSIL does NOT run directly without CLR); Procedural languages = C, FORTRAN, Pascal (Smalltalk/Java = OOP); 'Pyramid model' is NOT a valid SDLC model; Java bitwise 6 | 3 = 7; Python dict iterates keys in insertion order.", "hi": ".NET व प्रोग्रामिंग: WCF = Windows Communication Foundation; MSIL सीधे प्रोसेसर पर नहीं चलता (CLR आवश्यक); C, FORTRAN, Pascal प्रोसीजरल हैं; 'Pyramid model' कोई SDLC मॉडल नहीं है।"}]}, {"title": "Computer Graphics, Physics, Math & Business Systems", "title_hi": "कंप्यूटर ग्राफिक्स, भौतिकी, गणित और बिजनेस सिस्टम", "points": [{"en": "Graphics & Math/Physics: Basic 2D transformations = Translation, Rotation, Scaling; Clipping: Point clipping, Sutherland–Hodgman (polygon), Cohen–Sutherland (4-bit line region codes); Square matrix (m=n); A'BC'D has 4 literals; Concurrent forces meet at 1 point; Work is a scalar.", "hi": "ग्राफिक्स व भौतिकी: 3 मूल रूपांतरण = Translation, Rotation, Scaling; Sutherland–Hodgman (बहुभुज), Cohen–Sutherland (रेखा क्लिपिंग); कार्य अदिश (scalar) राशि है।"}, {"en": "Management & E-Business: Communication barriers = Noise, Language, Emotions, Overload (Feedback is NOT a barrier); Managerial economics = Business economics; DSS components = Database, Model base, User interface; E-business removes need for physical store presence.", "hi": "प्रबंधन व ई-बिजनेस: फीडबैक संचार में बाधा नहीं है; Business economics = Managerial economics; DSS = डेटाबेस, मॉडल बेस, यूज़र इंटरफ़ेस।"}]}], "questions": [{"id": 141, "topic": "Mathematics", "q": "A matrix in which the number of rows equals the number of columns is called a ________ matrix.", "options": ["column", "row", "square", "null"], "ans": 2, "exp": "An n × n matrix is called a square matrix."}, {"id": 142, "topic": "Digital Electronics", "q": "How many literals are there in the product term A'BC'D?", "options": ["4", "2", "1", "8"], "ans": 0, "exp": "Each plain or complemented variable is a literal: A', B, C', D ⇒ 4 literals."}, {"id": 143, "topic": "Management", "q": "Barriers to effective communication:\ni) Noise  ii) Language differences  iii) Emotional state  iv) Feedback  v) Information overload", "options": ["i, ii, iii, iv and v", "i, ii and iv only", "ii, iii, iv and v only", "i, ii, iii and v only"], "ans": 3, "exp": "Feedback completes the communication loop rather than blocking it ⇒ i, ii, iii and v only."}, {"id": 144, "topic": "Physics & General Science", "q": "Which correctly defines concurrent forces?", "options": ["Forces whose lines of action pass through a single point", "Forces lying in different planes", "Forces that are parallel to one another", "A single force keeping a body in equilibrium"], "ans": 0, "exp": "Concurrent forces have lines of action intersecting at a single common point."}, {"id": 145, "topic": "Physics & General Science", "q": "Truthfulness:\ni) Scalar quantities have magnitude only.\nii) Work is a vector quantity.\niii) Two equal, opposite parallel forces at different points form a couple.", "options": ["i-False, ii-False, iii-True", "i-True, ii-True, iii-False", "i-True, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 2, "exp": "Work (W = F·s) is a scalar, not a vector (ii False) ⇒ i-True, ii-False, iii-True."}, {"id": 146, "topic": "Computer Networks", "q": "Protocols used for retrieving e-mail from a mail server:\ni) POP3  ii) IMAP  iii) SMTP  iv) SNMP  v) FTP", "options": ["iii and iv only", "i, ii and iii only", "i and ii only", "ii, iv and v only"], "ans": 2, "exp": "POP3 (110) and IMAP (143) retrieve e-mail; SMTP sends e-mail."}, {"id": 147, "topic": "Cyber Security", "q": "Which security service ensures that data has not been altered during transmission?", "options": ["Nonrepudiation", "Authentication", "Data integrity", "Access control"], "ans": 2, "exp": "Data integrity guarantees data has not been modified in transit."}, {"id": 148, "topic": "C & Programming Basics", "q": "Truthfulness:\ni) A variable's value can change during execution.\nii) A constant's value can be changed during execution.", "options": ["i-True, ii-True", "i-True, ii-False", "i-False, ii-True", "i-False, ii-False"], "ans": 1, "exp": "Variables can change; constants remain fixed throughout execution ⇒ i-True, ii-False."}, {"id": 149, "topic": "Web Technologies", "q": "Match HTML list tags:\nA. <ol>  B. <ul>  C. <dl>  D. <li>\n1. List item  2. Ordered list  3. Unordered list  4. Description list", "options": ["A-2, B-3, C-1, D-4", "A-3, B-2, C-4, D-1", "A-2, B-3, C-4, D-1", "A-4, B-3, C-2, D-1"], "ans": 2, "exp": "<ol>→2, <ul>→3, <dl>→4, <li>→1 ⇒ A-2, B-3, C-4, D-1."}, {"id": 150, "topic": "C & Programming Basics", "q": "Which are procedural programming languages?\ni) C  ii) FORTRAN  iii) Pascal  iv) Smalltalk  v) Java", "options": ["i, ii, iii, iv and v", "Only i, ii and iii", "Only iv and v", "Only i and v"], "ans": 1, "exp": "C, FORTRAN and Pascal are procedural; Smalltalk and Java are object-oriented."}, {"id": 151, "topic": "Software Engineering", "q": "Which of the following is NOT a valid software life cycle model?", "options": ["V-model", "Pyramid model", "RAD model", "Spiral model"], "ans": 1, "exp": "V-model, RAD and Spiral are valid SDLC models; there is no 'Pyramid model'."}, {"id": 152, "topic": "Java & OOP", "q": "Output of Java code?\nint a = 6, b = 3;\nSystem.out.println(\"a|b = \" + (a | b));", "options": ["a|b = 5", "a|b = 2", "a|b = 7", "a|b = 9"], "ans": 2, "exp": "6 (110₂) | 3 (011₂) = 111₂ = 7 ⇒ a|b = 7."}, {"id": 153, "topic": "Commerce & Economics", "q": "________ is also called Managerial Economics, applying economic theory to business decision-making.", "options": ["Welfare economics", "Business economics", "Public finance", "Econometrics"], "ans": 1, "exp": "Business economics (managerial economics) applies economic tools to management decisions."}, {"id": 154, "topic": "Computer Fundamentals", "q": "What is the full form of WCF with respect to .NET?", "options": ["Windows Common Format", "Web Control Framework", "Windows Communication Foundation", "Web Communication Facility"], "ans": 2, "exp": "WCF = Windows Communication Foundation (WPF = Presentation, WF = Workflow)."}, {"id": 155, "topic": "Computer Fundamentals", "q": "Truthfulness:\ni) CLR garbage collector frees unreferenced objects.\nii) MSIL runs directly on the processor without CLR.\niii) A .NET assembly contains MSIL, metadata and a manifest.", "options": ["i-True, ii-False, iii-True", "i-True, ii-True, iii-False", "i-False, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 0, "exp": "MSIL requires the CLR's JIT compiler to produce native code (ii False) ⇒ i-True, ii-False, iii-True."}, {"id": 156, "topic": "Commerce & E-Business", "q": "Which of the following is NOT a benefit of e-business?", "options": ["Wider market reach", "Lower transaction costs", "Availability 24 × 7", "Need for the buyer to be physically present at the store"], "ans": 3, "exp": "E-business eliminates the need for physical presence at a store."}, {"id": 157, "topic": "Management & DSS", "q": "Components of a Decision Support System (DSS):\ni) Database  ii) Model base  iii) User interface  iv) Printer cartridges", "options": ["i and iv only", "i, ii, iii and iv", "i, ii and iii only", "iv only"], "ans": 2, "exp": "A DSS comprises a Database, Model base and User interface."}, {"id": 158, "topic": "AI & Graphics", "q": "Truthfulness:\ni) Point clipping checks if a point lies inside the clip window.\nii) Sutherland–Hodgman is for polygon clipping.\niii) Cohen–Sutherland assigns a 4-bit region code to each line endpoint.", "options": ["i-True, ii-True, iii-True", "i-True, ii-False, iii-True", "i-False, ii-True, iii-True", "i-True, ii-True, iii-False"], "ans": 0, "exp": "All three computer-graphics clipping statements are true."}, {"id": 159, "topic": "AI & Graphics", "q": "In computer graphics, the three basic geometric transformations are ________, ________ and ________.", "options": ["translation; clipping; rendering", "clipping; shading; rendering", "translation; rotation; scaling", "scaling; shading; hiding"], "ans": 2, "exp": "Translation, rotation and scaling are the three basic geometric transformations."}, {"id": 160, "topic": "Python", "q": "Output of Python code?\nd = dict(); d['x'] = 10; d['y'] = 20\nfor k in d: print(k, d[k])", "options": ["x 10 (next line) y 20", "10 x (next line) 20 y", "x y", "Error"], "ans": 0, "exp": "Iterating over a dict yields its keys in insertion order, printing 'x 10' then 'y 20'."}]}, {"id": 9, "code": "Part 9", "group": "Part B · Computer Science", "title": "CS 4 · Networks, SE, Web & OS", "range": "Q161 – Q180", "concepts": [{"title": "Networks, Hadoop, Digital Logic & Computer Org", "title_hi": "नेटवर्क्स, हडूप, डिजिटल लॉजिक और कंप्यूटर संगठन", "points": [{"en": "Networks & Sensors: Switch operates at Data Link layer using MAC table; Well-known TCP ports: 21=FTP, 23=Telnet, 53=DNS, 80=HTTP; Accelerometer detects tilt/acceleration for screen rotation; Mobile limitations = battery, small screen, limited bandwidth, interference (NOT unlimited processing).", "hi": "नेटवर्क्स व सेंसर: स्विच डेटा लिंक लेयर पर MAC टेबल उपयोग करता है; पोर्ट: 21=FTP, 23=Telnet, 53=DNS, 80=HTTP; एक्सेलेरोमीटर स्क्रीन रोटेशन पहचानता है।"}, {"en": "Hadoop, Architecture & Circuits: HDFS splits files into replicated blocks (NameNode = metadata, DataNodes = blocks; Map runs BEFORE Reduce); Programmer-visible attributes = Computer Architecture (NOT Organisation); Combinational has no memory, Sequential depends on input + past state.", "hi": "हडूप व आर्किटेक्चर: MapReduce में Map पहले चलता है; प्रोग्रामर को दिखने वाले गुण = Computer Architecture; कॉम्बिनेशनल में मेमोरी नहीं होती, सीक्वेंशियल में होती है।"}]}, {"title": "SE, Web (DOM/ASP.NET/XML), Linux, C++ & Math", "title_hi": "SE, वेब (DOM/ASP.NET/XML), लिनक्स, C++ और गणित", "points": [{"en": "SE, Web & Linux: Prototype clarifies unclear requirements via user feedback; COCOMO Organic = small experienced team; DOM lets scripts modify page content/style; ASP.NET Data Binding connects controls to data sources; XML declaration = <?xml version=\"1.0\" encoding=\"UTF-8\"?>; Linux directory commands = mkdir, rmdir.", "hi": "SE, वेब व लिनक्स: COCOMO Organic = छोटी अनुभवी टीम; DOM स्क्रिप्ट को वेबपेज बदलने देता है; ASP.NET में Data Binding; XML घोषणा <?xml ...?>; लिनक्स डायरेक्टरी = mkdir, rmdir।"}, {"en": "DSA, C++, SQL & Math: Push A,B,C,D then 2 pops ⇒ B on top; C++ supports all 5 inheritance types; SQL defines/manipulates RDBMS; Tally ERP = accounting & inventory; Rank of [[1,2,3],[2,1,4],[3,3,7]] = 2; Estimating outside data range = Extrapolation.", "hi": "DSA, C++ व गणित: स्टैक में A,B,C,D पुश और 2 पॉप के बाद शीर्ष पर B; C++ सभी 5 इनहेरिटेंस सपोर्ट करता है; ज्ञात सीमा के बाहर अनुमान = Extrapolation।"}]}], "questions": [{"id": 161, "topic": "Mathematics", "q": "Find the rank of the matrix [[1, 2, 3], [2, 1, 4], [3, 3, 7]].", "options": ["0", "3", "1", "2"], "ans": 3, "exp": "Row 3 = Row 1 + Row 2, so determinant = 0 and two linearly independent rows remain ⇒ Rank = 2."}, {"id": 162, "topic": "Computer Networks", "q": "Which smartphone sensor detects acceleration/tilt to switch between portrait and landscape?", "options": ["Ambient light sensor", "Proximity sensor", "Accelerometer", "Barometer"], "ans": 2, "exp": "The accelerometer detects linear acceleration and tilt for screen rotation."}, {"id": 163, "topic": "Computer Fundamentals", "q": "Truthfulness:\ni) Interpreter executes one statement at a time.\nii) Computer organisation refers to programmer-visible attributes like ISA.\niii) RISC aims at ~1 instruction/cycle.\niv) ALU runs arithmetic/logic under CU.", "options": ["i-True, ii-False, iii-True, iv-True", "i-True, ii-True, iii-True, iv-True", "i-False, ii-False, iii-True, iv-True", "i-True, ii-True, iii-False, iv-False"], "ans": 0, "exp": "Programmer-visible attributes define Computer Architecture, not Organisation (ii False) ⇒ i-True, ii-False, iii-True, iv-True."}, {"id": 164, "topic": "DSA", "q": "If A, B, C and D are pushed onto a stack in that order and two pops are performed, which element is on top?", "options": ["A", "D", "C", "B"], "ans": 3, "exp": "Pushing A,B,C,D puts D on top; two pops remove D and C, leaving B on top."}, {"id": 165, "topic": "AI & Big Data", "q": "Truthfulness:\ni) HDFS splits large files into replicated blocks.\nii) In MapReduce, Reduce runs before Map.\niii) NameNode stores metadata; DataNodes store blocks.", "options": ["i-False, ii-False, iii-True", "i-True, ii-True, iii-False", "i-True, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 2, "exp": "Map always executes before Reduce (ii False) ⇒ i-True, ii-False, iii-True."}, {"id": 166, "topic": "DBMS & SQL", "q": "Which language is used to define and manipulate data in relational databases?", "options": ["HTML", "CSS", "SQL", "XML"], "ans": 2, "exp": "SQL (DDL, DML, DCL, TCL) defines and manipulates relational databases."}, {"id": 167, "topic": "Computer Networks", "q": "Which network device operates at the data link layer and forwards frames using a MAC address table?", "options": ["Hub", "Switch", "Repeater", "Router"], "ans": 1, "exp": "A switch works at Layer 2 (Data Link) and forwards frames based on learned MAC addresses."}, {"id": 168, "topic": "Digital Electronics", "q": "Truthfulness:\ni) Combinational circuits contain no memory elements.\nii) Sequential circuit outputs depend on present inputs and past state.", "options": ["i-True, ii-False", "i-False, ii-True", "i-True, ii-True", "i-False, ii-False"], "ans": 2, "exp": "Both statements accurately define combinational vs. sequential circuits."}, {"id": 169, "topic": "Computer Networks", "q": "Match TCP well-known ports:\na) 21  b) 23  c) 53  d) 80\ni) HTTP  ii) DNS  iii) FTP  iv) Telnet", "options": ["a-i, b-iv, c-ii, d-iii", "a-iv, b-iii, c-ii, d-i", "a-iii, b-ii, c-iv, d-i", "a-iii, b-iv, c-ii, d-i"], "ans": 3, "exp": "21=FTP (iii), 23=Telnet (iv), 53=DNS (ii), 80=HTTP (i) ⇒ a-iii, b-iv, c-ii, d-i."}, {"id": 170, "topic": "Commerce & Management", "q": "Tally ERP software is mainly used for:", "options": ["accounting and inventory management", "image editing", "web page design", "writing computer programs"], "ans": 0, "exp": "Tally ERP manages accounting vouchers, ledgers, GST returns and inventory."}, {"id": 171, "topic": "C, C++ & OOP", "q": "Which types of inheritance are supported by C++?\ni) Single  ii) Multiple  iii) Multilevel  iv) Hierarchical  v) Hybrid", "options": ["i, ii, iii, iv and v", "i, iii and iv only", "i and ii only", "ii and v only"], "ans": 0, "exp": "C++ supports all five inheritance types: single, multiple, multilevel, hierarchical and hybrid."}, {"id": 172, "topic": "Software Engineering", "q": "True for the Prototype model:\ni) Useful when requirements are unclear.\nii) Shown to user for feedback.\niii) Strict phase-by-phase with no user feedback.\niv) Always reduces cost by delivering prototype as final product.", "options": ["i, ii and iii only", "i and ii only", "ii and iv only", "i, ii and iv only"], "ans": 1, "exp": "Prototyping clarifies unclear requirements via user feedback (i and ii); iii describes Waterfall and prototypes are usually discarded."}, {"id": 173, "topic": "Software Engineering", "q": "In basic COCOMO, a project built by a small team of experienced developers in a familiar environment is classified as:", "options": ["Embedded", "Semi-detached", "Organic", "Hybrid"], "ans": 2, "exp": "Organic mode = small, simple projects with experienced teams (2.4 × KLOC^1.05)."}, {"id": 174, "topic": "Operating Systems", "q": "Linux commands to create or delete directories:\ni) mkdir  ii) rmdir  iii) touch  iv) finger", "options": ["Only iv", "Only ii, iii and iv", "Only i, ii and iii", "Only i and ii"], "ans": 3, "exp": "mkdir creates and rmdir removes directories (touch creates files; finger shows user info)."}, {"id": 175, "topic": "Management", "q": "Steps of the management planning process:\ni) Setting objectives  ii) Developing premises  iii) Identifying alternatives  iv) Coding  v) Selecting best alternative", "options": ["ii, iv and v only", "iv only", "i and iv only", "i, ii, iii and v only"], "ans": 3, "exp": "Coding is software development, not a management planning step ⇒ i, ii, iii and v only."}, {"id": 176, "topic": "Computer Networks", "q": "Limitations of mobile computing:\ni) Limited battery  ii) Small screen/keypad  iii) Limited bandwidth  iv) Transmission interference  v) Unlimited processing power", "options": ["i, ii, iii, iv and v", "ii, iii and v only", "i, iv and v only", "i, ii, iii and iv only"], "ans": 3, "exp": "Mobile devices have limited (not unlimited) processing power ⇒ i, ii, iii and iv only."}, {"id": 177, "topic": "Web Technologies", "q": "Purpose(s) of the Document Object Model (DOM):\ni) Let scripts access and change content, structure and style of a web page.\nii) Compile JavaScript into machine code.", "options": ["Only (i)", "Both (i) and (ii)", "Only (ii)", "Neither (i) nor (ii)"], "ans": 0, "exp": "DOM exposes the document as an object tree for scripts to manipulate; it does not compile JS."}, {"id": 178, "topic": "Web Technologies", "q": "In ASP.NET, ________ connects a control (such as GridView) to a data source so it displays and updates data automatically.", "options": ["data marshalling", "data mining", "data hiding", "data binding"], "ans": 3, "exp": "Data binding links UI controls directly to data sources."}, {"id": 179, "topic": "Web Technologies", "q": "Which of the following is the correct XML declaration?", "options": ["<xml version=\"1.0\">", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "<!xml version=\"1.0\"!>", "<?XML-version 1.0?>"], "ans": 1, "exp": "A valid XML declaration starts with <?xml ... ?> in lowercase."}, {"id": 180, "topic": "Mathematics", "q": "________ is the method of estimating a value outside the range of known data points.", "options": ["Integration", "Differentiation", "Isolation", "Extrapolation"], "ans": 3, "exp": "Within known points = interpolation; outside known points = extrapolation."}]}, {"id": 10, "code": "Part 10", "group": "Part B · Computer Science", "title": "CS 5 · Networks, Graphics & Pedagogy", "range": "Q181 – Q200", "concepts": [{"title": "OS, TCP/UDP, Mobility, GPU, Python & Numerical Methods", "title_hi": "OS, TCP/UDP, मोबिलिटी, GPU, पायथन और संख्यात्मक विधियाँ", "points": [{"en": "OS & Networks: fork() = process control; TCP = connection-oriented, reliable, flow/congestion control (UDP is unreliable, no flow/congestion control); Mobility: Terminal (device), Personal (user), Session (ongoing session).", "hi": "OS व नेटवर्क्स: fork() प्रोसेस कंट्रोल कॉल है; TCP विश्वसनीय व कनेक्शन-ओरिएंटेड है (UDP में फ्लो/कंजेशन कंट्रोल नहीं); मोबिलिटी: टर्मिनल (डिवाइस), पर्सनल (यूज़र), सेशन (सत्र)।"}, {"en": "Graphics, Python, Math & Econ: GPU renders graphics; Colour models = RGB, CMYK, HSV, YIQ (FIFO is a queue); Line parallel to projection plane shows true length; Python list mutable, tuple immutable, (5) is int (needs trailing comma (5,) for 1-tuple); Lagrange works for unequal x-spacing (Newton forward = near start); Normative economics = 'what ought to be'; Tacit (experience), Explicit (documented), Declarative ('knowing what').", "hi": "ग्राफिक्स व पायथन: GPU ग्राफिक्स प्रोसेस करता है; रंग मॉडल = RGB, CMYK, HSV, YIQ; पायथन में (5) int है, एकल टपल के लिए (5,) लिखें; Lagrange असमान अंतराल पर चलता है; Normative अर्थशास्त्र = 'क्या होना चाहिए'।"}]}, {"title": "Pedagogy, RTE 2009, ABL, Assessment & JJ Act 2015", "title_hi": "शिक्षणशास्त्र, RTE 2009, ABL, मूल्यांकन और JJ अधिनियम 2015", "points": [{"en": "Acts & Rights: RTE Act 2009 came into force on 1 April 2010; Constitution promotes equality via Right to Equality (Art. 14–18) & DPSP; Juvenile Justice Act 2015 defines a 'child' as below 18 years.", "hi": "अधिनियम व अधिकार: RTE अधिनियम 2009, 1 अप्रैल 2010 को लागू हुआ; समानता (अनुच्छेद 14–18 व DPSP); किशोर न्याय अधिनियम 2015 में बच्चा = 18 वर्ष से कम।"}, {"en": "Teaching & Assessment: Cognitive benefit of play = problem-solving & imagination; ABL (Tamil Nadu / Rishi Valley) = self-paced graded learning cards; Open-ended item allows multiple explanations; Summative assessment = end of term for grading (diagnostic/remedial = formative); Folk art = community traditions; Home-school communication = PTMs + notices in home languages.", "hi": "शिक्षण व मूल्यांकन: खेल का संज्ञानात्मक लाभ = समस्या समाधान व कल्पना; ABL में बच्चे अपनी गति से सीखते हैं; योगात्मक मूल्यांकन सत्र के अंत में ग्रेडिंग हेतु; अभिभावक-शिक्षक बैठक व मातृभाषा में सूचना से संवाद बढ़ता है।"}]}], "questions": [{"id": 181, "topic": "Operating Systems", "q": "Which system call belongs to the 'process control' category?", "options": ["ioctl()", "open()", "read()", "fork()"], "ans": 3, "exp": "fork(), exec(), wait() and exit() are process control calls (open/read = file; ioctl = device)."}, {"id": 182, "topic": "Computer Networks", "q": "Truthfulness:\ni) TCP is connection-oriented and reliable.\nii) UDP provides flow control and congestion control.\niii) Connection-oriented service establishes a connection before transfer and releases it after.", "options": ["i-True, ii-False, iii-True", "i-True, ii-True, iii-False", "i-False, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 0, "exp": "UDP is connectionless and does NOT provide flow or congestion control (ii False) ⇒ i-True, ii-False, iii-True."}, {"id": 183, "topic": "Economics", "q": "________ economics deals with 'what ought to be' and involves value judgements.", "options": ["Normative", "Positive", "Basic", "Regular"], "ans": 0, "exp": "Normative economics focuses on 'what ought to be' (Positive economics deals with verifiable facts, 'what is')."}, {"id": 184, "topic": "Computer Networks", "q": "Match Mobility types:\na) Terminal  b) Personal  c) Session\ni) User accesses services from any terminal  ii) Device keeps connection while moving  iii) Ongoing session moves across devices", "options": ["a-ii, b-iii, c-i", "a-i, b-ii, c-iii", "a-iii, b-i, c-ii", "a-ii, b-i, c-iii"], "ans": 3, "exp": "Terminal→ii, Personal→i, Session→iii ⇒ a-ii, b-i, c-iii."}, {"id": 185, "topic": "Mathematics", "q": "When a straight line is parallel to a plane of projection, its projection on that plane shows its ________.", "options": ["true length", "a point", "a shortened length", "a curve"], "ans": 0, "exp": "A line parallel to a projection plane projects in its true length (perpendicular → point; inclined → foreshortened)."}, {"id": 186, "topic": "Computer Fundamentals", "q": "Which hardware component is specialised for processing graphics and rendering images for display?", "options": ["GPU", "ALU", "NIC", "PSU"], "ans": 0, "exp": "The GPU (Graphics Processing Unit) handles parallel pixel processing and image rendering."}, {"id": 187, "topic": "Management & KM", "q": "Match Knowledge types:\na) Tacit  b) Explicit  c) Declarative\ni) Documented in manuals/databases  ii) Personal know-how from experience  iii) Knowledge of facts ('knowing what')", "options": ["a-i, b-ii, c-iii", "a-ii, b-i, c-iii", "a-iii, b-i, c-ii", "a-ii, b-iii, c-i"], "ans": 1, "exp": "Tacit→ii, Explicit→i, Declarative→iii ⇒ a-ii, b-i, c-iii."}, {"id": 188, "topic": "Python", "q": "Truthfulness:\ni) A list is mutable, whereas a tuple is immutable.\nii) The expression t = (5) creates a tuple having one element.", "options": ["i-True, ii-False", "i-False, ii-True", "i-True, ii-True", "i-False, ii-False"], "ans": 0, "exp": "(5) is an int; a single-element tuple requires a trailing comma: (5,) ⇒ i-True, ii-False."}, {"id": 189, "topic": "Mathematics", "q": "Truthfulness:\ni) Lagrange's formula works even when x values are not equally spaced.\nii) Newton's forward formula is used near the end of a table.", "options": ["i-True, ii-True", "i-False, ii-True", "i-False, ii-False", "i-True, ii-False"], "ans": 3, "exp": "Lagrange works for unequal spacing (i True); Newton's forward formula is for the beginning (backward is for the end, so ii False)."}, {"id": 190, "topic": "AI & Graphics", "q": "Which are colour models used in computer graphics?\ni) RGB  ii) CMYK  iii) HSV  iv) YIQ  v) FIFO", "options": ["i, ii, iii, iv and v", "Only i, ii, iii and iv", "Only v", "Only i and ii"], "ans": 1, "exp": "RGB, CMYK, HSV and YIQ are colour models; FIFO is a scheduling/queue policy."}, {"id": 191, "topic": "Pedagogy & Education Policy", "q": "Which of the following comes under the cognitive benefits of play?", "options": ["Play teaches sharing and turn-taking", "Play only strengthens large muscles", "Play develops problem-solving skills and imagination", "Play reduces a child's appetite"], "ans": 2, "exp": "Problem-solving, thinking and imagination are cognitive benefits (sharing = socio-emotional; muscles = physical)."}, {"id": 192, "topic": "General Knowledge & Arts", "q": "The Constitution of India promotes equality through:\nI. Right to Equality (Articles 14–18)\nII. Directive Principles of State Policy", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Both Fundamental Rights (Art. 14–18) and DPSP promote legal and socio-economic equality."}, {"id": 193, "topic": "Pedagogy & Education Policy", "q": "The Right of Children to Free and Compulsory Education (RTE) Act, 2009 came into force on ________.", "options": ["1 April 2009", "26 January 2001", "15 August 2005", "1 April 2010"], "ans": 3, "exp": "Passed in 2009, the RTE Act came into effect on 1 April 2010."}, {"id": 194, "topic": "Pedagogy & Education Policy", "q": "Characteristics of an effective learning activity:\nI. Related to learners' own experiences.\nII. Meaningful and slightly challenging.", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Effective learning activities connect to learners' lives and provide achievable challenge (within ZPD)."}, {"id": 195, "topic": "Pedagogy & Education Policy", "q": "Features of Activity-Based Learning (ABL) in Tamil Nadu (inspired by Rishi Valley):\nI. Children learn at their own pace through graded learning cards.\nII. All children must complete the same card at the same time.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "ABL is self-paced using a ladder of graded cards (Only I; II is false)."}, {"id": 196, "topic": "Pedagogy & Education Policy", "q": "Which of the following is an example of an open-ended item?", "options": ["\"Explain how you would measure the height of a tree without climbing it.\"", "\"2 + 5 = ?\"", "\"Is a square a rectangle? (Yes/No)\"", "\"The capital of India is ______.\""], "ans": 0, "exp": "An open-ended question invites multiple valid explanations and higher-order thinking."}, {"id": 197, "topic": "Pedagogy & Education Policy", "q": "Correct regarding summative assessment:\nI. Conducted at the end of a unit or term.\nII. Mainly used for grading and certification.\nIII. Primarily diagnostic and remedial.", "options": ["II and III only", "I and II only", "I, II and III", "Only III"], "ans": 1, "exp": "Summative assessment occurs at term-end for grading/certification (I and II); diagnostic/remedial is formative."}, {"id": 198, "topic": "General Knowledge & Arts", "q": "What is folk art?\nI. Art produced by communities and passed down through generations.\nII. Art reflecting traditions and daily life of a region.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Folk art (Madhubani, Warli, Gond, etc.) is community-based and preserves regional traditions."}, {"id": 199, "topic": "Pedagogy & Education Policy", "q": "Under the Juvenile Justice (Care and Protection of Children) Act, 2015, a 'child' means a person who has not completed ________ of age.", "options": ["14 years", "16 years", "21 years", "18 years"], "ans": 3, "exp": "The JJ Act, 2015 defines a child as any person below 18 years of age."}, {"id": 200, "topic": "Pedagogy & Education Policy", "q": "Actions that help remove home–school communication hurdles:\nI. Holding regular parent–teacher meetings\nII. Translating notices into home languages\nIII. Sending notices only in English", "options": ["II and III only", "Only III", "I, II and III", "I and II only"], "ans": 3, "exp": "Regular PTMs and notices in parents' home languages foster partnership (I and II only)."}]}], "passages": {"ENG_RC_8": {"title": "Reading Comprehension Passage (Q76 – Q80)", "text": "Just as the oceans opened up a new world for clipper ships and Yankee traders, space holds enormous potential for commerce today. The International Space Station (ISS) took 10 years and more than 30 missions to assemble. It is the result of unprecedented scientific and engineering collaboration among five space agencies representing 15 countries. The space station is approximately the size of a football field: a 460-ton, permanently crewed platform orbiting 250 miles above Earth. It is about four times as large as the Russian space station Mir and five times as large as the U.S. Skylab. The idea of a space station was once science fiction, existing only in the imagination until it became clear in the 1940s that construction of such a structure might be attainable by our nation. As the Space Age began in the 1950s, designs of 'space planes' and stations dominated popular media. The first rudimentary station was created in 1969 by the linking of two Russian Soyuz vehicles in space, followed by other stations and developments in space technology until construction began on the ISS in 1998, aided by the first reusable spacecraft ever developed: the American shuttles. Until recently, U.S. research space onboard the ISS had been reserved for mostly government initiatives, but new opportunities for commercial and academic use of the ISS are now available, facilitated by the ISS National Lab."}, "HIN_RC_8": {"title": "अपठित गद्यांश (Q96 – Q100)", "text": "भारतेंदु कालीन साहित्यकार भारत में अंग्रेज़ी राज्य की स्थापना को दैवीय वरदान मानते हैं और यह उम्मीद जताते हैं कि महारानी विक्टोरिया के शासन के अधीन रहकर वह भी वैसे ही तरक़्क़ी कर सकेंगे जैसी इंग्लैण्ड कर रहा है। यही नहीं वह यह भी उम्मीद करते थे कि जो अधिकार इंग्लैण्ड की जनता को मिले हुए हैं वही अधिकार भारत की प्रजा को भी मिलेंगे। वे अपने को राजभक्त घोषित करते हैं। लेकिन धीरे-धीरे उनका विश्वास हिलने लगता है, जब वह यह देखते हैं कि न तो सरकारी नौकरियों में भारतीयों को जगह मिल पा रही है, न ही उनकी उन्नति और प्रगति के लिए ठोस क़दम उठाये जा रहे हैं। इसके विपरीत हर साल विभिन्न तरह के करों द्वारा भारतीय धन इंग्लैण्ड भेजा जा रहा है। हर साल अकाल पड़ रहे हैं। परम्परागत उद्योग धंधे चौपट हो रहे हैं, किसान बर्बाद हो रहे हैं। 19वीं सदी के आखिरी दशकों में इस बुद्धिजीवी वर्ग का मोहभंग होने लगा था और राजभक्ति की भावना धीरे-धीरे कम होने लगी थी। यह अहसास होने लगा था कि अगर भारत को भी उन्नत होना है तो खुद भारतीयों को आगे आना होगा। भारतीय कारीगर बेकार हो रहे थे। इस बात ने उनको प्रेरित किया कि वह स्वदेशी की भावना को जगायें। भारतेंदु युग के लेखकों द्वारा इस बात पर बल देने का कारण यही था।"}}};
+    const STORAGE_KEY = "ramban8_mock08_answers_v1";
+    const THEME_KEY = "ramban8_theme_v1";
+
+    let activePartId = 1;
+    let activeMode = "concept"; // "concept" | "quiz"
+    let activeQFilter = "all";  // "all" | "unanswered" | "wrong"
+    let noteLang = "both";      // "both" | "en" | "hi"
+    let answers = {};           // { [questionId]: selectedOptionIndex }
+
+    function safeGet(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, val); } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function loadAnswers() {
+      const raw = safeGet(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") answers = parsed;
+      } catch (e) {
+        answers = {};
+      }
+    }
+
+    function saveAnswers() {
+      safeSet(STORAGE_KEY, JSON.stringify(answers));
+    }
+
+    function setTheme(theme) {
+      const isDark = theme === "dark";
+      document.documentElement.classList.toggle("dark", isDark);
+      document.getElementById("sunIcon").classList.toggle("hidden", !isDark);
+      document.getElementById("moonIcon").classList.toggle("hidden", isDark);
+      safeSet(THEME_KEY, theme);
+    }
+
+    function getActiveSection() {
+      return DATA.sections.find((s) => s.id === activePartId) || DATA.sections[0];
+    }
+
+    function getSectionStats(sec) {
+      let attempted = 0, correct = 0, wrong = 0;
+      sec.questions.forEach((q) => {
+        if (answers[q.id] !== undefined) {
+          attempted++;
+          if (answers[q.id] === q.ans) correct++;
+          else wrong++;
+        }
+      });
+      const marks = correct - wrong * 0.25;
+      const acc = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+      return { attempted, correct, wrong, marks, acc };
+    }
+
+    function getOverallStats() {
+      let attempted = 0, correct = 0, wrong = 0;
+      DATA.sections.forEach((sec) => {
+        const st = getSectionStats(sec);
+        attempted += st.attempted;
+        correct += st.correct;
+        wrong += st.wrong;
+      });
+      return { attempted, correct, wrong, marks: correct - wrong * 0.25 };
+    }
+
+    function renderPartNav() {
+      const nav = document.getElementById("partNav");
+      nav.innerHTML = DATA.sections.map((sec) => {
+        const isActive = sec.id === activePartId;
+        const st = getSectionStats(sec);
+        const cls = isActive
+          ? "bg-indigo-600 text-white shadow-sm border-indigo-600"
+          : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-400";
+        const badgeCls = isActive
+          ? "bg-white/20 text-white"
+          : st.attempted === 20
+            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300"
+            : "bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-300";
+
+        return `
+          <button type="button" data-part="${sec.id}" class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer ${cls}">
+            <span>${escapeHtml(sec.code)}: ${escapeHtml(sec.title)}</span>
+            <span class="px-1.5 py-0.5 rounded-md text-[10px] font-bold ${badgeCls}">${st.attempted}/20</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderHeaderStats() {
+      const sec = getActiveSection();
+      const st = getSectionStats(sec);
+      const ov = getOverallStats();
+
+      document.getElementById("partGroupBadge").textContent = sec.group;
+      document.getElementById("partRangeBadge").textContent = sec.range;
+      document.getElementById("partTitleHeading").textContent = sec.code + " · " + sec.title;
+
+      document.getElementById("partDoneVal").textContent = st.attempted + "/20";
+      document.getElementById("partMarksVal").textContent = st.marks.toFixed(2);
+      document.getElementById("partAccVal").textContent = st.acc + "%";
+
+      const overallPill = document.getElementById("overallScorePill");
+      overallPill.textContent = ov.attempted + "/200 Done · " + ov.marks.toFixed(2) + " Marks";
+
+      document.getElementById("partFooterCounter").textContent = "Part " + activePartId + " of " + DATA.sections.length;
+      document.getElementById("prevPartBtn").disabled = activePartId <= 1;
+      document.getElementById("nextPartBtn").disabled = activePartId >= DATA.sections.length;
+    }
+
+    function renderModeTabs() {
+      const conceptBtn = document.getElementById("modeConceptBtn");
+      const quizBtn = document.getElementById("modeQuizBtn");
+      const conceptPanel = document.getElementById("conceptPanel");
+      const quizPanel = document.getElementById("quizPanel");
+      const quizControls = document.getElementById("quizControls");
+
+      const activeCls = "px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs transition-all cursor-pointer";
+      const inactiveCls = "px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer";
+
+      if (activeMode === "concept") {
+        conceptBtn.className = activeCls;
+        quizBtn.className = inactiveCls;
+        conceptPanel.classList.remove("hidden");
+        quizPanel.classList.add("hidden");
+        quizControls.classList.add("hidden");
+      } else {
+        conceptBtn.className = inactiveCls;
+        quizBtn.className = activeCls;
+        conceptPanel.classList.add("hidden");
+        quizPanel.classList.remove("hidden");
+        quizControls.classList.remove("hidden");
+      }
+
+      document.querySelectorAll(".qfilter-btn").forEach((btn) => {
+        const on = btn.dataset.qfilter === activeQFilter;
+        btn.className = on
+          ? "qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow-xs cursor-pointer"
+          : "qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+    }
+
+    function renderConceptClarity() {
+      const sec = getActiveSection();
+      const grid = document.getElementById("conceptGrid");
+      document.querySelectorAll("#noteLangGroup .nlang-btn").forEach((btn) => {
+        const on = btn.dataset.nlang === noteLang;
+        btn.className = on
+          ? "nlang-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer"
+          : "nlang-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+      grid.innerHTML = sec.concepts.map((c, idx) => {
+        const titleLine = noteLang === "hi"
+          ? escapeHtml(c.title_hi || c.title)
+          : noteLang === "en"
+            ? escapeHtml(c.title)
+            : `${escapeHtml(c.title)} <span class="block text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5">${escapeHtml(c.title_hi || "")}</span>`;
+        return `
+        <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+          <div class="flex items-start gap-2.5 mb-3.5">
+            <span class="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">
+              0${idx + 1}
+            </span>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug">${titleLine}</h3>
+          </div>
+          <ul class="space-y-3 text-xs sm:text-sm leading-relaxed">
+            ${c.points.map((pt) => `
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0"></span>
+                <div class="space-y-1">
+                  ${noteLang !== "hi" ? `<p class="text-slate-700 dark:text-slate-200">${escapeHtml(pt.en)}</p>` : ""}
+                  ${noteLang !== "en" ? `<p class="text-slate-600 dark:text-slate-300 ${noteLang === "both" ? "text-[12px] bg-slate-50 dark:bg-slate-800/60 px-2.5 py-1.5 rounded-lg border-l-2 border-indigo-400" : ""}">${escapeHtml(pt.hi)}</p>` : ""}
+                </div>
+              </li>
+            `).join("")}
+          </ul>
+        </article>
+      `;
+      }).join("");
+    }
+
+
+    function getVisualSvgHtml(kind) {
+      if (kind === "DI_Q49") {
+        return `
+          <div class="my-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
+            <p class="font-bold text-indigo-600 dark:text-indigo-400 mb-2">Car Production Distribution (Type S = 10% in both years)</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-3 border border-slate-200 dark:border-slate-800 flex justify-between items-center">
+                <span class="font-semibold">Year 2000</span>
+                <span class="font-extrabold text-indigo-600 dark:text-indigo-400">Total: 3,50,000 · S = 10%</span>
+              </div>
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-3 border border-slate-200 dark:border-slate-800 flex justify-between items-center">
+                <span class="font-semibold">Year 2001</span>
+                <span class="font-extrabold text-indigo-600 dark:text-indigo-400">Total: 4,40,000 · S = 10%</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      if (kind === "DI_Q58") {
+        return `
+          <div class="my-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
+            <p class="font-bold text-indigo-600 dark:text-indigo-400 mb-2">Birds Spotted in Different Parks</p>
+            <div class="grid grid-cols-5 gap-2 text-center">
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-2 border border-slate-200 dark:border-slate-800"><div class="text-slate-500">Park A</div><div class="font-extrabold">20</div></div>
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-2 border border-slate-200 dark:border-slate-800"><div class="text-slate-500">Park B</div><div class="font-extrabold">35</div></div>
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-2 border border-indigo-300 dark:border-indigo-700"><div class="text-indigo-600 dark:text-indigo-400 font-semibold">Park C</div><div class="font-extrabold text-indigo-600 dark:text-indigo-400">40</div></div>
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-2 border border-slate-200 dark:border-slate-800"><div class="text-slate-500">Park D</div><div class="font-extrabold">15</div></div>
+              <div class="bg-white dark:bg-slate-900 rounded-lg p-2 border border-indigo-300 dark:border-indigo-700"><div class="text-indigo-600 dark:text-indigo-400 font-semibold">Park E</div><div class="font-extrabold text-indigo-600 dark:text-indigo-400">30</div></div>
+            </div>
+          </div>
+        `;
+      }
+      return "";
+    }
+
+    function getWaterSvgHtml() {
+      return `
+        <div class="my-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col items-center">
+          <svg viewBox="0 0 180 140" class="w-44 h-36 text-slate-800 dark:text-slate-200" aria-label="Water reflection figure">
+            <circle cx="90" cy="52" r="42" fill="none" stroke="currentColor" stroke-width="3"/>
+            <line x1="90" y1="10" x2="64" y2="66" stroke="currentColor" stroke-width="3"/>
+            <polygon points="64,66 112,66 90,94" fill="currentColor"/>
+            <path d="M 35 112 Q 52 104 70 112 T 105 112 T 145 112" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+            <text x="20" y="118" font-size="13" font-weight="bold" fill="currentColor">X</text>
+            <text x="150" y="118" font-size="13" font-weight="bold" fill="currentColor">Y</text>
+          </svg>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">Water line X–Y placed below the circle</p>
+        </div>
+      `;
+    }
+
+    function renderQuizQuestions() {
+      const sec = getActiveSection();
+      const container = document.getElementById("questionsContainer");
+      const emptyBox = document.getElementById("emptyQuizFilter");
+
+      const filtered = sec.questions.filter((q) => {
+        const chosen = answers[q.id];
+        if (activeQFilter === "unanswered") return chosen === undefined;
+        if (activeQFilter === "wrong") return chosen !== undefined && chosen !== q.ans;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = "";
+        emptyBox.classList.remove("hidden");
+        return;
+      }
+      emptyBox.classList.add("hidden");
+
+      const shownPassages = new Set();
+      const optLetters = ["A", "B", "C", "D"];
+
+      container.innerHTML = filtered.map((q) => {
+        let passageHtml = "";
+        if (q.passage && !shownPassages.has(q.passage) && DATA.passages[q.passage]) {
+          shownPassages.add(q.passage);
+          const p = DATA.passages[q.passage];
+          passageHtml = `
+            <div class="rounded-2xl bg-amber-50/70 dark:bg-amber-950/25 border border-amber-200 dark:border-amber-800/60 p-4 sm:p-5 mb-4">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-2">${escapeHtml(p.title)}</div>
+              <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed whitespace-pre-line">${escapeHtml(p.text)}</p>
+            </div>
+          `;
+        }
+
+        const chosen = answers[q.id];
+        const isAnswered = chosen !== undefined;
+        const isCorrect = isAnswered && chosen === q.ans;
+
+        const statusBadge = !isAnswered
+          ? `<span class="px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">Unanswered</span>`
+          : isCorrect
+            ? `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">&check; Correct (+1.00)</span>`
+            : `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300">&cross; Wrong (&minus;0.25)</span>`;
+
+        const codeHtml = q.code
+          ? `<pre class="code-block my-3 p-3.5 rounded-xl bg-slate-900 text-slate-100 border border-slate-800"><code>${escapeHtml(q.code)}</code></pre>`
+          : "";
+
+        const svgHtml = q.svg ? getVisualSvgHtml(q.svg) : "";
+
+        const optionsHtml = q.options.map((opt, idx) => {
+          let btnCls = "border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-800 dark:text-slate-200";
+          let letterCls = "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700";
+
+          if (isAnswered) {
+            if (idx === q.ans) {
+              btnCls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 font-semibold";
+              letterCls = "bg-emerald-600 text-white border-emerald-600";
+            } else if (idx === chosen) {
+              btnCls = "border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200";
+              letterCls = "bg-rose-600 text-white border-rose-600";
+            } else {
+              btnCls = "border-slate-200 dark:border-slate-800 opacity-65 text-slate-600 dark:text-slate-400";
+            }
+          }
+
+          return `
+            <button type="button" data-qid="${q.id}" data-opt="${idx}" class="opt-btn w-full text-left flex items-start gap-3 p-3 rounded-xl border text-xs sm:text-sm transition-all cursor-pointer ${btnCls}">
+              <span class="w-6 h-6 rounded-lg text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5 ${letterCls}">
+                ${optLetters[idx]}
+              </span>
+              <span class="leading-snug">${escapeHtml(opt)}</span>
+            </button>
+          `;
+        }).join("");
+
+        const expHtml = isAnswered
+          ? `
+            <div class="mt-4 p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/35 border border-indigo-200/80 dark:border-indigo-800/60">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-1">
+                Explanation &bull; Correct Answer: Option ${optLetters[q.ans]}
+              </div>
+              <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed whitespace-pre-line">${escapeHtml(q.exp)}</p>
+            </div>
+          `
+          : "";
+
+        return `
+          ${passageHtml}
+          <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold">Q${q.id}</span>
+                <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">${escapeHtml(q.topic)}</span>
+              </div>
+              ${statusBadge}
+            </div>
+
+            <div class="text-sm sm:text-[15px] font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line mb-3">${escapeHtml(q.q)}</div>
+            ${codeHtml}
+            ${svgHtml}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${optionsHtml}
+            </div>
+            ${expHtml}
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderAll() {
+      renderPartNav();
+      renderHeaderStats();
+      renderModeTabs();
+      renderConceptClarity();
+      renderQuizQuestions();
+    }
+
+    function switchPart(newId) {
+      if (newId < 1 || newId > DATA.sections.length) return;
+      activePartId = newId;
+      activeQFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function bindEvents() {
+      document.getElementById("themeToggleBtn").addEventListener("click", () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        setTheme(isDark ? "light" : "dark");
+      });
+
+      document.getElementById("partNav").addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-part]");
+        if (!btn) return;
+        switchPart(Number(btn.dataset.part));
+      });
+
+      document.getElementById("noteLangGroup").addEventListener("click", (e) => {
+        const btn = e.target.closest(".nlang-btn");
+        if (!btn) return;
+        noteLang = btn.dataset.nlang || "both";
+        renderConceptClarity();
+      });
+
+      document.getElementById("modeConceptBtn").addEventListener("click", () => {
+        activeMode = "concept";
+        renderModeTabs();
+      });
+
+      document.getElementById("modeQuizBtn").addEventListener("click", () => {
+        activeMode = "quiz";
+        renderModeTabs();
+      });
+
+      document.getElementById("startPartQuizBtn").addEventListener("click", () => {
+        activeMode = "quiz";
+        renderModeTabs();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      document.getElementById("quizControls").addEventListener("click", (e) => {
+        const btn = e.target.closest(".qfilter-btn");
+        if (!btn) return;
+        activeQFilter = btn.dataset.qfilter || "all";
+        renderModeTabs();
+        renderQuizQuestions();
+      });
+
+      document.getElementById("clearQFilterBtn").addEventListener("click", () => {
+        activeQFilter = "all";
+        renderModeTabs();
+        renderQuizQuestions();
+      });
+
+      document.getElementById("questionsContainer").addEventListener("click", (e) => {
+        const btn = e.target.closest(".opt-btn");
+        if (!btn) return;
+        const qid = Number(btn.dataset.qid);
+        const opt = Number(btn.dataset.opt);
+        answers[qid] = opt;
+        saveAnswers();
+        renderPartNav();
+        renderHeaderStats();
+        renderQuizQuestions();
+      });
+
+      document.getElementById("prevPartBtn").addEventListener("click", () => switchPart(activePartId - 1));
+      document.getElementById("nextPartBtn").addEventListener("click", () => switchPart(activePartId + 1));
+
+      const resetModal = document.getElementById("resetModal");
+      document.getElementById("resetPartBtn").addEventListener("click", () => {
+        resetModal.classList.remove("hidden");
+        resetModal.classList.add("flex");
+      });
+      document.getElementById("cancelResetBtn").addEventListener("click", () => {
+        resetModal.classList.add("hidden");
+        resetModal.classList.remove("flex");
+      });
+      document.getElementById("confirmResetBtn").addEventListener("click", () => {
+        const sec = getActiveSection();
+        sec.questions.forEach((q) => { delete answers[q.id]; });
+        saveAnswers();
+        resetModal.classList.add("hidden");
+        resetModal.classList.remove("flex");
+        renderAll();
+      });
+      resetModal.addEventListener("click", (e) => {
+        if (e.target === resetModal) {
+          resetModal.classList.add("hidden");
+          resetModal.classList.remove("flex");
+        }
+      });
+    }
+
+    if (safeGet(THEME_KEY) === "dark") setTheme("dark");
+    else setTheme("light");
+    loadAnswers();
+    bindEvents();
+    renderAll();
+  </script>
+</body>
+</html>
