@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commerce, Management & Economics Mocks · HARIS SAIFI</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .timer-urgent { animation: pulseSoft 1s infinite; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen antialiased transition-colors duration-200">
+
+  <!-- Sticky Top Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-green-700 text-white font-extrabold text-xs flex items-center justify-center shadow-sm shrink-0">
+          COM
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
+            COMMERCE, MANAGEMENT &amp; ECONOMICS MOCKS
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+            8 Dedicated Mocks &bull; 160 Unique Qs &bull; CBT Timer &bull; <span class="font-bold text-indigo-600 dark:text-indigo-400">by HARIS SAIFI</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <div id="miniTimerPill" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-extrabold tabular-nums">
+          <span aria-hidden="true">⏱</span>
+          <span id="miniTimerText">10:00</span>
+        </div>
+
+        <div id="overallScorePill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-bold tabular-nums">
+          0/160 Done &bull; 0.00 Marks
+        </div>
+
+        <button id="themeToggleBtn" type="button" aria-label="Toggle dark mode"
+          class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Subject Category Tabs (C | C++ | Java | OOPS | Python) -->
+    <div class="border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/80">
+      <div id="categoryTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </div>
+
+    <!-- Mock Selector Strip for Active Subject -->
+    <nav aria-label="Select Mock Test" class="border-t border-slate-100 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/75">
+      <div id="mockTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-3 sm:px-5 py-5 space-y-5">
+
+    <!-- Active Mock Hero + Timer Panel -->
+    <section id="heroCard" class="rounded-2xl bg-gradient-to-br from-emerald-700 via-green-700 to-slate-900 text-white p-5 sm:p-6 shadow-md">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="space-y-1.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="heroBadge" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/20 text-white"></span>
+            <span id="heroQCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-black/20 text-indigo-100"></span>
+          </div>
+          <h2 id="heroTitle" class="text-xl sm:text-2xl font-extrabold tracking-tight"></h2>
+          <p id="heroSub" class="text-xs sm:text-sm text-indigo-100/95"></p>
+        </div>
+
+        <!-- Timer + Score Box -->
+        <div class="flex flex-wrap sm:flex-nowrap items-stretch gap-3">
+          <div class="rounded-xl bg-black/25 border border-white/15 px-4 py-2.5 flex flex-col justify-center min-w-[160px]">
+            <div class="flex items-center justify-between gap-2">
+              <span id="timerLabel" class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">10-MIN TIMER</span>
+              <span id="timerStatusBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/15">READY</span>
+            </div>
+            <div id="heroTimerText" class="text-2xl sm:text-3xl font-black tabular-nums tracking-tight mt-0.5">10:00</div>
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <button id="timerToggleBtn" type="button"
+                class="flex-1 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white text-indigo-700 hover:bg-indigo-50 cursor-pointer">
+                Start
+              </button>
+              <button id="timerResetBtn" type="button"
+                class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white cursor-pointer">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white/12 border border-white/15 px-4 py-2.5 flex items-center gap-4 text-center">
+            <div>
+              <div id="statAttempted" class="text-lg sm:text-xl font-extrabold tabular-nums">0/20</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Attempted</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statMarks" class="text-lg sm:text-xl font-extrabold tabular-nums">0.00</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Marks</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statAccuracy" class="text-lg sm:text-xl font-extrabold tabular-nums">0%</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Accuracy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 h-1.5 w-full rounded-full bg-black/20 overflow-hidden">
+        <div id="timerProgressBar" class="h-full bg-emerald-300 transition-all duration-500" style="width: 100%;"></div>
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <section class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1" role="group" aria-label="Quiz Mode">
+          <button id="modeInstantBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer">
+            Instant Feedback
+          </button>
+          <button id="modeExamBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer">
+            Timed Exam (Submit)
+          </button>
+        </div>
+
+        <div id="filterGroup" class="inline-flex items-center gap-1" role="group" aria-label="Question filter">
+          <button type="button" data-filter="all" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer">All</button>
+          <button type="button" data-filter="unanswered" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Unanswered</button>
+          <button type="button" data-filter="wrong" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Wrong Only</button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="submitExamBtn" type="button"
+          class="hidden px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs cursor-pointer">
+          Submit Mock
+        </button>
+        <button id="resetMockBtn" type="button"
+          class="px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-800/70 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-xs font-bold cursor-pointer">
+          Reset Mock
+        </button>
+      </div>
+    </section>
+
+    <!-- Quick Question Palette -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex items-center justify-between mb-2">
+        <span id="paletteTitle" class="text-xs font-bold text-slate-600 dark:text-slate-300">Question Palette</span>
+        <span class="text-[11px] text-slate-500 dark:text-slate-400">Green = Correct &bull; Red = Wrong &bull; Indigo = Marked</span>
+      </div>
+      <div id="questionPalette" class="flex flex-wrap gap-1.5"></div>
+    </section>
+
+    <!-- Questions Container -->
+    <section id="questionsList" class="space-y-4"></section>
+
+    <!-- Bottom Navigation -->
+    <section class="flex items-center justify-between pt-2 pb-8">
+      <button id="prevMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 cursor-pointer">
+        &larr; Previous Mock
+      </button>
+      <button id="nextMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white disabled:opacity-40 cursor-pointer">
+        Next Mock &rarr;
+      </button>
+    </section>
+  </main>
+
+  <!-- In-Page Modal -->
+  <div id="modalBackdrop" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white"></h3>
+        <button id="modalCloseX" type="button" aria-label="Close modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg font-bold cursor-pointer">&times;</button>
+      </div>
+      <div id="modalBody" class="text-sm text-slate-600 dark:text-slate-300 space-y-3"></div>
+      <div id="modalActions" class="flex items-center justify-end gap-2 pt-1"></div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"categories": [{"key": "Commerce", "label": "Commerce, Mgmt & Economics", "count": 160, "mocks": 8, "desc": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management"}], "mocks": [{"id": 1, "category": "Commerce", "code": "COM Mock 01", "title": "Commerce, Mgmt & Economics — Mock 01", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 1, "num": 1, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which information system handles routine, day-to-day operations such as payroll, order entry and ticket booking?", "options": ["Executive Support System (ESS)", "Management Information System (MIS)", "Decision Support System (DSS)", "Transaction Processing System (TPS)"], "ans": 3, "exp": "TPS records and processes routine operational transactions and supplies data to MIS, DSS, and ESS."}, {"id": 2, "num": 2, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "The owner's personal expenses are not recorded in the books of the business, and capital is shown as a liability of the business to the owner. Which accounting concept is this?", "options": ["Business entity concept", "Going concern concept", "Money measurement concept", "Dual aspect concept"], "ans": 0, "exp": "The business entity concept treats the business as distinct from its owner, excluding personal transactions and treating owner’s capital as a liability."}, {"id": 3, "num": 3, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "The closing stock appears inside the trial balance as an adjusted figure (because purchases have already been adjusted for it). Where is it shown in the final accounts?", "options": ["Only on the credit side of the Trading Account", "Only in the Balance Sheet", "In both the Trading Account and the Balance Sheet", "Only in the Profit and Loss Account"], "ans": 1, "exp": "When closing stock is already inside the trial balance (adjusted purchases), it is shown only once — as a current asset in the Balance Sheet."}, {"id": 4, "num": 4, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A firm has fixed costs of ₹60,000. Its product sells at ₹50 per unit, and the variable cost is ₹30 per unit. What is the break-even point in units?", "options": ["2,000 units", "1,200 units", "3,000 units", "1,500 units"], "ans": 2, "exp": "Contribution/unit = 50 − 30 = ₹20. Break-even = 60,000 / 20 = 3,000 units."}, {"id": 5, "num": 5, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "100 shares of ₹10 each were issued at par, and ₹8 per share has been called up. A shareholder who has paid ₹5 per share fails to pay the remaining call, and the shares are forfeited. With what amount is the Share Forfeiture Account credited?", "options": ["₹500", "₹800", "₹300", "₹1,000"], "ans": 0, "exp": "Share Forfeiture Account is credited with the amount actually received: 100 × ₹5 = ₹500."}, {"id": 6, "num": 6, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Nominal GDP is ₹1,200 crore and the GDP deflator is 120. What is real GDP?", "options": ["₹1,440 crore", "₹1,000 crore", "₹1,080 crore", "₹10 crore"], "ans": 1, "exp": "Real GDP = (Nominal GDP × 100) / GDP deflator = (1,200 × 100) / 120 = ₹1,000 crore."}, {"id": 7, "num": 7, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A production possibility curve (PPC) is usually concave to the origin because of ______.", "options": ["constant opportunity cost", "increasing marginal opportunity cost", "decreasing marginal opportunity cost", "unlimited resources"], "ans": 1, "exp": "Shifting resources to produce more of one good requires sacrificing increasing amounts of the other (increasing marginal opportunity cost / rising MRT), making PPC concave."}, {"id": 8, "num": 8, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which of the following is an example of horizontal communication in an organisation?", "options": ["A manager giving instructions to a clerk", "A worker submitting a report to the supervisor", "The production manager discussing a schedule with the marketing manager", "The CEO addressing all employees"], "ans": 2, "exp": "Horizontal (lateral) communication occurs between peers at the same hierarchical level across departments."}, {"id": 9, "num": 9, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "Furniture costing ₹5,000 bought for office use was wrongly debited to Purchases A/c. What is the rectifying entry?", "options": ["Furniture A/c Dr. ₹5,000 To Cash A/c ₹5,000", "Purchases A/c Dr. ₹5,000 To Furniture A/c ₹5,000", "Furniture A/c Dr. ₹5,000 To Purchases A/c ₹5,000", "Furniture A/c Dr. ₹5,000 To Suspense A/c ₹5,000"], "ans": 2, "exp": "Debit Furniture A/c (correct asset) and credit Purchases A/c (reverse wrong debit)."}, {"id": 10, "num": 10, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A second-hand machine is purchased, and ₹20,000 is spent immediately on overhauling it before it is put to use. How is the ₹20,000 treated?", "options": ["Revenue expenditure, charged to Profit and Loss A/c", "Capital loss", "Deferred revenue expenditure", "Capital expenditure, added to the cost of the machine"], "ans": 3, "exp": "Overhaul required before putting a second-hand asset to first use is Capital expenditure."}, {"id": 11, "num": 11, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A firm's credit sales are ₹3,60,000 and average trade receivables are ₹60,000. Taking a 360-day year, what is the average collection period?", "options": ["60 days", "6 days", "30 days", "72 days"], "ans": 0, "exp": "Turnover = 3,60,000 / 60,000 = 6 times; Average collection period = 360 / 6 = 60 days."}, {"id": 12, "num": 12, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A partner's capital on 1 April is ₹1,00,000, with ₹20,000 added on 1 October. Interest on capital is 6% p.a. Total interest for the year ending 31 March:", "options": ["₹6,000", "₹7,200", "₹6,600", "₹6,300"], "ans": 2, "exp": "1,00,000 × 6% = 6,000; 20,000 × 6% × (6/12) = 600 → Total = ₹6,600."}, {"id": 13, "num": 13, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "If CRR is 10% with no cash leakages, what is the maximum total deposits created from an initial deposit of ₹1,000?", "options": ["₹10,000", "₹9,000", "₹1,100", "₹100"], "ans": 0, "exp": "Money multiplier = 1/0.10 = 10 → Total deposits = 1,000 × 10 = ₹10,000."}, {"id": 14, "num": 14, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "In the Shannon–Weaver model of communication, what does 'noise' refer to?", "options": ["Only loud sounds in the environment", "The medium through which the message travels", "The receiver's reply to the sender", "Any interference that distorts the message between sender and receiver"], "ans": 3, "exp": "Noise is any interference distorting the signal/message between sender and receiver."}, {"id": 15, "num": 15, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "Which function of management compares actual performance with planned standards and takes corrective action?", "options": ["Planning", "Organising", "Staffing", "Controlling"], "ans": 3, "exp": "Controlling measures actual performance against standards and corrects deviations."}, {"id": 16, "num": 16, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "In India, the repo rate is the rate at which ______.", "options": ["commercial banks lend to the public", "the RBI lends short-term funds to commercial banks against government securities", "commercial banks keep deposits with the RBI", "the government borrows from the public"], "ans": 1, "exp": "Repo rate is the rate at which the RBI lends short-term funds to commercial banks against government securities."}, {"id": 17, "num": 17, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Which type of information system integrates the business processes of all departments (finance, HR, inventory, sales) using a single common database?", "options": ["Decision Support System (DSS)", "Customer Relationship Management (CRM)", "Supply Chain Management (SCM)", "Enterprise Resource Planning (ERP)"], "ans": 3, "exp": "ERP integrates all core internal business processes into a unified database."}, {"id": 18, "num": 18, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Cash book shows ₹10,000 (debit). Cheques of ₹2,000 issued not yet presented, cheques of ₹3,000 deposited not yet cleared, and bank charges ₹200 unrecorded in cash book. Pass book balance is:", "options": ["₹9,200", "₹11,200", "₹8,800", "₹14,800"], "ans": 2, "exp": "10,000 + 2,000 − 3,000 − 200 = ₹8,800."}, {"id": 19, "num": 19, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Sales are ₹2,00,000, and the gross profit is 25% on cost. What is the gross profit?", "options": ["₹1,60,000", "₹50,000", "₹40,000", "₹1,50,000"], "ans": 2, "exp": "25% on cost = 25/125 = 20% on sales → 20% of ₹2,00,000 = ₹40,000."}, {"id": 20, "num": 20, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "GDP at market price is ₹500 crore, depreciation ₹50 crore, net indirect taxes ₹30 crore, and NFIA −₹10 crore. What is NNP at factor cost?", "options": ["₹440 crore", "₹430 crore", "₹420 crore", "₹410 crore"], "ans": 3, "exp": "NNP(FC) = 500 + (−10) − 50 − 30 = ₹410 crore."}]}, {"id": 2, "category": "Commerce", "code": "COM Mock 02", "title": "Commerce, Mgmt & Economics — Mock 02", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 21, "num": 1, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A partner withdraws ₹2,000 at the end of every month for a year. Interest on drawings is 6% p.a. What is the interest for the year?", "options": ["₹660", "₹720", "₹780", "₹1,440"], "ans": 0, "exp": "Total = 24,000; avg period (end of each month) = 5.5 months → 24,000 × (6/100) × (5.5/12) = ₹660."}, {"id": 22, "num": 2, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "For which type of goods does demand rise when the price rises, against the law of demand?", "options": ["Substitute goods", "Normal goods", "Giffen goods", "Complementary goods"], "ans": 2, "exp": "Giffen goods exhibit upward-sloping demand curves where a strong negative income effect outweighs substitution."}, {"id": 23, "num": 3, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Which of the following is an example of asynchronous communication?", "options": ["Video conference", "E-mail", "Telephone call", "Face-to-face meeting"], "ans": 1, "exp": "E-mail is asynchronous because sender and receiver do not need to be present simultaneously."}, {"id": 24, "num": 4, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "What is the shape of the demand curve of a commodity whose demand is perfectly inelastic?", "options": ["A horizontal straight line", "A vertical straight line", "A rectangular hyperbola", "A downward-sloping straight line"], "ans": 1, "exp": "Perfectly inelastic demand (Ed = 0) keeps quantity constant at all prices → vertical straight line."}, {"id": 25, "num": 5, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "The proprietor withdraws goods costing ₹5,000 from the business for personal use. Which journal entry records this?", "options": ["Capital A/c Dr. ₹5,000 To Cash A/c ₹5,000", "Drawings A/c Dr. ₹5,000 To Sales A/c ₹5,000", "Purchases A/c Dr. ₹5,000 To Drawings A/c ₹5,000", "Drawings A/c Dr. ₹5,000 To Purchases A/c ₹5,000"], "ans": 3, "exp": "Personal withdrawal of goods at cost debits Drawings A/c and reduces Purchases A/c (credit)."}, {"id": 26, "num": 6, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "A machine is bought for ₹1,20,000, and ₹10,000 is spent on its installation. Its estimated scrap value is ₹10,000 after 6 years. What is the annual depreciation by the straight-line method?", "options": ["₹16,667", "₹18,333", "₹21,667", "₹20,000"], "ans": 3, "exp": "Total cost = 1,20,000 + 10,000 = ₹1,30,000. Annual SLM dep = (1,30,000 − 10,000) / 6 = ₹20,000."}, {"id": 27, "num": 7, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "A firm's current ratio is 2.5 and its quick ratio is 1.5. Its current liabilities are ₹40,000. What is the value of its inventory?", "options": ["₹60,000", "₹40,000", "₹1,00,000", "₹20,000"], "ans": 1, "exp": "CA = 2.5 × 40,000 = 1,00,000; QA = 1.5 × 40,000 = 60,000. Inventory = CA − QA = ₹40,000."}, {"id": 28, "num": 8, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "The average profit of a firm is ₹60,000. Its capital employed is ₹4,00,000 and the normal rate of return is 10%. What is the goodwill at 3 years' purchase of super profit?", "options": ["₹2,00,000", "₹1,80,000", "₹20,000", "₹60,000"], "ans": 3, "exp": "Normal profit = 40,000; Super profit = 60,000 − 40,000 = 20,000; Goodwill = 20,000 × 3 = ₹60,000."}, {"id": 29, "num": 9, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "In the short run, a firm in perfect competition that is making a loss will still continue production as long as the price covers its:", "options": ["Average total cost", "Average variable cost", "Average fixed cost", "Marginal revenue"], "ans": 1, "exp": "In the short run, producing minimizes losses as long as Price ≥ Average Variable Cost (shut-down point)."}, {"id": 30, "num": 10, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which accounting concept requires that the expenses of a period be recorded against the revenues earned in that same period?", "options": ["Going concern concept", "Money measurement concept", "Matching concept", "Dual aspect concept"], "ans": 2, "exp": "The Matching concept matches expenses incurred in a period with the revenues earned in that same period."}, {"id": 31, "num": 11, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which of the following errors is NOT disclosed by the trial balance?", "options": ["Wrong totalling of the Sales Book", "Posting an amount to the wrong side of an account", "Error of principle", "Omitting to post one side of a journal entry"], "ans": 2, "exp": "An error of principle maintains debit = credit equality (wrong account class), so the trial balance still tallies."}, {"id": 32, "num": 12, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which of the following is a nominal account?", "options": ["Machinery Account", "Debtors Account", "Salaries Account", "Capital Account"], "ans": 2, "exp": "Salaries Account is an expense account, hence a Nominal account (Machinery = Real; Debtors & Capital = Personal)."}, {"id": 33, "num": 13, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Which of the following is NOT a basic concept (principle) of accounting?", "options": ["Going concern concept", "Matching concept", "Money measurement concept", "Marginal costing concept"], "ans": 3, "exp": "Marginal costing is a cost-accounting decision technique, not a basic financial accounting principle."}, {"id": 34, "num": 14, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regarding the law of variable proportions:\nI. Operates in the short run with one variable factor and others fixed.\nII. In Stage II, total product continues to rise at a diminishing rate.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements accurately describe the short-run law of variable proportions."}, {"id": 35, "num": 15, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Which of the following is NOT an operating activity in a cash flow statement?", "options": ["Cash received from customers", "Cash paid to suppliers", "Cash paid for wages and salaries", "Cash paid for the purchase of machinery"], "ans": 3, "exp": "Purchasing machinery (a fixed asset) is an investing activity."}, {"id": 36, "num": 16, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Total expenditure = ₹10,000 crore, revenue receipts = ₹6,000 crore, non-debt capital receipts = ₹1,000 crore. Fiscal deficit is ______.", "options": ["₹4,000 crore", "₹3,000 crore", "₹7,000 crore", "₹9,000 crore"], "ans": 1, "exp": "Fiscal deficit = 10,000 − (6,000 + 1,000) = ₹3,000 crore."}, {"id": 37, "num": 17, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Which of the following is NOT a function of the Reserve Bank of India?", "options": ["Issuing currency notes (except one-rupee notes and coins)", "Acting as banker to the Central and State Governments", "Controlling credit through instruments such as the repo rate", "Accepting savings deposits from the general public"], "ans": 3, "exp": "Accepting savings deposits from the general public is a function of commercial banks, not the RBI."}, {"id": 38, "num": 18, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "If MPC = 0.8 and investment increases by ₹500 crore, by how much will national income increase under the Keynesian investment multiplier?", "options": ["₹2,500 crore", "₹625 crore", "₹400 crore", "₹4,000 crore"], "ans": 0, "exp": "Multiplier k = 1 / (1 − 0.8) = 5 ⇒ ΔY = 5 × 500 = ₹2,500 crore."}, {"id": 39, "num": 19, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following statements is/are correct?\nI. A Decision Support System mainly supports semi-structured and unstructured decisions with models and 'what-if' analysis.\nII. A Transaction Processing System is mainly used by top management for long-term strategic planning.\nIII. An Executive Support System gives summarised internal and external information to senior management.", "options": ["II and III only", "I and II only", "I and III only", "I, II and III"], "ans": 2, "exp": "I and III are correct. II is false because TPS handles operational day-to-day transactions (billing, payroll), not strategic planning."}, {"id": 40, "num": 20, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A machine costing ₹1,00,000 is depreciated by the written down value method at 20% per year. What is the depreciation for the third year?", "options": ["₹20,000", "₹16,000", "₹12,800", "₹10,240"], "ans": 2, "exp": "Year 1 dep = 20,000 (WDV 80,000); Year 2 dep = 16,000 (WDV 64,000); Year 3 dep = 20% of 64,000 = ₹12,800."}]}, {"id": 3, "category": "Commerce", "code": "COM Mock 03", "title": "Commerce, Mgmt & Economics — Mock 03", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 41, "num": 1, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A firm's current ratio is 2.5 : 1 and its working capital is ₹60,000. What are its current assets?", "options": ["₹1,00,000", "₹40,000", "₹1,50,000", "₹84,000"], "ans": 0, "exp": "CA = 2.5 CL and CA − CL = 60,000 → 1.5 CL = 60,000 → CL = 40,000 → CA = 2.5 × 40,000 = ₹1,00,000."}, {"id": 42, "num": 2, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A and B share profits in the ratio 3 : 2. C is admitted for a 1/5 share, which he takes equally from A and B. What is the new profit-sharing ratio?", "options": ["5 : 3 : 2", "3 : 2 : 1", "12 : 8 : 5", "2 : 2 : 1"], "ans": 0, "exp": "Each gives 1/10: A = 3/5 − 1/10 = 5/10, B = 2/5 − 1/10 = 3/10, C = 2/10 → 5 : 3 : 2."}, {"id": 43, "num": 3, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "The price of a good rises from ₹10 to ₹12, and the quantity demanded falls from 50 units to 40 units. Using the percentage method on the original values, what is the price elasticity of demand?", "options": ["0.2 (inelastic)", "0.5 (inelastic)", "2 (elastic)", "1 (unitary elastic)"], "ans": 3, "exp": "%ΔQ = −10/50 = −20%; %ΔP = +2/10 = +20%. Eₚ = |−20% / 20%| = 1 (unitary elastic)."}, {"id": 44, "num": 4, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following is a feature of a bill of exchange but NOT of a promissory note?", "options": ["It has three parties and must be accepted by the drawee", "It is an unconditional written document", "It must be stamped as per law", "It is a negotiable instrument"], "ans": 0, "exp": "A bill of exchange has three parties (drawer, drawee, payee) and requires acceptance by the drawee; a promissory note has two parties and needs no acceptance."}, {"id": 45, "num": 5, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "In the communication process, the receiver's response that tells the sender whether the message was understood as intended is called:", "options": ["Decoding", "Feedback", "Noise", "Encoding"], "ans": 1, "exp": "Feedback is the receiver's response sent back to the sender, completing the two-way communication loop."}, {"id": 46, "num": 6, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Where does closing stock appear in the final accounts?", "options": ["On the credit side of the Trading Account and on the assets side of the Balance Sheet", "Only in the Balance Sheet, as a liability", "On the debit side of the Trading Account only", "In the Profit and Loss Account"], "ans": 0, "exp": "Closing stock is credited to the Trading Account and shown under Assets in the Balance Sheet."}, {"id": 47, "num": 7, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "How is a bad debt recovered (written off in an earlier year) treated in the books?", "options": ["Credited to the debtor's personal account", "Credited to Bad Debts Recovered account and shown as income in the Profit and Loss Account", "Added to provision for doubtful debts", "Shown as a liability"], "ans": 1, "exp": "It is credited to Bad Debts Recovered A/c and recognised as current-year income in P&L."}, {"id": 48, "num": 8, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "A consumer buying a single commodity is in equilibrium when ______.", "options": ["The price is zero", "The total utility is zero", "The marginal utility is at its maximum", "The marginal utility of the commodity equals its price (in money terms)"], "ans": 3, "exp": "Single-commodity consumer equilibrium holds when MUₓ = Pₓ."}, {"id": 49, "num": 9, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Who introduced the concept of Management by Objectives (MBO)?", "options": ["Henri Fayol", "Peter F. Drucker", "F. W. Taylor", "Elton Mayo"], "ans": 1, "exp": "Peter F. Drucker popularized Management by Objectives (MBO) in 1954."}, {"id": 50, "num": 10, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Which of the following is an example of B2B (business-to-business) e-commerce?", "options": ["A person selling an old phone on OLX", "A student buying a book on Amazon", "A shop owner buying stock from a manufacturer through IndiaMART", "A citizen paying income tax online"], "ans": 2, "exp": "A retailer procuring stock from a manufacturer via IndiaMART is B2B (Amazon = B2C, OLX = C2C, tax = C2G)."}, {"id": 51, "num": 11, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Tacit knowledge in an organisation is best shared through ______.", "options": ["E-mail circulars only", "Printed manuals only", "Databases only", "Mentoring, apprenticeship and working together"], "ans": 3, "exp": "Tacit know-how transfers best via socialisation—mentoring, apprenticeship, and hands-on collaboration."}, {"id": 52, "num": 12, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Which of the following is NOT a feature of a cooperative society?", "options": ["One member, one vote", "Voluntary membership", "Profit maximisation as the main motive", "Service to members as the main motive"], "ans": 2, "exp": "Cooperatives prioritize mutual service to members rather than profit maximisation."}, {"id": 53, "num": 13, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "A machine costs ₹1,20,000, has a scrap value of ₹20,000 and a useful life of 5 years. What is the annual depreciation under the straight line method?", "options": ["₹24,000", "₹20,000", "₹28,000", "₹16,000"], "ans": 1, "exp": "Annual depreciation = (Cost − Scrap value) / Life = (1,20,000 − 20,000) / 5 = ₹20,000."}, {"id": 54, "num": 14, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following is a real account?", "options": ["Salary Account", "Machinery Account", "Rent Account", "Ramesh's Account"], "ans": 1, "exp": "Machinery is a tangible asset → Real Account. Salary & Rent are Nominal Accounts; Ramesh's Account is a Personal Account."}, {"id": 55, "num": 15, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "The total utility from consuming 1, 2, 3 and 4 units of a good is 10, 18, 24 and 28 respectively. What is the marginal utility of the third unit?", "options": ["6", "24", "8", "4"], "ans": 0, "exp": "MU₃ = TU₃ − TU₂ = 24 − 18 = 6."}, {"id": 56, "num": 16, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which function of management mainly involves leadership, motivation, communication and supervision?", "options": ["Controlling", "Planning", "Organising", "Directing"], "ans": 3, "exp": "Directing initiates action through leadership, motivation, communication, and supervision."}, {"id": 57, "num": 17, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following statements about electronic funds transfer systems in India is/are correct?\nI. RTGS settles each transaction individually in real time, with a minimum amount of ₹2 lakh.\nII. NEFT settles transactions in batches.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements are correct: RTGS is real-time gross settlement (min ₹2 lakh) and NEFT settles in half-hourly batches."}, {"id": 58, "num": 18, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which level of management mainly uses strategic information, such as long-term market trends?", "options": ["Top level", "Middle level", "Operational level", "Clerical level"], "ans": 0, "exp": "Top management uses strategic information for long-term planning; middle uses tactical; operational uses day-to-day operational info."}, {"id": 59, "num": 19, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "According to the Companies (Miscellaneous) Rules, 2014, what is the maximum number of partners allowed in a partnership firm?", "options": ["100", "20", "10", "50"], "ans": 3, "exp": "Under the Companies (Miscellaneous) Rules, 2014 (framed under the Companies Act, 2013), a partnership firm can have at most 50 partners."}, {"id": 60, "num": 20, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which accounting concept states that the business is separate from its owner, so capital is shown as a liability?", "options": ["Business entity concept", "Going concern concept", "Money measurement concept", "Accrual concept"], "ans": 0, "exp": "The Business Entity Concept treats the enterprise and its proprietor as distinct entities."}]}, {"id": 4, "category": "Commerce", "code": "COM Mock 04", "title": "Commerce, Mgmt & Economics — Mock 04", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 61, "num": 1, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "A firm has current assets ₹2,00,000, current ratio 2 : 1, and inventory ₹50,000. What is its quick (acid-test) ratio?", "options": ["2 : 1", "1.5 : 1", "1 : 1", "0.5 : 1"], "ans": 1, "exp": "Current liabilities = 2,00,000 / 2 = ₹1,00,000. Quick assets = 2,00,000 − 50,000 = ₹1,50,000 ⇒ Quick ratio = 1.5 : 1."}, {"id": 62, "num": 2, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Gross Domestic Product at market price minus depreciation is called ______.", "options": ["Net National Product at factor cost", "Gross National Product", "Net Domestic Product at market price", "Personal income"], "ans": 2, "exp": "NDP at MP = GDP at MP − Depreciation."}, {"id": 63, "num": 3, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "According to Maslow's hierarchy of needs, which need is at the highest level?", "options": ["Safety", "Esteem", "Self-actualisation", "Social (belonging)"], "ans": 2, "exp": "Hierarchy (bottom→top): Physiological → Safety → Social → Esteem → Self-actualisation."}, {"id": 64, "num": 4, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which type of information system is mainly used by managers for 'what-if' analysis in semi-structured decisions?", "options": ["Transaction Processing System", "Decision Support System", "Office Automation System", "Management Reporting System"], "ans": 1, "exp": "A Decision Support System (DSS) combines data with analytical models for 'what-if' semi-structured decision-making."}, {"id": 65, "num": 5, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "In a formal business letter starting with 'Dear Sir/Madam', which complimentary close is appropriate?", "options": ["Yours sincerely", "Yours lovingly", "Yours faithfully", "Cheers"], "ans": 2, "exp": "'Yours faithfully' pairs with impersonal salutations ('Dear Sir/Madam'); 'Yours sincerely' pairs with named recipients."}, {"id": 66, "num": 6, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "How is trade discount treated in the books of account?", "options": ["Shown in the Profit and Loss Account", "Debited to Discount Allowed account", "Credited to Discount Received account", "It is not recorded; goods are entered at the net price after the discount"], "ans": 3, "exp": "Trade discount is deducted upfront on the invoice and not recorded separately in books (only cash discount is recorded)."}, {"id": 67, "num": 7, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "The proprietor withdraws goods for personal use. What is the correct journal entry?", "options": ["Drawings A/c Dr. To Sales A/c", "Purchases A/c Dr. To Drawings A/c", "Drawings A/c Dr. To Purchases A/c", "Capital A/c Dr. To Cash A/c"], "ans": 2, "exp": "Drawings A/c is debited, and Purchases A/c is credited (at cost, since goods were not sold)."}, {"id": 68, "num": 8, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Cost of goods sold is ₹4,00,000 and average stock is ₹80,000. What is the stock turnover ratio?", "options": ["0.2 times", "4 times", "5 times", "8 times"], "ans": 2, "exp": "Stock turnover ratio = COGS / Average stock = 4,00,000 / 80,000 = 5 times."}, {"id": 69, "num": 9, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "When price falls from ₹10 to ₹8, quantity demanded rises from 100 to 130 units. What is the price elasticity of demand (percentage method)?", "options": ["1", "0.67", "3", "1.5"], "ans": 3, "exp": "%ΔQ = 30%, %ΔP = 20% ⇒ E_d = 30 / 20 = 1.5."}, {"id": 70, "num": 10, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Which form of business organisation has a separate legal entity, perpetual succession, and a common seal?", "options": ["Sole proprietorship", "Partnership firm", "Joint stock company", "Joint Hindu Family business"], "ans": 2, "exp": "A Joint stock company is an artificial legal person with separate legal entity, perpetual succession, and limited liability."}, {"id": 71, "num": 11, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A business sells stationery to government departments via GeM. Which e-commerce model is this?", "options": ["B2G (Business-to-Government)", "G2C (Government-to-Citizen)", "C2C (Consumer-to-Consumer)", "B2C (Business-to-Consumer)"], "ans": 0, "exp": "Selling goods/services by businesses to government agencies via GeM (Government e-Marketplace) is B2G."}, {"id": 72, "num": 12, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "In the SECI model of knowledge creation, which process converts explicit knowledge into new, more complex explicit knowledge?", "options": ["Externalisation", "Socialisation", "Combination", "Internalisation"], "ans": 2, "exp": "SECI: Socialisation (Tacit→Tacit), Externalisation (Tacit→Explicit), Combination (Explicit→Explicit), Internalisation (Explicit→Tacit)."}, {"id": 73, "num": 13, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A barrier to communication arising because a word or symbol means different things to sender and receiver is called a ______ barrier.", "options": ["Semantic", "Physical", "Psychological", "Organisational"], "ans": 0, "exp": "Semantic barriers arise from language ambiguities, jargon, or differing word interpretations."}, {"id": 74, "num": 14, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Ordinary repairs to machinery that keep it in working condition are an example of ______.", "options": ["Deferred revenue expenditure", "Capital expenditure", "Revenue expenditure", "Capital receipt"], "ans": 2, "exp": "Routine maintenance repairs only maintain existing earning capacity and are charged as Revenue expenditure."}, {"id": 75, "num": 15, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "A machine costing ₹1,00,000 is depreciated at 10% p.a. by the written down value (WDV) method. What is its book value at the end of 2 years?", "options": ["₹82,000", "₹80,000", "₹90,000", "₹81,000"], "ans": 3, "exp": "Year 1: 1,00,000 − 10% = 90,000. Year 2: 90,000 − 10% (9,000) = ₹81,000."}, {"id": 76, "num": 16, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "In a Bank Reconciliation Statement starting from the Cash Book balance, how are cheques issued but not yet presented for payment treated?", "options": ["Subtracted", "Added", "Ignored", "Shown in the Profit and Loss Account"], "ans": 1, "exp": "Cash Book was already reduced when cheques were issued, while the bank Pass Book has not yet debited them — so they are Added to reconcile to Pass Book balance."}, {"id": 77, "num": 17, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "In which market structure is a single firm the price maker, facing a downward-sloping demand curve, with no close substitutes?", "options": ["Monopoly", "Perfect competition", "Monopolistic competition", "Oligopoly"], "ans": 0, "exp": "Monopoly has a single seller, no close substitutes, high barriers to entry, and price-making power."}, {"id": 78, "num": 18, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which Henri Fayol management principle states that an employee should receive orders from only one superior?", "options": ["Division of work", "Unity of direction", "Scalar chain", "Unity of command"], "ans": 3, "exp": "Unity of command mandates one boss per employee to prevent conflicting instructions."}, {"id": 79, "num": 19, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which statements about Enterprise Resource Planning (ERP) are correct?\nI. ERP integrates finance, HR, production and sales on a single database.\nII. SAP and Oracle are examples of ERP software.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "ERP unifies core business functions on a shared real-time database; SAP, Oracle ERP, and Microsoft Dynamics are leading ERP suites."}, {"id": 80, "num": 20, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which of the following is NOT one of the 7 Cs of effective business communication?", "options": ["Clarity", "Complexity", "Conciseness", "Courtesy"], "ans": 1, "exp": "The 7 Cs are Clarity, Conciseness, Concreteness, Correctness, Coherence, Completeness, and Courtesy — Complexity hinders communication."}]}, {"id": 5, "category": "Commerce", "code": "COM Mock 05", "title": "Commerce, Mgmt & Economics — Mock 05", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 81, "num": 1, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "In the balance sheet, rent paid in advance is shown as ______.", "options": ["An income", "A current liability", "An expense in the trading account", "A current asset"], "ans": 3, "exp": "Prepaid rent gives a future right to occupy the premises, so it is recorded as a current asset (outstanding rent is a current liability)."}, {"id": 82, "num": 2, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is an example of a routine (periodic) report in an organisation?", "options": ["Special investigation report", "Inquiry report", "Monthly sales report", "Report on a one-time survey"], "ans": 2, "exp": "Routine reports (monthly sales, weekly attendance, annual reports) are prepared at regular intervals in a fixed format, unlike one-time special/inquiry reports."}, {"id": 83, "num": 3, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is/are correct?\nI. A trial balance is a statement, not an account.\nII. A trial balance checks the arithmetical accuracy of the ledger accounts.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 0, "exp": "A trial balance is a statement (not an account) listing debit and credit balances of all ledgers on a date to verify arithmetical accuracy of posting."}, {"id": 84, "num": 4, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is/are capital expenditure?\nI. Purchase of a new machine\nII. Wages paid for installing the new machine", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Both the purchase cost of a fixed asset and expenses incurred to bring it into working condition (installation wages) are capital expenditure."}, {"id": 85, "num": 5, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is/are properties of indifference curves?\nI. They are convex to the origin.\nII. Two indifference curves can intersect each other.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Indifference curves slope downward, are convex to the origin (diminishing MRS), and can never intersect each other. Hence Only I is correct."}, {"id": 86, "num": 6, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is a quantitative tool used by the RBI to control the money supply?", "options": ["Cash Reserve Ratio", "Moral suasion", "Selective credit control", "Rationing of credit"], "ans": 0, "exp": "Cash Reserve Ratio (CRR), SLR, Repo/Bank rate, and Open Market Operations are quantitative (general) tools; moral suasion, selective credit control, and credit rationing are qualitative."}, {"id": 87, "num": 7, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following statement(s) is/are correct regarding batch transaction processing?\nI. Transactions are collected over a period and processed together.\nII. The master file is updated immediately when each transaction occurs.\nIII. Payroll is a typical example.", "options": ["I and III", "II and III", "I and II", "I, II and III"], "ans": 0, "exp": "Batch processing accumulates similar transactions (like payroll) and processes them together periodically. Immediate updating belongs to online/real-time processing."}, {"id": 88, "num": 8, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following are activities of a Knowledge Management System (KMS)?\nI. Knowledge capture  II. Knowledge sharing  III. Knowledge hoarding by individuals", "options": ["I and II", "II and III", "I and III", "I, II and III"], "ans": 0, "exp": "A KMS supports capturing, storing, sharing, and applying organisational knowledge. Hoarding knowledge opposes the goal of KMS."}, {"id": 89, "num": 9, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The minutes of a meeting should mainly record ______.", "options": ["informal conversations among members", "the personal opinions of the secretary", "the decisions taken and resolutions passed", "the full speech of every member, word for word"], "ans": 2, "exp": "Minutes are a brief, objective official record of attendance, agenda items, decisions taken, resolutions passed, and action points."}, {"id": 90, "num": 10, "topic": "Business Communication", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Features of a good business report:\nI. Clarity and conciseness   II. Use of facts and evidence", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "A good business report is clear, concise and backed by facts and evidence."}, {"id": 91, "num": 11, "topic": "Commerce & Accounting", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which is/are correct?\nI. An increase in expenses is debited.\nII. An increase in income is credited.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 0, "exp": "Modern accounting rules: Expense increase → Debit; Income increase → Credit."}, {"id": 92, "num": 12, "topic": "Commerce & Accounting", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which are methods of charging depreciation?\nI. Straight line method   II. Written down value method", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Both SLM and WDV are standard depreciation methods."}, {"id": 93, "num": 13, "topic": "Economics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "If the price of tea rises, the demand for coffee (a substitute) will ______.", "options": ["increase", "decrease", "remain unchanged", "become zero"], "ans": 0, "exp": "When a good's price rises, consumers switch to its substitute, increasing coffee demand."}, {"id": 94, "num": 14, "topic": "Economics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Purchase of government securities by RBI from the public leads to:\nI. Increase in bank reserves   II. Increase in money supply", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Open market purchases inject liquidity, raising both bank reserves and money supply."}, {"id": 95, "num": 15, "topic": "Economics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "All inputs are tripled. Which is/are correct?\nI. Output tripled → constant returns to scale.\nII. Output doubles → increasing returns to scale.\nIII. Output > 3× → increasing returns to scale.", "options": ["I and III only", "I and II only", "II and III only", "I, II and III"], "ans": 0, "exp": "Output doubling on 3× inputs is decreasing (not increasing) returns ⇒ I and III only."}, {"id": 96, "num": 16, "topic": "Management & TPS", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "A Transaction Processing System deals with:\nI. Payroll processing   II. Long-term strategic planning", "options": ["Neither I nor II", "Only II", "Both I and II", "Only I"], "ans": 3, "exp": "TPS handles routine daily operations like payroll (strategic planning is ESS/DSS)."}, {"id": 97, "num": 17, "topic": "Knowledge Management", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which type of knowledge is documented and can be shared easily?", "options": ["Explicit knowledge", "Tacit knowledge", "Intuitive knowledge", "Personal knowledge"], "ans": 0, "exp": "Explicit knowledge is codified in manuals, reports and databases."}, {"id": 98, "num": 18, "topic": "Management", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Poor ________ between management and employees can lower morale and damage the corporate image of a business.", "options": ["inventory", "communication", "depreciation", "taxation"], "ans": 1, "exp": "Clear two-way communication maintains morale and corporate image."}, {"id": 99, "num": 19, "topic": "Management", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Activities under 'Controlling':\ni) Setting standards  ii) Measuring performance  iii) Comparing with standards  iv) Taking corrective action  v) Recruiting & training", "options": ["i, ii, iii, iv and v", "ii, iii and v only", "i, ii, iii and iv only", "i, iv and v only"], "ans": 2, "exp": "Recruiting and training belong to Staffing, not Controlling ⇒ i, ii, iii and iv only."}, {"id": 100, "num": 20, "topic": "Management & KM", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Major types of Knowledge Management Systems:\ni) Enterprise-wide KM  ii) Knowledge work systems  iii) Intelligent techniques  iv) Spreadsheet macros", "options": ["i, ii and iii only", "iv only", "i and iv only", "i, ii, iii and iv"], "ans": 0, "exp": "Laudon's three major KM systems are Enterprise-wide KM, Knowledge work systems, and Intelligent techniques."}]}, {"id": 6, "category": "Commerce", "code": "COM Mock 06", "title": "Commerce, Mgmt & Economics — Mock 06", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 101, "num": 1, "topic": "Management", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Channels of formal communication in an organisation:\ni) Downward  ii) Upward  iii) Horizontal  iv) Grapevine", "options": ["i, ii, iii and iv", "iv only", "i and iv only", "i, ii and iii only"], "ans": 3, "exp": "Grapevine is informal communication; downward, upward and horizontal are formal channels."}, {"id": 102, "num": 2, "topic": "Management & Commerce", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which software manages customer interactions, sales leads and after-sales service?", "options": ["CRM software", "Compiler", "Antivirus software", "Device driver"], "ans": 0, "exp": "CRM (Customer Relationship Management) tracks customer data, sales leads and support."}, {"id": 103, "num": 3, "topic": "Commerce & Accounting", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Limitations of financial accounting:\ni) Records only monetary transactions  ii) Based on historical cost  iii) No per-product/job cost  iv) Shows exact current market value of assets  v) Results known only at period end", "options": ["i, ii, iii and v only", "i, ii and iv only", "ii, iii, iv and v only", "i, ii, iii, iv and v"], "ans": 0, "exp": "Financial accounting records historical cost, NOT current market value (iv is false) ⇒ i, ii, iii and v only."}, {"id": 104, "num": 4, "topic": "Management & MIS", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Main purpose of a/an ________ is to give senior executives summarised KPI information with graphics and drill-down.", "options": ["Office Automation System", "Transaction Processing System", "Executive Support System", "Expert System"], "ans": 2, "exp": "An Executive Support System (ESS/EIS) serves top executives with KPI dashboards and drill-down."}, {"id": 105, "num": 5, "topic": "Management", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Barriers to effective communication:\ni) Noise  ii) Language differences  iii) Emotional state  iv) Feedback  v) Information overload", "options": ["i, ii, iii, iv and v", "i, ii and iv only", "ii, iii, iv and v only", "i, ii, iii and v only"], "ans": 3, "exp": "Feedback completes the communication loop rather than blocking it ⇒ i, ii, iii and v only."}, {"id": 106, "num": 6, "topic": "Commerce & Economics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "________ is also called Managerial Economics, applying economic theory to business decision-making.", "options": ["Welfare economics", "Business economics", "Public finance", "Econometrics"], "ans": 1, "exp": "Business economics (managerial economics) applies economic tools to management decisions."}, {"id": 107, "num": 7, "topic": "Commerce & E-Business", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which of the following is NOT a benefit of e-business?", "options": ["Wider market reach", "Lower transaction costs", "Availability 24 × 7", "Need for the buyer to be physically present at the store"], "ans": 3, "exp": "E-business eliminates the need for physical presence at a store."}, {"id": 108, "num": 8, "topic": "Management & DSS", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Components of a Decision Support System (DSS):\ni) Database  ii) Model base  iii) User interface  iv) Printer cartridges", "options": ["i and iv only", "i, ii, iii and iv", "i, ii and iii only", "iv only"], "ans": 2, "exp": "A DSS comprises a Database, Model base and User interface."}, {"id": 109, "num": 9, "topic": "Commerce & Management", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Tally ERP software is mainly used for:", "options": ["accounting and inventory management", "image editing", "web page design", "writing computer programs"], "ans": 0, "exp": "Tally ERP manages accounting vouchers, ledgers, GST returns and inventory."}, {"id": 110, "num": 10, "topic": "Management", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Steps of the management planning process:\ni) Setting objectives  ii) Developing premises  iii) Identifying alternatives  iv) Coding  v) Selecting best alternative", "options": ["ii, iv and v only", "iv only", "i and iv only", "i, ii, iii and v only"], "ans": 3, "exp": "Coding is software development, not a management planning step ⇒ i, ii, iii and v only."}, {"id": 111, "num": 11, "topic": "Economics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "________ economics deals with 'what ought to be' and involves value judgements.", "options": ["Normative", "Positive", "Basic", "Regular"], "ans": 0, "exp": "Normative economics focuses on 'what ought to be' (Positive economics deals with verifiable facts, 'what is')."}, {"id": 112, "num": 12, "topic": "Management & KM", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Match Knowledge types:\na) Tacit  b) Explicit  c) Declarative\ni) Documented in manuals/databases  ii) Personal know-how from experience  iii) Knowledge of facts ('knowing what')", "options": ["a-i, b-ii, c-iii", "a-ii, b-i, c-iii", "a-iii, b-i, c-ii", "a-ii, b-iii, c-i"], "ans": 1, "exp": "Tacit→ii, Explicit→i, Declarative→iii ⇒ a-ii, b-i, c-iii."}, {"id": 113, "num": 13, "topic": "Management & MIS", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is a type of report produced by a Management Information System (MIS)?", "options": ["Source code listing", "Exception report", "Compiler log", "Boot log"], "ans": 1, "exp": "MIS produces Scheduled, Exception (triggered by unusual conditions), and Demand (ad hoc) reports."}, {"id": 114, "num": 14, "topic": "Knowledge Management", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is/are types of knowledge in knowledge management?\nI. Tacit knowledge   II. Explicit knowledge", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Knowledge management distinguishes Tacit knowledge (personal experience) and Explicit knowledge (documented/recorded)."}, {"id": 115, "num": 15, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "The fastest way to implement a knowledge management system, with the least customisation, is:", "options": ["in-house development", "outsourcing", "development by end users", "off-the-shelf solution"], "ans": 3, "exp": "An off-the-shelf package is pre-built and quickest to deploy, though with minimal customisation."}, {"id": 116, "num": 16, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "_____ is a computer-based system providing managers at all levels with information needed for planning, controlling, and decision-making.", "options": ["Expert system", "Management Information System", "Transaction processing system", "Operating system"], "ans": 1, "exp": "MIS aggregates transaction data into regular summarised reports for planning and control."}, {"id": 117, "num": 17, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "A Decision Support System (DSS) mainly supports _____ decisions.", "options": ["only clerical", "only routine, structured", "only operational", "semi-structured and unstructured"], "ans": 3, "exp": "DSS supports semi-structured and unstructured managerial decisions using analytical models."}, {"id": 118, "num": 18, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Average revenue is calculated by _____.", "options": ["dividing total cost by total output", "dividing change in total revenue by change in quantity", "dividing total revenue by the quantity sold", "multiplying marginal cost by quantity"], "ans": 2, "exp": "AR = TR / Q (= price per unit)."}, {"id": 119, "num": 19, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Goods returned by a customer are recorded in the books of account as:", "options": ["purchases return", "bad debts", "drawings", "sales return"], "ans": 3, "exp": "Goods returned by customers = Sales Return (returns inwards)."}, {"id": 120, "num": 20, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Price elasticity of demand measures the _____ of change in quantity demanded to a change in price.", "options": ["direction only", "cost", "degree of responsiveness", "supply"], "ans": 2, "exp": "E_d = (% ΔQ) / (% ΔP) measures the degree of responsiveness of demand to price changes."}]}, {"id": 7, "category": "Commerce", "code": "COM Mock 07", "title": "Commerce, Mgmt & Economics — Mock 07", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 121, "num": 1, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which is NOT an economic objective of business?", "options": ["Earning profit", "Searching for customers", "Contributing to social welfare", "Innovation"], "ans": 2, "exp": "Contributing to social welfare is a social objective, not an economic objective."}, {"id": 122, "num": 2, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Under the double entry system, the total of debits is always _____ the total of credits.", "options": ["double", "greater than", "less than", "equal to"], "ans": 3, "exp": "Every transaction has equal debit and credit entries ⇒ total debits = total credits."}, {"id": 123, "num": 3, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which is NOT a benefit of a knowledge management system?", "options": ["Better decision-making", "Avoiding repeated mistakes", "Faster sharing of best practices", "Increase in the processor's clock speed"], "ans": 3, "exp": "KMS improves organisational knowledge sharing and decisions — unrelated to CPU clock speed."}, {"id": 124, "num": 4, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Inflation caused by an increase in production costs (wages, raw materials) is called:", "options": ["Demand-pull inflation", "Hyperinflation", "Built-in inflation", "Cost-push inflation"], "ans": 3, "exp": "Rising input/production costs push prices up → Cost-push inflation."}, {"id": 125, "num": 5, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Capital invested in long-term assets like land, buildings, and machinery is called:", "options": ["working capital", "expenses", "current assets", "fixed capital"], "ans": 3, "exp": "Fixed capital finances long-term fixed assets; working capital covers day-to-day operations."}, {"id": 126, "num": 6, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "'Span of control' in an organisation refers to:", "options": ["the number of levels in the organisation", "the number of subordinates a superior can supervise effectively", "the total number of employees", "the area of the company's market"], "ans": 1, "exp": "Span of control = number of direct subordinates a manager can effectively supervise."}, {"id": 127, "num": 7, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "In a _____, two or more persons agree to share the profits of a business carried on by all or any of them acting for all.", "options": ["partnership", "sole proprietorship", "cooperative society", "Joint Hindu Family business"], "ans": 0, "exp": "Section 4 of the Indian Partnership Act, 1932 defines Partnership."}, {"id": 128, "num": 8, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which system gives senior executives easy access to summarised internal and external information (dashboards, drill-down)?", "options": ["Transaction Processing System", "Executive Support System", "Office Automation System", "Knowledge Work System"], "ans": 1, "exp": "An Executive Support System (ESS / EIS) supports top-level strategic monitoring."}, {"id": 129, "num": 9, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "In the SECI model of knowledge management (Nonaka & Takeuchi), converting tacit knowledge into explicit knowledge is called:", "options": ["Socialisation", "Externalisation", "Combination", "Internalisation"], "ans": 1, "exp": "SECI: Socialisation (T→T), Externalisation (T→E), Combination (E→E), Internalisation (E→T)."}, {"id": 130, "num": 10, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Demand is said to be _____ when a change in price causes no change at all in quantity demanded.", "options": ["unitary elastic", "relatively elastic", "perfectly inelastic", "perfectly elastic"], "ans": 2, "exp": "Perfectly inelastic demand has elasticity E_d = 0 (vertical demand curve)."}, {"id": 131, "num": 11, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which branch of economics studies the economy as a whole (national income, total employment, general price level)?", "options": ["Micro economics", "Environmental economics", "Welfare economics", "Macro economics"], "ans": 3, "exp": "Macroeconomics studies economy-wide aggregates; microeconomics studies individual consumers and firms."}, {"id": 132, "num": 12, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which step of knowledge management makes knowledge available to people who need it via documents, databases, and training?", "options": ["Knowledge sharing", "Knowledge refining", "Knowledge storage", "Knowledge acquisition"], "ans": 0, "exp": "Knowledge sharing (dissemination) distributes stored knowledge across the organisation."}, {"id": 133, "num": 13, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which business characteristic refers to 'every business is exposed to the possibility of loss because the future is uncertain'?", "options": ["Profit motive", "Continuity of dealings", "Risk and uncertainty", "Creativity"], "ans": 2, "exp": "Risk and uncertainty arise from unpredictable changes in demand, prices, technology, or calamities."}, {"id": 134, "num": 14, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which is the proper sequence of the accounting process?", "options": ["Recording → Journal → Trial Balance → Ledger → Final Accounts", "Recording → Ledger → Journal → Trial Balance → Final Accounts", "Recording of transaction → Journal → Ledger → Trial Balance → Final Accounts", "Recording → Trial Balance → Journal → Ledger → Final Accounts"], "ans": 2, "exp": "Journal (book of original entry) → Ledger posting → Trial Balance → Final Accounts."}, {"id": 135, "num": 15, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Accuracy, objectivity, believability, and reputation belong to which MIS information quality category?", "options": ["Contextual", "Intrinsic", "Representational", "Accessibility"], "ans": 1, "exp": "Intrinsic quality covers accuracy, objectivity, believability, and reputation."}, {"id": 136, "num": 16, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Identifying, measuring, and communicating economic information to permit informed judgements and decisions is:", "options": ["Book-keeping", "Auditing", "Accounting", "Costing"], "ans": 2, "exp": "This is the classic American Accounting Association (1966) definition of Accounting."}, {"id": 137, "num": 17, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "The _____ economic system is one in which the means of production are owned and controlled by the state.", "options": ["socialist", "capitalist", "mixed", "private"], "ans": 0, "exp": "In a socialist economy, the state owns and plans the means of production."}, {"id": 138, "num": 18, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "In MIS, which category of information is used by middle management for short-term planning and control (e.g., monthly sales reports)?", "options": ["Strategic information", "Tactical information", "Operational information", "Statutory information"], "ans": 1, "exp": "Middle management uses Tactical information (Top = Strategic; Lower = Operational)."}, {"id": 139, "num": 19, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which of the following is NOT a component of a Decision Support System (DSS)?", "options": ["Database", "Model base", "User interface", "Assembly line"], "ans": 3, "exp": "DSS has 3 core components: Database, Model base, and User interface (Assembly line is manufacturing)."}, {"id": 140, "num": 20, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which involves the production of goods by converting raw materials into finished products?", "options": ["Trade", "Aids to trade", "Commerce", "Industry"], "ans": 3, "exp": "Industry produces goods (extractive/manufacturing/construction); Commerce distributes them."}]}, {"id": 8, "category": "Commerce", "code": "COM Mock 08", "title": "Commerce, Mgmt & Economics — Mock 08", "subtitle": "Accounting Principles, Balance Sheet, Break-Even, Shares, GDP, PPC, MIS/TPS & Management", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 141, "num": 1, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which interactive computer-based system helps managers make decisions in semi-structured and unstructured situations?", "options": ["Transaction Processing System", "Enterprise Resource Planning", "Office Automation System", "Decision Support System"], "ans": 3, "exp": "A Decision Support System (DSS) combines data, analytical models, and 'what-if' interfaces for semi-/unstructured decisions."}, {"id": 142, "num": 2, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "'When the price of a commodity rises, quantity demanded falls, other things remaining the same.' This is the:", "options": ["Law of Demand", "Law of Supply", "Law of Diminishing Marginal Utility", "Law of Returns"], "ans": 0, "exp": "The Law of Demand describes the inverse relationship between price and quantity demanded, ceteris paribus."}, {"id": 143, "num": 3, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Purchases = ₹3,20,000; closing stock is ₹20,000 less than opening stock; GP = 20% on sales. Find Gross Profit.", "options": ["₹68,000", "₹85,000", "₹64,000", "₹80,000"], "ans": 1, "exp": "COGS = 3,20,000 + 20,000 = ₹3,40,000 (= 80% of Sales) ⇒ Sales = ₹4,25,000 ⇒ GP = ₹85,000."}, {"id": 144, "num": 4, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Opening stock ₹60,000, Purchases ₹2,40,000, Sales ₹3,00,000, GP = 20% on sales, Stock salvaged = ₹16,000. Value of stock destroyed by fire:", "options": ["₹28,000", "₹60,000", "₹76,000", "₹44,000"], "ans": 3, "exp": "Closing stock on fire date = 60,000 + 2,40,000 + 60,000 − 3,00,000 = ₹60,000. Destroyed = 60,000 − 16,000 = ₹44,000."}, {"id": 145, "num": 5, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Rent received = ₹1,80,000 (includes ₹30,000 advance for next year). Accrued rent receivable = ₹15,000. Rent credited to P&L Account:", "options": ["₹1,65,000", "₹1,50,000", "₹1,95,000", "₹1,80,000"], "ans": 0, "exp": "1,80,000 − 30,000 (advance) + 15,000 (accrued) = ₹1,65,000."}, {"id": 146, "num": 6, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which is NOT a secondary (industrial) activity?", "options": ["Manufacturing", "Construction", "Banking", "Processing of raw materials"], "ans": 2, "exp": "Banking is a tertiary (service) sector activity."}, {"id": 147, "num": 7, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which statement is CORRECT for a business organisation?", "options": ["Delegation leads to centralisation", "Responsibility can be fully delegated", "Authority can never be delegated", "Authority can be delegated, but responsibility cannot be fully delegated"], "ans": 3, "exp": "Managers can delegate authority, yet remain ultimately accountable for outcomes."}, {"id": 148, "num": 8, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "What does 'angel investor' refer to in starting a business?", "options": ["A bank giving loans", "An individual who invests his own money in a start-up, usually in exchange for equity", "A government subsidy department", "The first customer"], "ans": 1, "exp": "Angel investors fund early-stage start-ups with personal capital for equity ownership."}, {"id": 149, "num": 9, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "GST (Goods and Services Tax), introduced in India in 2017, is an example of:", "options": ["An indirect tax on the supply of goods and services", "A direct tax on income", "A tax only on imported goods", "A tax on property"], "ans": 0, "exp": "GST is a destination-based indirect tax on supply of goods and services (with input tax credit)."}, {"id": 150, "num": 10, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Long-term borrowed instruments issued by a company carrying a fixed rate of interest and repaid after a fixed period are:", "options": ["Retained earnings", "Debentures", "Preference shares", "Equity shares"], "ans": 1, "exp": "Debentures are long-term debt instruments; holders are creditors earning fixed interest regardless of profit."}, {"id": 151, "num": 11, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "In a SWOT analysis of a coaching institute, the arrival of a new low-fee online competitor is listed as a:", "options": ["Opportunity", "Threat", "Strength", "Weakness"], "ans": 1, "exp": "A new competitor is an external factor that can harm the organisation → Threat."}, {"id": 152, "num": 12, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "March salary of ₹15,000 is unpaid on 31 March. How is this outstanding salary treated in final accounts?", "options": ["Added to salary in the Profit and Loss Account, and shown as a liability in the Balance Sheet", "Deducted from salary and shown as an asset", "Shown only in the Trading Account", "Ignored until paid"], "ans": 0, "exp": "Under the accrual concept, outstanding expenses are added to the expense in P&L and recorded as a current liability in the Balance Sheet."}, {"id": 153, "num": 13, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "A product sells for ₹80/unit with variable cost ₹50/unit. What is its profit-volume (P/V) ratio?", "options": ["62.5%", "30%", "60%", "37.5%"], "ans": 3, "exp": "Contribution = 80 − 50 = ₹30. P/V ratio = (30 / 80) × 100 = 37.5%."}, {"id": 154, "num": 14, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "A petty cashier starts with a fixed amount and is reimbursed exactly the amount spent at period-end to restore the float. This is:", "options": ["Single-entry system", "Accrual system", "Imprest system", "Double-entry system"], "ans": 2, "exp": "The Imprest system maintains a fixed petty-cash float by reimbursing exact documented expenditure each period."}, {"id": 155, "num": 15, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A business has total assets of ₹5,00,000 and outside liabilities of ₹1,80,000. What is the owner's capital?", "options": ["₹1,80,000", "₹5,00,000", "₹6,80,000", "₹3,20,000"], "ans": 3, "exp": "Capital = Assets − Liabilities = 5,00,000 − 1,80,000 = ₹3,20,000."}, {"id": 156, "num": 16, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "What is the compound interest on ₹10,000 for 2 years at 10% p.a., compounded annually?", "options": ["₹1,900", "₹2,000", "₹2,200", "₹2,100"], "ans": 3, "exp": "Amount = 10,000 × (1.1)² = ₹12,100 ⇒ CI = 12,100 − 10,000 = ₹2,100."}, {"id": 157, "num": 17, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Which of the following is NOT one of the 4 Ps of the marketing mix?", "options": ["Price", "Product", "Profit", "Promotion"], "ans": 2, "exp": "The 4 Ps are Product, Price, Place, and Promotion. Profit is a business objective, not a marketing-mix element."}, {"id": 158, "num": 18, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A firm has net sales of ₹5,00,000 and gross profit of ₹1,25,000. What is its gross profit ratio?", "options": ["12.5%", "25%", "20%", "33.33%"], "ans": 1, "exp": "Gross Profit Ratio = (1,25,000 / 5,00,000) × 100 = 25%."}, {"id": 159, "num": 19, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A student watches a film instead of working in a shop where she could have earned ₹500. In economics, the ₹500 is the:", "options": ["Marginal cost", "Sunk cost", "Fixed cost", "Opportunity cost"], "ans": 3, "exp": "Opportunity cost is the value of the next-best alternative forgone (₹500 earnings given up)."}, {"id": 160, "num": 20, "topic": "Commerce, Management & Economics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "The rate at which the RBI lends short-term funds to commercial banks against government securities is called:", "options": ["Repo rate", "Reverse repo rate", "Cash reserve ratio", "Statutory liquidity ratio"], "ans": 0, "exp": "Repo rate = RBI lends to banks; Reverse repo = RBI borrows from banks; CRR = cash share with RBI; SLR = liquid assets share."}]}]};
+
+    const STORAGE_ANS = "commerce_mgmt_dsssb_answers_v1";
+    const STORAGE_SUB = "commerce_mgmt_dsssb_submitted_v1";
+    const STORAGE_THEME = "commerce_mgmt_dsssb_theme_v1";
+
+    function safeGet(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    function safeSet(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    let answers = safeGet(STORAGE_ANS, {});
+    let submittedMocks = safeGet(STORAGE_SUB, {});
+    let activeCategory = "Commerce";
+    let activeMockId = DATA.mocks[0].id;
+    let quizMode = "instant";
+    let activeFilter = "all";
+
+    const timerState = {};
+    DATA.mocks.forEach((m) => {
+      timerState[m.id] = { remaining: m.durationSec, running: false };
+    });
+    let tickInterval = null;
+
+    function getActiveMock() {
+      return DATA.mocks.find((m) => m.id === activeMockId);
+    }
+
+    function getCategoryMocks(catKey) {
+      return DATA.mocks.filter((m) => m.category === catKey);
+    }
+
+    function formatTime(sec) {
+      const s = Math.max(0, sec);
+      const mm = String(Math.floor(s / 60)).padStart(2, "0");
+      const ss = String(s % 60).padStart(2, "0");
+      return `${mm}:${ss}`;
+    }
+
+    function isRevealed(mockId, qId) {
+      if (quizMode === "instant") return answers[qId] !== undefined;
+      return Boolean(submittedMocks[mockId]);
+    }
+
+    function computeMockStats(mock) {
+      let attempted = 0, correct = 0, wrong = 0;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      mock.questions.forEach((q) => {
+        if (answers[q.id] !== undefined) {
+          attempted++;
+          if (showTruth) {
+            if (answers[q.id] === q.ans) correct++;
+            else wrong++;
+          }
+        }
+      });
+      const marks = showTruth ? (correct * 1 - wrong * 0.25) : 0;
+      const acc = showTruth && attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+      return { attempted, correct, wrong, marks, acc, showTruth, total: mock.questions.length };
+    }
+
+    function computeOverallStats() {
+      let done = 0, correct = 0, wrong = 0, total = 0;
+      DATA.mocks.forEach((m) => {
+        const showTruth = quizMode === "instant" || Boolean(submittedMocks[m.id]);
+        m.questions.forEach((q) => {
+          total++;
+          if (answers[q.id] !== undefined) {
+            done++;
+            if (showTruth) {
+              if (answers[q.id] === q.ans) correct++;
+              else wrong++;
+            }
+          }
+        });
+      });
+      return { done, total, marks: (correct - wrong * 0.25).toFixed(2) };
+    }
+
+    function stopInterval() {
+      if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
+    }
+
+    function pauseAllTimers() {
+      Object.keys(timerState).forEach((k) => { timerState[k].running = false; });
+      stopInterval();
+    }
+
+    function startTimerForActive() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      if (st.remaining <= 0) st.remaining = mock.durationSec;
+      pauseAllTimers();
+      st.running = true;
+      updateTimerUI();
+      tickInterval = setInterval(() => {
+        const cur = timerState[activeMockId];
+        if (!cur.running) { stopInterval(); return; }
+        cur.remaining = Math.max(0, cur.remaining - 1);
+        updateTimerUI();
+        if (cur.remaining === 0) {
+          cur.running = false;
+          stopInterval();
+          showScorecardModal("⏱ Time's Up!");
+        }
+      }, 1000);
+    }
+
+    function toggleTimer() {
+      const st = timerState[activeMockId];
+      if (st.running) {
+        st.running = false;
+        stopInterval();
+        updateTimerUI();
+      } else {
+        startTimerForActive();
+      }
+    }
+
+    function resetTimer() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      st.running = false;
+      st.remaining = mock.durationSec;
+      stopInterval();
+      updateTimerUI();
+    }
+
+    function updateTimerUI() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      const formatted = formatTime(st.remaining);
+      document.getElementById("heroTimerText").textContent = formatted;
+      document.getElementById("miniTimerText").textContent = formatted;
+      document.getElementById("timerLabel").textContent = `${mock.timeLabel.toUpperCase()} TIMER`;
+      document.getElementById("timerToggleBtn").textContent = st.running ? "Pause" : (st.remaining < mock.durationSec && st.remaining > 0 ? "Resume" : "Start");
+      document.getElementById("timerStatusBadge").textContent = st.remaining === 0 ? "TIME UP" : (st.running ? "LIVE" : (st.remaining < mock.durationSec ? "PAUSED" : "READY"));
+
+      const pct = Math.max(0, (st.remaining / mock.durationSec) * 100);
+      const bar = document.getElementById("timerProgressBar");
+      const miniPill = document.getElementById("miniTimerPill");
+      bar.style.width = `${pct}%`;
+
+      miniPill.classList.remove("timer-urgent", "bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300", "bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      bar.classList.remove("bg-emerald-300", "bg-amber-300", "bg-rose-400");
+
+      if (st.remaining <= 60) {
+        bar.classList.add("bg-rose-400");
+        miniPill.classList.add("bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300");
+        if (st.running) miniPill.classList.add("timer-urgent");
+      } else if (st.remaining <= 150) {
+        bar.classList.add("bg-amber-300");
+        miniPill.classList.add("bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      } else {
+        bar.classList.add("bg-emerald-300");
+      }
+    }
+
+    function openModal(title, bodyHtml, buttons) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalBody").innerHTML = bodyHtml;
+      const actions = document.getElementById("modalActions");
+      actions.innerHTML = "";
+      buttons.forEach((b) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = b.label;
+        btn.className = b.cls;
+        btn.addEventListener("click", () => {
+          closeModal();
+          if (b.onClick) b.onClick();
+        });
+        actions.appendChild(btn);
+      });
+      document.getElementById("modalBackdrop").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("modalBackdrop").classList.add("hidden");
+    }
+
+    function showScorecardModal(titlePrefix) {
+      const mock = getActiveMock();
+      submittedMocks[mock.id] = true;
+      safeSet(STORAGE_SUB, submittedMocks);
+      const st = computeMockStats(mock);
+      renderAll();
+      openModal(
+        `${titlePrefix} — ${mock.code} Scorecard`,
+        `
+          <div class="grid grid-cols-2 gap-2.5 text-center">
+            <div class="rounded-xl bg-indigo-50 dark:bg-indigo-500/15 p-3">
+              <div class="text-xl font-black text-indigo-700 dark:text-indigo-300">${st.marks.toFixed(2)} / ${st.total}</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">NET MARKS</div>
+            </div>
+            <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/15 p-3">
+              <div class="text-xl font-black text-emerald-700 dark:text-emerald-300">${st.acc}%</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">ACCURACY</div>
+            </div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Correct: <span class="text-emerald-600 dark:text-emerald-400">${st.correct}</span></div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Wrong: <span class="text-rose-600 dark:text-rose-400">${st.wrong}</span> &bull; Left: ${st.total - st.attempted}</div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">All answers and explanations for ${escapeHtml(mock.code)} are now unlocked below.</p>
+        `,
+        [
+          {
+            label: "Review Wrong Only",
+            cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer",
+            onClick: () => { activeFilter = "wrong"; renderAll(); }
+          },
+          {
+            label: "View All Solutions",
+            cls: "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer"
+          }
+        ]
+      );
+    }
+
+    function renderCategoryTabs() {
+      const wrap = document.getElementById("categoryTabs");
+      wrap.innerHTML = DATA.categories.map((c) => {
+        const active = c.key === activeCategory;
+        const catMocks = getCategoryMocks(c.key);
+        const done = catMocks.reduce((acc, m) => acc + m.questions.filter((q) => answers[q.id] !== undefined).length, 0);
+        const cls = active
+          ? "bg-slate-900 dark:bg-indigo-600 text-white border-slate-900 dark:border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-indigo-400";
+        const badgeCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300";
+        return `
+          <button type="button" data-cat="${escapeHtml(c.key)}"
+            class="cat-tab shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-extrabold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(c.label)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md tabular-nums ${badgeCls}">${c.mocks} Mocks &bull; ${done}/${c.count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderMockTabs() {
+      const wrap = document.getElementById("mockTabs");
+      const catMocks = getCategoryMocks(activeCategory);
+      wrap.innerHTML = catMocks.map((m) => {
+        const active = m.id === activeMockId;
+        const done = m.questions.filter((q) => answers[q.id] !== undefined).length;
+        const cls = active
+          ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700";
+        const pillCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400";
+        return `
+          <button type="button" data-mock-id="${m.id}"
+            class="mock-tab shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(m.code)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums ${pillCls}">${done}/${m.questions.length}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderHeroAndStats() {
+      const mock = getActiveMock();
+      const st = computeMockStats(mock);
+      const ov = computeOverallStats();
+
+      document.getElementById("heroBadge").textContent = `${mock.category} Dedicated Mock`;
+      document.getElementById("heroQCount").textContent = `${mock.questions.length} Questions · +1.00 / −0.25`;
+      document.getElementById("heroTitle").textContent = mock.title;
+      document.getElementById("heroSub").textContent = mock.subtitle;
+
+      document.getElementById("statAttempted").textContent = `${st.attempted}/${st.total}`;
+      document.getElementById("statMarks").textContent = st.showTruth ? st.marks.toFixed(2) : "—";
+      document.getElementById("statAccuracy").textContent = st.showTruth ? `${st.acc}%` : "—";
+      document.getElementById("overallScorePill").textContent = `${ov.done}/${ov.total} Done • ${ov.marks} Marks`;
+
+      const instBtn = document.getElementById("modeInstantBtn");
+      const examBtn = document.getElementById("modeExamBtn");
+      const subBtn = document.getElementById("submitExamBtn");
+
+      if (quizMode === "instant") {
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        subBtn.classList.add("hidden");
+      } else {
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        if (!submittedMocks[mock.id]) subBtn.classList.remove("hidden");
+        else subBtn.classList.add("hidden");
+      }
+
+      document.querySelectorAll("#filterGroup .flt-btn").forEach((btn) => {
+        const active = btn.dataset.filter === activeFilter;
+        btn.className = active
+          ? "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer"
+          : "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+
+      document.getElementById("prevMockBtn").disabled = activeMockId <= 1;
+      document.getElementById("nextMockBtn").disabled = activeMockId >= DATA.mocks.length;
+      updateTimerUI();
+    }
+
+    function renderPalette() {
+      const mock = getActiveMock();
+      const wrap = document.getElementById("questionPalette");
+      document.getElementById("paletteTitle").textContent = `Question Palette (Jump to Q1–Q${mock.questions.length})`;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      wrap.innerHTML = mock.questions.map((q) => {
+        const picked = answers[q.id];
+        let cls = "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+        if (picked !== undefined) {
+          if (!showTruth) cls = "bg-indigo-600 text-white border-indigo-600";
+          else if (picked === q.ans) cls = "bg-emerald-600 text-white border-emerald-600";
+          else cls = "bg-rose-600 text-white border-rose-600";
+        }
+        return `
+          <button type="button" data-jump="qcard-${q.id}"
+            class="pal-btn w-8 h-7 rounded-lg border text-[11px] font-bold tabular-nums hover:opacity-85 cursor-pointer ${cls}">
+            ${q.num}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderQuestions() {
+      const mock = getActiveMock();
+      const list = document.getElementById("questionsList");
+      const showTruthGlobal = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+
+      const filtered = mock.questions.filter((q) => {
+        const picked = answers[q.id];
+        if (activeFilter === "unanswered") return picked === undefined;
+        if (activeFilter === "wrong") {
+          return showTruthGlobal && picked !== undefined && picked !== q.ans;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 text-center space-y-2">
+            <p class="text-sm font-bold text-slate-700 dark:text-slate-200">No questions match the current filter.</p>
+            <button type="button" id="clearFilterBtn" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Show All Questions</button>
+          </div>
+        `;
+        const cf = document.getElementById("clearFilterBtn");
+        if (cf) cf.addEventListener("click", () => { activeFilter = "all"; renderAll(); });
+        return;
+      }
+
+      const letters = ["A", "B", "C", "D"];
+      list.innerHTML = filtered.map((q) => {
+        const picked = answers[q.id];
+        const revealed = isRevealed(mock.id, q.id);
+
+        const optsHtml = q.options.map((opt, idx) => {
+          let btnCls = "border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-800 dark:text-slate-100";
+          let badgeCls = "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+          let mark = "";
+
+          if (revealed) {
+            if (idx === q.ans) {
+              btnCls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200";
+              badgeCls = "bg-emerald-600 text-white border-emerald-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-emerald-600 dark:text-emerald-400">✓ Correct</span>';
+            } else if (picked === idx) {
+              btnCls = "border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200";
+              badgeCls = "bg-rose-600 text-white border-rose-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-rose-600 dark:text-rose-400">✗ Your Pick</span>';
+            } else {
+              btnCls = "border-slate-200/70 dark:border-slate-800/70 bg-white dark:bg-slate-900/40 text-slate-500 dark:text-slate-400 opacity-75";
+            }
+          } else if (picked === idx) {
+            btnCls = "border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200";
+            badgeCls = "bg-indigo-600 text-white border-indigo-600";
+            mark = '<span class="ml-auto text-xs font-bold text-indigo-600 dark:text-indigo-400">Selected</span>';
+          }
+
+          return `
+            <button type="button" data-qid="${q.id}" data-opt="${idx}"
+              class="opt-btn w-full text-left flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer ${btnCls}">
+              <span class="w-6 h-6 rounded-lg border text-xs font-extrabold flex items-center justify-center shrink-0 ${badgeCls}">${letters[idx]}</span>
+              <span class="flex-1 leading-snug font-mono sm:font-sans">${escapeHtml(opt)}</span>
+              ${mark}
+            </button>
+          `;
+        }).join("");
+
+        const expHtml = revealed && q.exp ? `
+          <div class="mt-3 rounded-xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 p-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+            <span class="font-extrabold text-indigo-700 dark:text-indigo-300">Explanation: </span>${escapeHtml(q.exp)}
+          </div>
+        ` : "";
+
+        const qBodyHtml = `<p class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line mb-3.5">${escapeHtml(q.q)}</p>`;
+
+        return `
+          <article id="qcard-${q.id}" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs scroll-mt-40">
+            <div class="flex flex-wrap items-center gap-2 mb-2.5">
+              <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white">Q${q.num}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${escapeHtml(mock.category)}</span>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border text-sky-800 dark:text-sky-300 bg-sky-100 dark:bg-sky-900/40 border-sky-200 dark:border-sky-800">📘 ${escapeHtml(q.exam)}</span>
+            </div>
+            ${qBodyHtml}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${optsHtml}
+            </div>
+            ${expHtml}
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderAll() {
+      renderCategoryTabs();
+      renderMockTabs();
+      renderHeroAndStats();
+      renderPalette();
+      renderQuestions();
+    }
+
+    document.getElementById("categoryTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat-tab");
+      if (!btn) return;
+      const nextCat = btn.dataset.cat;
+      if (nextCat === activeCategory) return;
+      pauseAllTimers();
+      activeCategory = nextCat;
+      const firstMock = getCategoryMocks(activeCategory)[0];
+      if (firstMock) activeMockId = firstMock.id;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("mockTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".mock-tab");
+      if (!btn) return;
+      const nextId = Number(btn.dataset.mockId);
+      if (nextId === activeMockId) return;
+      pauseAllTimers();
+      activeMockId = nextId;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("questionsList").addEventListener("click", (e) => {
+      const btn = e.target.closest(".opt-btn");
+      if (!btn) return;
+      const qId = Number(btn.dataset.qid);
+      const optIdx = Number(btn.dataset.opt);
+      const mock = getActiveMock();
+
+      const st = timerState[activeMockId];
+      if (!st.running && st.remaining === mock.durationSec) {
+        startTimerForActive();
+      }
+
+      if (quizMode === "instant") {
+        if (answers[qId] !== undefined) return;
+        answers[qId] = optIdx;
+      } else {
+        if (submittedMocks[mock.id]) return;
+        answers[qId] = optIdx;
+      }
+      safeSet(STORAGE_ANS, answers);
+      renderAll();
+    });
+
+    document.getElementById("questionPalette").addEventListener("click", (e) => {
+      const btn = e.target.closest(".pal-btn");
+      if (!btn) return;
+      const target = document.getElementById(btn.dataset.jump);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        activeFilter = "all";
+        renderAll();
+        setTimeout(() => {
+          const el = document.getElementById(btn.dataset.jump);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 50);
+      }
+    });
+
+    document.getElementById("filterGroup").addEventListener("click", (e) => {
+      const btn = e.target.closest(".flt-btn");
+      if (!btn) return;
+      activeFilter = btn.dataset.filter;
+      renderAll();
+    });
+
+    document.getElementById("modeInstantBtn").addEventListener("click", () => { quizMode = "instant"; renderAll(); });
+    document.getElementById("modeExamBtn").addEventListener("click", () => { quizMode = "exam"; renderAll(); });
+    document.getElementById("submitExamBtn").addEventListener("click", () => { pauseAllTimers(); showScorecardModal("Mock Submitted"); });
+    document.getElementById("timerToggleBtn").addEventListener("click", toggleTimer);
+    document.getElementById("timerResetBtn").addEventListener("click", resetTimer);
+
+    document.getElementById("resetMockBtn").addEventListener("click", () => {
+      const mock = getActiveMock();
+      openModal(
+        `Reset ${mock.code}?`,
+        `<p>This will clear all saved answers and reset the timer for <strong>${escapeHtml(mock.code)}</strong>.</p>`,
+        [
+          { label: "Cancel", cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer" },
+          {
+            label: "Reset Mock",
+            cls: "px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold cursor-pointer",
+            onClick: () => {
+              mock.questions.forEach((q) => { delete answers[q.id]; });
+              delete submittedMocks[mock.id];
+              safeSet(STORAGE_ANS, answers);
+              safeSet(STORAGE_SUB, submittedMocks);
+              resetTimer();
+              activeFilter = "all";
+              renderAll();
+            }
+          }
+        ]
+      );
+    });
+
+    document.getElementById("prevMockBtn").addEventListener("click", () => {
+      if (activeMockId > 1) {
+        pauseAllTimers();
+        activeMockId--;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("nextMockBtn").addEventListener("click", () => {
+      if (activeMockId < DATA.mocks.length) {
+        pauseAllTimers();
+        activeMockId++;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("modalCloseX").addEventListener("click", closeModal);
+    document.getElementById("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      document.documentElement.classList.toggle("dark", isDark);
+      document.getElementById("themeIcon").textContent = isDark ? "☀️" : "🌙";
+    }
+    applyTheme(safeGet(STORAGE_THEME, "light"));
+    document.getElementById("themeToggleBtn").addEventListener("click", () => {
+      const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+      safeSet(STORAGE_THEME, next);
+      applyTheme(next);
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

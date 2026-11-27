@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CS Math, AI/Graphics, Physics & Arts Mocks · HARIS SAIFI</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .timer-urgent { animation: pulseSoft 1s infinite; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen antialiased transition-colors duration-200">
+
+  <!-- Sticky Top Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-600 to-purple-700 text-white font-extrabold text-xs flex items-center justify-center shadow-sm shrink-0">
+          MATH
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
+            CS MATH, AI/GRAPHICS, PHYSICS &amp; ARTS
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+            14 Separate Topic Mocks &bull; 269 Unique Qs &bull; CBT Timer &bull; <span class="font-bold text-indigo-600 dark:text-indigo-400">by HARIS SAIFI</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <div id="miniTimerPill" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-extrabold tabular-nums">
+          <span aria-hidden="true">⏱</span>
+          <span id="miniTimerText">12:00</span>
+        </div>
+
+        <div id="overallScorePill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-bold tabular-nums">
+          0/269 Done &bull; 0.00 Marks
+        </div>
+
+        <button id="themeToggleBtn" type="button" aria-label="Toggle dark mode"
+          class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Subject Category Tabs (C | C++ | Java | OOPS | Python) -->
+    <div class="border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/80">
+      <div id="categoryTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </div>
+
+    <!-- Mock Selector Strip for Active Subject -->
+    <nav aria-label="Select Mock Test" class="border-t border-slate-100 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/75">
+      <div id="mockTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-3 sm:px-5 py-5 space-y-5">
+
+    <!-- Active Mock Hero + Timer Panel -->
+    <section id="heroCard" class="rounded-2xl bg-gradient-to-br from-rose-600 via-pink-600 to-purple-800 text-white p-5 sm:p-6 shadow-md">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="space-y-1.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="heroBadge" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/20 text-white"></span>
+            <span id="heroQCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-black/20 text-indigo-100"></span>
+          </div>
+          <h2 id="heroTitle" class="text-xl sm:text-2xl font-extrabold tracking-tight"></h2>
+          <p id="heroSub" class="text-xs sm:text-sm text-indigo-100/95"></p>
+        </div>
+
+        <!-- Timer + Score Box -->
+        <div class="flex flex-wrap sm:flex-nowrap items-stretch gap-3">
+          <div class="rounded-xl bg-black/25 border border-white/15 px-4 py-2.5 flex flex-col justify-center min-w-[160px]">
+            <div class="flex items-center justify-between gap-2">
+              <span id="timerLabel" class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">12-MIN TIMER</span>
+              <span id="timerStatusBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/15">READY</span>
+            </div>
+            <div id="heroTimerText" class="text-2xl sm:text-3xl font-black tabular-nums tracking-tight mt-0.5">12:00</div>
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <button id="timerToggleBtn" type="button"
+                class="flex-1 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white text-indigo-700 hover:bg-indigo-50 cursor-pointer">
+                Start
+              </button>
+              <button id="timerResetBtn" type="button"
+                class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white cursor-pointer">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white/12 border border-white/15 px-4 py-2.5 flex items-center gap-4 text-center">
+            <div>
+              <div id="statAttempted" class="text-lg sm:text-xl font-extrabold tabular-nums">0/20</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Attempted</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statMarks" class="text-lg sm:text-xl font-extrabold tabular-nums">0.00</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Marks</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statAccuracy" class="text-lg sm:text-xl font-extrabold tabular-nums">0%</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Accuracy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 h-1.5 w-full rounded-full bg-black/20 overflow-hidden">
+        <div id="timerProgressBar" class="h-full bg-emerald-300 transition-all duration-500" style="width: 100%;"></div>
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <section class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1" role="group" aria-label="Quiz Mode">
+          <button id="modeInstantBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer">
+            Instant Feedback
+          </button>
+          <button id="modeExamBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer">
+            Timed Exam (Submit)
+          </button>
+        </div>
+
+        <div id="filterGroup" class="inline-flex items-center gap-1" role="group" aria-label="Question filter">
+          <button type="button" data-filter="all" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer">All</button>
+          <button type="button" data-filter="unanswered" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Unanswered</button>
+          <button type="button" data-filter="wrong" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Wrong Only</button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="submitExamBtn" type="button"
+          class="hidden px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs cursor-pointer">
+          Submit Mock
+        </button>
+        <button id="resetMockBtn" type="button"
+          class="px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-800/70 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-xs font-bold cursor-pointer">
+          Reset Mock
+        </button>
+      </div>
+    </section>
+
+    <!-- Quick Question Palette -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex items-center justify-between mb-2">
+        <span id="paletteTitle" class="text-xs font-bold text-slate-600 dark:text-slate-300">Question Palette</span>
+        <span class="text-[11px] text-slate-500 dark:text-slate-400">Green = Correct &bull; Red = Wrong &bull; Indigo = Marked</span>
+      </div>
+      <div id="questionPalette" class="flex flex-wrap gap-1.5"></div>
+    </section>
+
+    <!-- Questions Container -->
+    <section id="questionsList" class="space-y-4"></section>
+
+    <!-- Bottom Navigation -->
+    <section class="flex items-center justify-between pt-2 pb-8">
+      <button id="prevMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 cursor-pointer">
+        &larr; Previous Mock
+      </button>
+      <button id="nextMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white disabled:opacity-40 cursor-pointer">
+        Next Mock &rarr;
+      </button>
+    </section>
+  </main>
+
+  <!-- In-Page Modal -->
+  <div id="modalBackdrop" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white"></h3>
+        <button id="modalCloseX" type="button" aria-label="Close modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg font-bold cursor-pointer">&times;</button>
+      </div>
+      <div id="modalBody" class="text-sm text-slate-600 dark:text-slate-300 space-y-3"></div>
+      <div id="modalActions" class="flex items-center justify-end gap-2 pt-1"></div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"categories": [{"key": "CSMath", "label": "CS Mathematics", "count": 138, "mocks": 7, "desc": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic"}, {"key": "AIGraphics", "label": "AI, Graphics & Tech", "count": 71, "mocks": 4, "desc": "2D/3D Transformations, RGB/CMY, AI Search, ML & Cloud/IoT"}, {"key": "Physics", "label": "Physics & Science", "count": 42, "mocks": 2, "desc": "EM Waves, Optics, Transformers, Semiconductors & General Science"}, {"key": "Arts", "label": "GK & Arts (Part B)", "count": 18, "mocks": 1, "desc": "Indian Tribal Arts, Culture & Part B General Knowledge"}], "mocks": [{"id": 1, "category": "CSMath", "code": "MTH Mock 01", "title": "CS Mathematics — Mock 01", "subtitle": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic", "durationSec": 720, "timeLabel": "12-Min", "questions": [{"id": 1, "num": 1, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A family has two children. Given that at least one of them is a boy, what is the probability that both are boys? (Assume boys and girls are equally likely and independent.)", "options": ["1/3", "1/2", "1/4", "2/3"], "ans": 0, "exp": "Sample space with at least one boy = {BB, BG, GB} (3 equally likely cases); only BB has both boys → 1/3."}, {"id": 2, "num": 2, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "What is the determinant of the identity matrix of order 3?", "options": ["0", "9", "3", "1"], "ans": 3, "exp": "The determinant of any diagonal matrix is the product of its diagonal entries: 1 × 1 × 1 = 1."}, {"id": 3, "num": 3, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "What is the value of d/dx (eˣ)?", "options": ["eˣ", "x·eˣ⁻¹", "1", "log x"], "ans": 0, "exp": "The exponential function eˣ is its own derivative: d/dx (eˣ) = eˣ."}, {"id": 4, "num": 4, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "What is the next number in the series 1, 3, 7, 15, 31, …?", "options": ["47", "62", "63", "64"], "ans": 2, "exp": "Each term = 2 × previous + 1 (or 2ⁿ − 1): 31 × 2 + 1 = 63."}, {"id": 5, "num": 5, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "If A = {1, 2, 3} and B = {3, 4}, what is A ∪ B?", "options": ["{1, 2, 3, 4}", "{3}", "{1, 2}", "{1, 2, 3, 3, 4}"], "ans": 0, "exp": "A ∪ B contains every distinct element belonging to A or B → {1, 2, 3, 4}."}, {"id": 6, "num": 6, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "What is the negation of the statement “All students passed the exam”?", "options": ["No student passed the exam", "Some students passed the exam", "All students failed the exam", "At least one student did not pass the exam"], "ans": 3, "exp": "The logical negation of “for all x, P(x)” is “there exists at least one x such that not P(x)”."}, {"id": 7, "num": 7, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A random variable X follows a binomial distribution with n = 10 and p = 0.4. What are its mean and variance?", "options": ["Mean 4, variance 4", "Mean 4, variance 2.4", "Mean 6, variance 2.4", "Mean 4, variance 1.55"], "ans": 1, "exp": "Mean = np = 4; Variance = npq = 10 × 0.4 × 0.6 = 2.4."}, {"id": 8, "num": 8, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "If A is a square matrix, then (Aᵀ)ᵀ is equal to:", "options": ["A", "Aᵀ", "A⁻¹", "2A"], "ans": 0, "exp": "Taking the transpose twice returns the original matrix A."}, {"id": 9, "num": 9, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "What is the derivative of x³ with respect to x?", "options": ["3x²", "x²", "3x", "x⁴/4"], "ans": 0, "exp": "By power rule, d/dx(x³) = 3x²."}, {"id": 10, "num": 10, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "What is the value of 2⁵ − 5²?", "options": ["7", "0", "−7", "57"], "ans": 0, "exp": "32 − 25 = 7."}, {"id": 11, "num": 11, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "What is the minimum number of students in a class that guarantees at least 3 of them were born in the same month?", "options": ["36", "24", "37", "25"], "ans": 3, "exp": "By Pigeonhole Principle: 12 × 2 + 1 = 25 students."}, {"id": 12, "num": 12, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "What is the minimum number of colours needed to colour the vertices of a triangle (complete graph K₃) so that no two adjacent vertices have the same colour?", "options": ["1", "2", "3", "4"], "ans": 2, "exp": "Chromatic number of K₃ is 3."}, {"id": 13, "num": 13, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Two fair dice are thrown. Given that both dice show odd numbers, what is the probability that their sum is 8?", "options": ["1/4", "5/36", "1/9", "2/9"], "ans": 3, "exp": "Both odd = 3×3 = 9 outcomes. Sum 8: (3,5), (5,3) → 2/9."}, {"id": 14, "num": 14, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "The number of onto (surjective) functions from a set with 3 elements to a set with 2 elements is ______.", "options": ["6", "8", "9", "3"], "ans": 0, "exp": "Total functions = 2³ = 8; non-onto (constant) = 2 → onto functions = 8 − 2 = 6."}, {"id": 15, "num": 15, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "What is the value of ∫ from 0 to π/2 of sin²x dx?", "options": ["π/4", "π/2", "1/2", "1"], "ans": 0, "exp": "∫₀^(π/2) (1 − cos 2x)/2 dx = π/4."}, {"id": 16, "num": 16, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "What is the value of log₁₀ 1000?", "options": ["2", "3", "10", "100"], "ans": 1, "exp": "log₁₀(10³) = 3."}, {"id": 17, "num": 17, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding a relation R on a set A?\nI. R is reflexive if (a, b) ∈ R always implies (b, a) ∈ R.\nII. A relation that is only reflexive and symmetric is called an equivalence relation.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 3, "exp": "Both are false: I defines symmetric, not reflexive; II omits transitivity."}, {"id": 18, "num": 18, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Which of the following is a tautology?", "options": ["(p → q) ∨ (q → p)", "(p → q) → (q → p)", "(p ∨ q) → (p ∧ q)", "(p → q) ∧ (q → p)"], "ans": 0, "exp": "(¬p ∨ q) ∨ (¬q ∨ p) = (p ∨ ¬p) ∨ (q ∨ ¬q) = True for all truth values."}, {"id": 19, "num": 19, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which phase of a compiler checks whether the program follows the grammar of the language, building a parse tree?", "options": ["Lexical analysis", "Code generation", "Code optimisation", "Syntax analysis"], "ans": 3, "exp": "Syntax analysis (parsing) validates tokens against the language grammar and builds a parse tree."}, {"id": 20, "num": 20, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Box I has 4 red and 1 black ball; Box II has 1 red and 4 black balls. A die is thrown: if 1 or 2, draw from Box I, else Box II. The ball drawn is red. What is the probability it came from Box I?", "options": ["4/5", "2/3", "1/3", "2/5"], "ans": 1, "exp": "P(I)=1/3, P(II)=2/3; P(R|I)=4/5, P(R|II)=1/5. P(I|R) = (4/15) / (4/15 + 2/15) = 4/6 = 2/3."}]}, {"id": 2, "category": "CSMath", "code": "MTH Mock 02", "title": "CS Mathematics — Mock 02", "subtitle": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic", "durationSec": 720, "timeLabel": "12-Min", "questions": [{"id": 21, "num": 1, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "What is the inverse of the matrix [[1, 0], [0, 2]]?", "options": ["[[1, 0], [0, 1/2]]", "[[1, 0], [0, 2]]", "[[0, 1], [2, 0]]", "[[−1, 0], [0, −2]]"], "ans": 0, "exp": "Inverse of a diagonal matrix replaces each diagonal entry with its reciprocal: [[1, 0], [0, 1/2]]."}, {"id": 22, "num": 2, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "For f(x) = x³ − 6x² + 9x + 1 on the closed interval [0, 4], what is the maximum value of f and where is it attained?", "options": ["21, at x = 4", "5, at x = 1 only", "1, at x = 0 and x = 3", "5, at x = 1 and x = 4"], "ans": 3, "exp": "f'(x) = 3(x−1)(x−3) = 0 ⇒ x = 1, 3. Values: f(0)=1, f(1)=5, f(3)=1, f(4)=5. Max = 5 at x = 1 and x = 4."}, {"id": 23, "num": 3, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "What is the value of 5! (5 factorial)?", "options": ["25", "60", "120", "720"], "ans": 2, "exp": "5! = 5 × 4 × 3 × 2 × 1 = 120."}, {"id": 24, "num": 4, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "How many subsets does a set with 4 elements have?", "options": ["8", "16", "4", "32"], "ans": 1, "exp": "A set with n elements has 2ⁿ subsets → 2⁴ = 16."}, {"id": 25, "num": 5, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "How many different equivalence relations can be defined on a set with 4 elements?", "options": ["15", "16", "64", "4"], "ans": 0, "exp": "Equivalence relations equal set partitions (Bell number B₄ = 1 + 4 + 3 + 6 + 1 = 15)."}, {"id": 26, "num": 6, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "The trapezoidal rule with step h = 1 is used to evaluate ∫₀² x² dx. What value does it give?", "options": ["3", "8/3", "2.5", "4"], "ans": 0, "exp": "(h/2)[f(0) + 2f(1) + f(2)] = (1/2)[0 + 2(1) + 4] = 3."}, {"id": 27, "num": 7, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regula falsi is applied to f(x) = x³ − 2x − 5 on [2, 3]. What is the first approximation?", "options": ["About 2.0588", "2.5", "About 2.0625", "About 2.9412"], "ans": 0, "exp": "f(2) = −1, f(3) = 16 ⇒ x = (2×16 − 3×(−1)) / (16 − (−1)) = 35/17 ≈ 2.0588."}, {"id": 28, "num": 8, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "A is a 4 × 6 matrix of rank 3. By the rank–nullity theorem, what is the nullity of A?", "options": ["1", "3", "4", "6"], "ans": 1, "exp": "rank(A) + nullity(A) = number of columns = 6 ⇒ nullity = 6 − 3 = 3."}, {"id": 29, "num": 9, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "If A = [[2, 1], [1, 2]], the trace of A³ is ______.", "options": ["27", "28", "64", "9"], "ans": 1, "exp": "Eigenvalues of A are 1 and 3 ⇒ eigenvalues of A³ are 1³=1 and 3³=27 ⇒ trace(A³) = 1 + 27 = 28."}, {"id": 30, "num": 10, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "The bisection method starts with an interval of length 1. Minimum iterations needed to reduce interval length below 0.001?", "options": ["1000", "9", "11", "10"], "ans": 3, "exp": "1 / 2ⁿ < 0.001 ⇒ 2ⁿ > 1000. Since 2⁹ = 512 and 2¹⁰ = 1024, n = 10 iterations."}, {"id": 31, "num": 11, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "How many relations on a set with 3 elements are both reflexive and symmetric?", "options": ["8", "64", "512", "16"], "ans": 0, "exp": "Reflexive fixes all n diagonal pairs; symmetric pairs up the remaining (n²−n)/2 = 3 off-diagonal pairs ⇒ 2³ = 8."}, {"id": 32, "num": 12, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "What is the derivative of xˣ at x = 1?", "options": ["0", "1", "e", "2"], "ans": 1, "exp": "y = xˣ ⇒ y' = xˣ(ln x + 1). At x = 1, y' = 1 × (0 + 1) = 1."}, {"id": 33, "num": 13, "topic": "Mathematics", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "A quadratic polynomial passes through (0, 1), (1, 3), and (2, 7). What is its value at x = 3?", "options": ["11", "13", "15", "9"], "ans": 1, "exp": "First differences: 2, 4; constant second difference = 2 ⇒ next first diff = 6 ⇒ f(3) = 7 + 6 = 13 (f(x) = x² + x + 1)."}, {"id": 34, "num": 14, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "For two events, P(A) = 0.4, P(B) = 0.5 and P(A ∪ B) = 0.7. Which of the following is true?", "options": ["A and B are mutually exclusive", "A and B are independent", "P(A | B) = 0.5", "P(A ∩ B) = 0.3"], "ans": 1, "exp": "P(A ∩ B) = 0.4 + 0.5 − 0.7 = 0.2. Since P(A)×P(B) = 0.4 × 0.5 = 0.2 = P(A ∩ B), A and B are independent."}, {"id": 35, "num": 15, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "If A = [[1, 2], [0, 3]], what is A + A?", "options": ["[[2, 4], [0, 6]]", "[[1, 4], [0, 9]]", "[[2, 2], [0, 3]]", "[[1, 2], [0, 6]]"], "ans": 0, "exp": "Element-wise addition: [[1+1, 2+2], [0+0, 3+3]] = [[2, 4], [0, 6]]."}, {"id": 36, "num": 16, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Three fair coins are tossed. Given that at least one of them shows a head, what is the probability that at least two show heads?", "options": ["3/8", "1/2", "3/7", "4/7"], "ans": 3, "exp": "Outcomes with ≥1 head = 8 − 1 (TTT) = 7. Outcomes with ≥2 heads = {HHT, HTH, THH, HHH} = 4. Probability = 4/7."}, {"id": 37, "num": 17, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "What is the value of √144 + ∛27 ?", "options": ["12", "18", "15", "9"], "ans": 2, "exp": "√144 = 12 and ∛27 = 3; 12 + 3 = 15."}, {"id": 38, "num": 18, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "What is the value of ∫₀⁴ x dx ?", "options": ["4", "8", "16", "2"], "ans": 1, "exp": "[x²/2] from 0 to 4 = 16/2 − 0 = 8."}, {"id": 39, "num": 19, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "What is the derivative of sin x with respect to x?", "options": ["cos x", "−cos x", "−sin x", "sec² x"], "ans": 0, "exp": "Standard derivative: d/dx (sin x) = cos x."}, {"id": 40, "num": 20, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the value of ∫₀¹ 2x dx?", "options": ["0", "2", "1/2", "1"], "ans": 3, "exp": "[x²]₀¹ = 1² − 0² = 1."}]}, {"id": 3, "category": "CSMath", "code": "MTH Mock 03", "title": "CS Mathematics — Mock 03", "subtitle": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic", "durationSec": 720, "timeLabel": "12-Min", "questions": [{"id": 41, "num": 1, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the transpose of the matrix [[1, 2], [3, 4]]?", "options": ["[[1, 3], [2, 4]]", "[[4, 3], [2, 1]]", "[[1, 2], [3, 4]]", "[[2, 1], [4, 3]]"], "ans": 0, "exp": "Swapping rows and columns gives [[1, 3], [2, 4]]."}, {"id": 42, "num": 2, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the solution of dy/dx = 2xy with y(0) = 1?", "options": ["y = 2e^(x²)", "y = e^(2x)", "y = x² + 1", "y = e^(x²)"], "ans": 3, "exp": "dy/y = 2x dx ⇒ ln y = x² + c ⇒ y = C e^(x²); y(0)=1 gives C=1 ⇒ y = e^(x²)."}, {"id": 43, "num": 3, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the value of lim(x → 2) (x² − 4)/(x − 2)?", "options": ["0", "2", "4", "Not defined"], "ans": 2, "exp": "(x−2)(x+2)/(x−2) = x + 2 → 2 + 2 = 4."}, {"id": 44, "num": 4, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the sum of the first 20 natural numbers?", "options": ["200", "210", "220", "190"], "ans": 1, "exp": "n(n+1)/2 = 20 × 21 / 2 = 210."}, {"id": 45, "num": 5, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the mode of the data 3, 5, 7, 5, 9, 5, 3?", "options": ["3", "5", "7", "9"], "ans": 1, "exp": "5 appears most frequently (3 times) ⇒ Mode = 5."}, {"id": 46, "num": 6, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "A fair coin is tossed twice. Probability of getting at least one head?", "options": ["1/4", "1/2", "3/4", "1"], "ans": 2, "exp": "1 − P(TT) = 1 − 1/4 = 3/4."}, {"id": 47, "num": 7, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "The mean of 5 observations is 12. What is the sum of the observations?", "options": ["17", "2.4", "12", "60"], "ans": 3, "exp": "Sum = Mean × Count = 12 × 5 = 60."}, {"id": 48, "num": 8, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "A number is chosen at random from 1 to 100. Probability that it is divisible by 4 or by 6?", "options": ["41/100", "33/100", "25/100", "8/100"], "ans": 1, "exp": "n(4) = 25, n(6) = 16, n(12) = 8 ⇒ 25 + 16 − 8 = 33 ⇒ 33/100."}, {"id": 49, "num": 9, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the value of sin 30° + cos 60°?", "options": ["1/2", "√3", "1", "0"], "ans": 2, "exp": "sin 30° = 1/2 and cos 60° = 1/2, so 1/2 + 1/2 = 1."}, {"id": 50, "num": 10, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "A is a 3 × 3 matrix with |A| = 4. What is the value of |adj A|?", "options": ["8", "4", "64", "16"], "ans": 3, "exp": "For an n × n matrix, |adj A| = |A|^(n−1) = 4^(3−1) = 4² = 16."}, {"id": 51, "num": 11, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the integrating factor of the differential equation dy/dx − y tan x = sec x?", "options": ["−cos x", "sec x", "e^(tan x)", "cos x"], "ans": 3, "exp": "P = −tan x ⇒ IF = e^(−∫tan x dx) = e^(ln cos x) = cos x."}, {"id": 52, "num": 12, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the slope of the line 2x + 3y = 6?", "options": ["2/3", "−2/3", "3/2", "−3/2"], "ans": 1, "exp": "Rewriting as y = (−2/3)x + 2 (or −a/b = −2/3) gives slope m = −2/3."}, {"id": 53, "num": 13, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the modulus of the complex number z = (3 + 4i) / (1 − i)?", "options": ["7/√2", "5√2", "5", "5/√2"], "ans": 3, "exp": "|z| = |3 + 4i| / |1 − i| = √(9 + 16) / √(1 + 1) = 5 / √2."}, {"id": 54, "num": 14, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "For a moderately skewed distribution, the mean is 30 and the median is 27. Using the empirical relation, what is the mode?", "options": ["27", "24", "33", "21"], "ans": 3, "exp": "Mode = 3 × Median − 2 × Mean = 3(27) − 2(30) = 81 − 60 = 21."}, {"id": 55, "num": 15, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "A and B are independent events with P(A) = 0.5 and P(B) = 0.4. What is the probability that exactly one of them occurs?", "options": ["0.9", "0.2", "0.7", "0.5"], "ans": 3, "exp": "P(A and not B) = 0.5×0.6 = 0.3; P(B and not A) = 0.4×0.5 = 0.2. Total = 0.3 + 0.2 = 0.5."}, {"id": 56, "num": 16, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the arithmetic mean of the first 10 natural numbers?", "options": ["5", "6", "55", "5.5"], "ans": 3, "exp": "Mean of first n natural numbers = (n + 1) / 2 = (10 + 1) / 2 = 5.5."}, {"id": 57, "num": 17, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Two cards are drawn at random without replacement from a well-shuffled pack of 52 cards. What is the probability that both are aces?", "options": ["1/13", "1/169", "2/13", "1/221"], "ans": 3, "exp": "P(both aces) = (4/52) × (3/51) = (1/13) × (1/17) = 1/221."}, {"id": 58, "num": 18, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "If A = {1, 2, 3} and B = {2, 3, 4}, what is A ∩ B?", "options": ["{2, 3}", "{1, 4}", "{1, 2, 3, 4}", "∅ (empty set)"], "ans": 0, "exp": "A ∩ B contains elements common to both sets = {2, 3}."}, {"id": 59, "num": 19, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "What is the determinant of the matrix A = [[2, 1], [3, 4]]?", "options": ["11", "8", "5", "−5"], "ans": 2, "exp": "|A| = (2 × 4) − (1 × 3) = 8 − 3 = 5."}, {"id": 60, "num": 20, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "What are the order and degree of the differential equation (d²y/dx²)³ + (dy/dx)⁴ + y = 0?", "options": ["Order 3, degree 2", "Order 2, degree 4", "Order 2, degree 3", "Order 4, degree 3"], "ans": 2, "exp": "Highest derivative is d²y/dx² (order 2), and its exponent is 3 (degree 3)."}]}, {"id": 4, "category": "CSMath", "code": "MTH Mock 04", "title": "CS Mathematics — Mock 04", "subtitle": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic", "durationSec": 720, "timeLabel": "12-Min", "questions": [{"id": 61, "num": 1, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "What is the value of d/dx (x² + 3x) at x = 2?", "options": ["10", "7", "4", "5"], "ans": 1, "exp": "Derivative = 2x + 3; at x = 2: 2(2) + 3 = 7."}, {"id": 62, "num": 2, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "How many different 3-digit numbers can be formed using digits 1, 2, 3, 4, 5 without repetition?", "options": ["125", "20", "60", "10"], "ans": 2, "exp": "5 × 4 × 3 = 60 (= ⁵P₃)."}, {"id": 63, "num": 3, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "What is the median of the data: 12, 5, 9, 15, 7, 20?", "options": ["10.5", "9", "12", "11.3"], "ans": 0, "exp": "Sorted: 5, 7, 9, 12, 15, 20 ⇒ Median = (9 + 12) / 2 = 10.5."}, {"id": 64, "num": 4, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "What is the probability that a randomly selected leap year has 53 Sundays?", "options": ["2/7", "1/7", "3/7", "1/366"], "ans": 0, "exp": "A leap year has 52 full weeks + 2 consecutive extra days. Out of 7 equally likely pairs, 2 include Sunday ((Sat,Sun), (Sun,Mon)) ⇒ 2/7."}, {"id": 65, "num": 5, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "A quadratic polynomial f(x) passes through (0, 2), (1, 3) and (2, 12). What is f(3)?", "options": ["31", "27", "29", "25"], "ans": 2, "exp": "f(x) = ax²+bx+2; a+b = 1 and 4a+2b = 10 ⇒ a = 4, b = −3 ⇒ f(x) = 4x² − 3x + 2 ⇒ f(3) = 36 − 9 + 2 = 29."}, {"id": 66, "num": 6, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "A fair die is thrown once. What is the variance of the number shown?", "options": ["7/2", "35/12", "91/6", "5/3"], "ans": 1, "exp": "E(X) = 7/2, E(X²) = 91/6 ⇒ Var(X) = 91/6 − 49/4 = (182 − 147)/12 = 35/12."}, {"id": 67, "num": 7, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Using Simpson's 1/3 rule with h = 1, what is the value of ∫₀² x² dx?", "options": ["4", "3", "2", "8/3"], "ans": 3, "exp": "f(0)=0, f(1)=1, f(2)=4 ⇒ (h/3)[f₀ + 4f₁ + f₂] = (1/3)[0 + 4 + 4] = 8/3."}, {"id": 68, "num": 8, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "What is the inverse of the matrix A = [[2, 1], [5, 3]]?", "options": ["[[3, −1], [−5, 2]]", "[[3, −5], [−1, 2]]", "[[−3, 1], [5, −2]]", "[[2, −1], [−5, 3]]"], "ans": 0, "exp": "|A| = 2×3 − 1×5 = 1 ⇒ A⁻¹ = [[3, −1], [−5, 2]]."}, {"id": 69, "num": 9, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "What is the general solution of the differential equation y″ − 4y′ + 13y = 0?", "options": ["y = c₁e²ˣ + c₂e³ˣ", "y = e²ˣ(c₁ cos 3x + c₂ sin 3x)", "y = e³ˣ(c₁ cos 2x + c₂ sin 2x)", "y = (c₁ + c₂x)e²ˣ"], "ans": 1, "exp": "Auxiliary eq: m² − 4m + 13 = 0 ⇒ m = 2 ± 3i ⇒ y = e²ˣ(c₁ cos 3x + c₂ sin 3x)."}, {"id": 70, "num": 10, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "What is the value of lim (x → 0) sin 3x / tan 2x?", "options": ["1", "2/3", "3/2", "0"], "ans": 2, "exp": "lim (x→0) [sin(3x)/(3x)] · [(2x)/tan(2x)] · (3/2) = 1 × 1 × 3/2 = 3/2."}, {"id": 71, "num": 11, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "If f(z) = u + iv is analytic and u = x² − y², which of the following can be v?", "options": ["−2xy", "x² + y²", "2xy", "x − y"], "ans": 2, "exp": "By Cauchy–Riemann equations: v_y = u_x = 2x and v_x = −u_y = 2y ⇒ v = 2xy (f(z) = z²)."}, {"id": 72, "num": 12, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A data set has a mean of 40 and a standard deviation of 10. What is its coefficient of variation?", "options": ["2.5%", "4%", "40%", "25%"], "ans": 3, "exp": "CV = (SD / Mean) × 100 = (10 / 40) × 100 = 25%."}, {"id": 73, "num": 13, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A and B are independent events with P(A) = 0.4 and P(B) = 0.5. What is P(A ∪ B)?", "options": ["0.7", "0.9", "0.2", "0.5"], "ans": 0, "exp": "P(A∩B) = 0.4 × 0.5 = 0.2 ⇒ P(A∪B) = 0.4 + 0.5 − 0.2 = 0.7."}, {"id": 74, "num": 14, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A polynomial f(x) takes values f(0) = 1, f(1) = 3, f(2) = 7. Using Newton's forward difference formula, what is f(3)?", "options": ["9", "11", "15", "13"], "ans": 3, "exp": "Δf(0)=2, Δf(1)=4 ⇒ Δ²f(0)=2. f(x) = 1 + 2x + x(x−1) = x² + x + 1 ⇒ f(3) = 9 + 3 + 1 = 13."}, {"id": 75, "num": 15, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A fair coin is tossed 6 times. What is the probability of getting exactly 4 heads?", "options": ["15/64", "5/16", "3/8", "1/4"], "ans": 0, "exp": "P(X = 4) = ⁶C₄ (1/2)⁴ (1/2)² = 15 / 64."}, {"id": 76, "num": 16, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Using Newton–Raphson to find a root of x² − 5 = 0 starting at x₀ = 2, what is the first approximation x₁?", "options": ["2.5", "2.25", "2.2", "2.236"], "ans": 1, "exp": "x₁ = x₀ − f(x₀)/f′(x₀) = 2 − (4 − 5)/(2×2) = 2 + 0.25 = 2.25."}, {"id": 77, "num": 17, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "The eigenvalues of a 3 × 3 matrix A are 2, 3 and 5. What is the value of det(A²)?", "options": ["30", "100", "900", "60"], "ans": 2, "exp": "det(A) = 2 × 3 × 5 = 30 ⇒ det(A²) = (det A)² = 30² = 900."}, {"id": 78, "num": 18, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "What is the general solution of the differential equation dy/dx + y = eˣ?", "options": ["y = eˣ/2 + c e⁻ˣ", "y = eˣ + c e⁻ˣ", "y = x eˣ + c", "y = eˣ/2 + c eˣ"], "ans": 0, "exp": "IF = e^(∫1 dx) = eˣ. Then y·eˣ = ∫e²ˣ dx = e²ˣ/2 + c ⇒ y = eˣ/2 + c e⁻ˣ."}, {"id": 79, "num": 19, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "If u = x³y² + x⁴y, what is the value of x²(∂²u/∂x²) + 2xy(∂²u/∂x∂y) + y²(∂²u/∂y²)?", "options": ["30u", "25u", "5u", "20u"], "ans": 3, "exp": "u is homogeneous of degree n = 5. By Euler's second-order theorem, the expression equals n(n − 1)u = 5 × 4u = 20u."}, {"id": 80, "num": 20, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "What is the residue of f(z) = eᶻ / (z − 1)² at z = 1?", "options": ["0", "1", "e²", "e"], "ans": 3, "exp": "z = 1 is a pole of order 2: Res = d/dz[(z−1)² f(z)] at z=1 = d/dz(eᶻ)|_{z=1} = e."}]}, {"id": 5, "category": "CSMath", "code": "MTH Mock 05", "title": "CS Mathematics — Mock 05", "subtitle": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic", "durationSec": 720, "timeLabel": "12-Min", "questions": [{"id": 81, "num": 1, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "What is the standard deviation of the data: 2, 4, 4, 4, 5, 5, 7, 9?", "options": ["√2", "4", "3", "2"], "ans": 3, "exp": "Mean = 40/8 = 5. Sum of squared deviations = 9+1+1+1+0+0+4+16 = 32. Variance = 32/8 = 4 ⇒ SD = √4 = 2."}, {"id": 82, "num": 2, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Two fair dice are thrown. Given that the number on the first die is even, what is the probability that the sum is 8?", "options": ["1/12", "5/36", "1/3", "1/6"], "ans": 3, "exp": "Sample space (1st die even) = 3 × 6 = 18 outcomes. Favourable sum-8 pairs: (2,6), (4,4), (6,2) = 3. P = 3/18 = 1/6."}, {"id": 83, "num": 3, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "For f(x) = x³ tabulated with step size h = 2, what is the value of the third forward difference Δ³f(x)?", "options": ["8", "6", "48", "24"], "ans": 2, "exp": "For degree-n polynomial aₙxⁿ, Δⁿf(x) = aₙ · n! · hⁿ ⇒ 1 × 3! × 2³ = 6 × 8 = 48."}, {"id": 84, "num": 4, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "A fair die is thrown 4 times. What is the probability of getting at least one six?", "options": ["2/3", "625/1296", "671/1296", "1/6"], "ans": 2, "exp": "P(no six) = (5/6)⁴ = 625/1296 ⇒ P(at least one six) = 1 − 625/1296 = 671/1296."}, {"id": 85, "num": 5, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following statements is correct for the given partial differential equation?\n∂²u/∂x² + (∂u/∂y)² = 0", "options": ["It is a non-linear equation of order two", "It is a non-linear equation of order one", "It is a linear equation of order one", "It is a linear equation of order two"], "ans": 0, "exp": "The highest derivative present is ∂²u/∂x² ⇒ order 2. Because (∂u/∂y)² raises a derivative to power 2, the PDE is non-linear."}, {"id": 86, "num": 6, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The curve x = 2 cos t, y = 2 sin t, 0 ≤ t ≤ π/2, is rotated about the X-axis through 360°. What is the area of the surface generated?", "options": ["16π", "4π", "8π", "2π"], "ans": 2, "exp": "S = ∫₀^(π/2) 2πy √[(dx/dt)²+(dy/dt)²] dt = ∫₀^(π/2) 2π(2 sin t)(2) dt = 8π[−cos t]₀^(π/2) = 8π. (A quarter circle of radius 2 generates a hemisphere: 2πr² = 8π.)"}, {"id": 87, "num": 7, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "What is the value of ∮c e^(2z) / (z − 1)⁴ dz, where c is the circle |z| = 2?", "options": ["(16/3)πie²", "(4/3)πie²", "2πie²", "(8/3)πie²"], "ans": 3, "exp": "z = 1 lies inside |z| = 2. By Cauchy's integral formula: ∮ f(z)/(z−a)ⁿ⁺¹ dz = (2πi/n!) f⁽ⁿ⁾(a). Here f(z) = e^(2z), n = 3 ⇒ f‴(1) = 8e². Result = (2πi/6)·8e² = (8/3)πie²."}, {"id": 88, "num": 8, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The median of the observations 11, 7, 15, x, 9, 18 is 12. What is the value of x?", "options": ["13", "12", "14", "11"], "ans": 0, "exp": "Sort the data: 7, 9, 11, x, 15, 18 (since median is 12, x lies between 11 and 15). Median = (11 + x)/2 = 12 ⇒ x = 13."}, {"id": 89, "num": 9, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "In a factory, machines A, B and C produce 50%, 30% and 20% of output, with 3%, 4% and 5% defective respectively. A randomly drawn product is defective. What is the probability it was produced by machine B?", "options": ["10/37", "15/37", "12/37", "3/10"], "ans": 2, "exp": "P(D) = 0.5(0.03) + 0.3(0.04) + 0.2(0.05) = 0.015 + 0.012 + 0.010 = 0.037. By Bayes' theorem, P(B|D) = 0.012 / 0.037 = 12/37."}, {"id": 90, "num": 10, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "If u = sin⁻¹[(x² + y²)/(x + y)], what is the value of x(∂u/∂x) + y(∂u/∂y)?", "options": ["−tan u", "2 tan u", "sin u", "tan u"], "ans": 3, "exp": "z = sin u is homogeneous of degree 1. By Euler's theorem: cos u [x(∂u/∂x) + y(∂u/∂y)] = sin u ⇒ tan u."}, {"id": 91, "num": 11, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Given f(x) = ln x: f(1)=0, f(2)=0.6931, f(3)=1.0986, f(4)=1.3863. Using central difference (h = 1), approximate f'(3).", "options": ["0.2877", "0.4055", "0.3466", "0.6931"], "ans": 2, "exp": "f'(3) ≈ [f(4) − f(2)] / 2 = (1.3863 − 0.6931) / 2 = 0.3466."}, {"id": 92, "num": 12, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Discrete distribution for X = 0..7 has P(X) = 0, k, 2k, 2k, 3k, k², 2k², 7k²+k. Find P(X ≥ 6).", "options": ["1/10", "17/100", "9/100", "19/100"], "ans": 3, "exp": "10k² + 9k − 1 = 0 ⇒ k = 1/10. P(X ≥ 6) = 9k² + k = 9/100 + 10/100 = 19/100."}, {"id": 93, "num": 13, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Two balls are drawn without replacement from 6 red and 4 white balls. Probability both are white?", "options": ["3/10", "4/25", "1/5", "2/15"], "ans": 3, "exp": "(4/10) × (3/9) = 12/90 = 2/15."}, {"id": 94, "num": 14, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Using Newton's backward difference formula on (1,1), (2,8), (3,27), (4,64), find f(5).", "options": ["120", "100", "125", "64"], "ans": 2, "exp": "f(5) = 64 + 1(37) + 1(18) + 1(6) = 125 (matches f(x) = x³)."}, {"id": 95, "num": 15, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Find the number of terms in the binomial expansion of (x + 3/x²)⁹.", "options": ["10", "18", "9", "11"], "ans": 0, "exp": "(a + b)ⁿ has n + 1 terms ⇒ 9 + 1 = 10 terms."}, {"id": 96, "num": 16, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "If A = {1, 2, 3, 4, 5}, B = {4, 5, 6} and C = {5, 6, 7}, find (A − B) ∪ (C − B).", "options": ["{1, 2, 3, 7}", "{1, 2, 3}", "{4, 5, 6, 7}", "{1, 2, 3, 6, 7}"], "ans": 0, "exp": "A − B = {1, 2, 3} and C − B = {7} ⇒ Union = {1, 2, 3, 7}."}, {"id": 97, "num": 17, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Truthfulness:\ni) Mutually exclusive ⇒ P(A ∩ B) = 0.\nii) Independent ⇒ P(A ∩ B) = P(A) + P(B).\niii) Sampling error = population parameter − sample statistic.", "options": ["i-True, ii-True, iii-False", "i-True, ii-False, iii-True", "i-False, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 1, "exp": "Independent events satisfy P(A ∩ B) = P(A) × P(B), so ii is False ⇒ i-True, ii-False, iii-True."}, {"id": 98, "num": 18, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "A matrix in which the number of rows equals the number of columns is called a ________ matrix.", "options": ["column", "row", "square", "null"], "ans": 2, "exp": "An n × n matrix is called a square matrix."}, {"id": 99, "num": 19, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Find the rank of the matrix [[1, 2, 3], [2, 1, 4], [3, 3, 7]].", "options": ["0", "3", "1", "2"], "ans": 3, "exp": "Row 3 = Row 1 + Row 2, so determinant = 0 and two linearly independent rows remain ⇒ Rank = 2."}, {"id": 100, "num": 20, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "________ is the method of estimating a value outside the range of known data points.", "options": ["Integration", "Differentiation", "Isolation", "Extrapolation"], "ans": 3, "exp": "Within known points = interpolation; outside known points = extrapolation."}]}, {"id": 6, "category": "CSMath", "code": "MTH Mock 06", "title": "CS Mathematics — Mock 06", "subtitle": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic", "durationSec": 720, "timeLabel": "12-Min", "questions": [{"id": 101, "num": 1, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "When a straight line is parallel to a plane of projection, its projection on that plane shows its ________.", "options": ["true length", "a point", "a shortened length", "a curve"], "ans": 0, "exp": "A line parallel to a projection plane projects in its true length (perpendicular → point; inclined → foreshortened)."}, {"id": 102, "num": 2, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Truthfulness:\ni) Lagrange's formula works even when x values are not equally spaced.\nii) Newton's forward formula is used near the end of a table.", "options": ["i-True, ii-True", "i-False, ii-True", "i-False, ii-False", "i-True, ii-False"], "ans": 3, "exp": "Lagrange works for unequal spacing (i True); Newton's forward formula is for the beginning (backward is for the end, so ii False)."}, {"id": 103, "num": 3, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "A square matrix in which all elements above the main diagonal are zero is called a ______ matrix, while one in which all elements below the main diagonal are zero is called a ______ matrix.", "options": ["Sparse; Dense", "Upper triangular; Lower triangular", "Diagonal; Scalar", "Lower triangular; Upper triangular"], "ans": 3, "exp": "Lower triangular has non-zeros on/below the diagonal (zeros above); Upper triangular has non-zeros on/above the diagonal (zeros below)."}, {"id": 104, "num": 4, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "The probability that a student passes a test is 0.6. If three students take it independently, what is the probability that at least two pass?", "options": ["0.216", "0.432", "0.648", "0.784"], "ans": 2, "exp": "P(2) = ³C₂(0.6)²(0.4) = 0.432; P(3) = (0.6)³ = 0.216. P(at least 2) = 0.432 + 0.216 = 0.648."}, {"id": 105, "num": 5, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Using linear interpolation, what is y at x = 4 given (x₀=2, y₀=10) and (x₁=6, y₁=22)?", "options": ["16", "14", "18", "12"], "ans": 0, "exp": "y = 10 + (4 − 2)(22 − 10)/(6 − 2) = 10 + 2 × 3 = 16."}, {"id": 106, "num": 6, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "The sum of the squares of deviations is LEAST when deviations are taken from the _____.", "options": ["median", "arithmetic mean", "mode", "geometric mean"], "ans": 1, "exp": "∑(x − x̄)² is minimum around the arithmetic mean (sum of absolute deviations is minimum around the median)."}, {"id": 107, "num": 7, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "The volume of the tetrahedron bounded by the coordinate planes and x + y + z = 3 is:", "options": ["27", "9", "4.5", "3"], "ans": 2, "exp": "Intercepts a = b = c = 3 ⇒ V = abc / 6 = 27 / 6 = 4.5 cubic units."}, {"id": 108, "num": 8, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "What is the value of Δ²eˣ, where the interval of differencing is h?", "options": ["e^(2h) eˣ", "(eʰ + 1)² eˣ", "(eʰ − 1)² eˣ", "(eʰ − 1) e^(2x)"], "ans": 2, "exp": "Δeˣ = eˣ(eʰ − 1) ⇒ Δ²eˣ = (eʰ − 1)² eˣ."}, {"id": 109, "num": 9, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "For x = 0, 1, 2 with f(x) = 1, 3, 7, what is the Lagrange interpolating polynomial?", "options": ["2x² + 1", "x² − x + 1", "x² + x + 1", "x² + 2x + 1"], "ans": 2, "exp": "Check x² + x + 1: f(0)=1, f(1)=3, f(2)=7 ✓."}, {"id": 110, "num": 10, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "If two dice are thrown, find the probability that the sum is neither 4 nor 10.", "options": ["1/6", "7/9", "2/3", "5/6"], "ans": 3, "exp": "Sum 4 has 3 outcomes; sum 10 has 3 outcomes → 6/36. P(neither) = 1 − 6/36 = 5/6."}, {"id": 111, "num": 11, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "The general solution of dy/dx = e^(x − y) is:", "options": ["e^y = e^x + c", "e^(−y) = e^x + c", "e^y + e^x = c", "e^(x+y) = c"], "ans": 0, "exp": "Separate variables: e^y dy = e^x dx ⇒ ∫e^y dy = ∫e^x dx ⇒ e^y = e^x + c."}, {"id": 112, "num": 12, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "If u = x³ + y³ + 3x²y, then x(∂u/∂x) + y(∂u/∂y) = ?", "options": ["2u", "3u", "0", "u"], "ans": 1, "exp": "u is homogeneous of degree n = 3; by Euler's theorem, x(∂u/∂x) + y(∂u/∂y) = nu = 3u."}, {"id": 113, "num": 13, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "If E is the shift operator and Δ is the forward difference operator, then:", "options": ["Δ = E⁻¹ − 1", "Δ = E + 1", "Δ = 1 − E", "Δ = E − 1"], "ans": 3, "exp": "Δf(x) = f(x + h) − f(x) = (E − 1)f(x) ⇒ Δ = E − 1."}, {"id": 114, "num": 14, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which of the following is NOT a method of solving a system of linear equations?", "options": ["Trapezoidal rule", "Gauss elimination method", "Matrix inversion method", "Cramer's rule"], "ans": 0, "exp": "Trapezoidal rule is a numerical integration method, not a linear-equation solver."}, {"id": 115, "num": 15, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "If the radius of a sphere increases by 10%, by what percentage does its volume increase?", "options": ["10%", "30%", "33.1%", "21%"], "ans": 2, "exp": "V ∝ r³ ⇒ (1.1)³ = 1.331 ⇒ 33.1% increase."}, {"id": 116, "num": 16, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Consider the data set: 12, 7, 25, 3, 18, 40. What is its range?", "options": ["37", "40", "33", "22"], "ans": 0, "exp": "Range = Max − Min = 40 − 3 = 37."}, {"id": 117, "num": 17, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which of the following is a continuous probability distribution?", "options": ["Binomial distribution", "Normal distribution", "Poisson distribution", "Geometric distribution"], "ans": 1, "exp": "Normal distribution is continuous; Binomial, Poisson, and Geometric are discrete."}, {"id": 118, "num": 18, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Finding y = f(x) for a value of x lying OUTSIDE the given range x₀ to x_n is called _____.", "options": ["interpolation", "extrapolation", "regression", "correlation"], "ans": 1, "exp": "Interpolation estimates inside the range; extrapolation estimates outside the range."}, {"id": 119, "num": 19, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which interpolation formula is most suitable for finding f(x) when x lies near the beginning of a table of equally spaced values?", "options": ["Newton's divided difference formula", "Newton's backward interpolation formula", "Lagrange's interpolation formula", "Newton's forward interpolation formula"], "ans": 3, "exp": "Equal spacing near the start → Newton's forward; near the end → Newton's backward; unequal spacing → Lagrange / divided difference."}]}, {"id": 7, "category": "CSMath", "code": "MTH Mock 07", "title": "CS Mathematics — Mock 07", "subtitle": "Discrete Math, Matrices, Probability, Calculus, Sets & Logic", "durationSec": 720, "timeLabel": "12-Min", "questions": [{"id": 120, "num": 1, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "From point A outside a circle with centre O (radius 30 mm), a tangent AB touches the circle at B. If AO = 50 mm, find length AB.", "options": ["40 mm", "58.3 mm", "20 mm", "80 mm"], "ans": 0, "exp": "OB ⊥ AB ⇒ AB = √(50² − 30²) = √1600 = 40 mm."}, {"id": 121, "num": 2, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which branch of statistics summarises and describes the main features of a dataset using mean and standard deviation?", "options": ["Inferential statistics", "Predictive statistics", "Descriptive statistics", "Prescriptive statistics"], "ans": 2, "exp": "Descriptive statistics summarises observed data; inferential statistics generalises from sample to population."}, {"id": 122, "num": 3, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Each interior angle of a regular polygon is 140°. How many sides does it have?", "options": ["7", "8", "9", "10"], "ans": 2, "exp": "Exterior angle = 180° − 140° = 40° ⇒ n = 360° / 40° = 9 sides."}, {"id": 123, "num": 4, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "If A = [[1, 0], [2, 1]], then A⁵ is:", "options": ["[[5, 0], [10, 5]]", "[[1, 0], [2, 1]]", "[[1, 0], [32, 1]]", "[[1, 0], [10, 1]]"], "ans": 3, "exp": "Aⁿ = [[1, 0], [2n, 1]] ⇒ A⁵ = [[1, 0], [10, 1]]."}, {"id": 124, "num": 5, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Differential equation corresponding to y = ae³ˣ + be⁻ˣ is:", "options": ["y″ − 2y′ − 3y = 0", "y″ + 2y′ − 3y = 0", "y″ − 3y′ + 2y = 0", "y″ + 2y′ + 3y = 0"], "ans": 0, "exp": "(m − 3)(m + 1) = m² − 2m − 3 = 0 ⇒ y″ − 2y′ − 3y = 0."}, {"id": 125, "num": 6, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Particular integral of (D² − 4D + 4)y = 6e²ˣ is:", "options": ["6x²e²ˣ", "3x²e²ˣ", "3xe²ˣ", "x²e²ˣ"], "ans": 1, "exp": "Repeated root a=2: PI = 6 x² e²ˣ / f″(2) = 6 x² e²ˣ / 2 = 3x²e²ˣ."}, {"id": 126, "num": 7, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "The characteristic equation of A = [[2, 3], [4, 1]] is:", "options": ["λ² − 3λ + 10 = 0", "λ² + 3λ − 10 = 0", "λ² − 3λ − 10 = 0", "λ² + 3λ + 10 = 0"], "ans": 2, "exp": "trace = 3, det = 2 − 12 = −10 ⇒ λ² − 3λ − 10 = 0."}, {"id": 127, "num": 8, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Particular integral of y″ + y = 2 sin t is:", "options": ["−cos t", "t sin t", "−t cos t", "2t cos t"], "ans": 2, "exp": "Failure case (a=1): PI = 2 × (−t / 2) cos t = −t cos t."}, {"id": 128, "num": 9, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "In a 3 × 4 contingency table, what are the degrees of freedom of the chi-square statistic?", "options": ["12", "6", "7", "5"], "ans": 1, "exp": "df = (r − 1)(c − 1) = (3 − 1)(4 − 1) = 2 × 3 = 6."}, {"id": 129, "num": 10, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Three fair coins are tossed simultaneously. Probability of getting at least two heads:", "options": ["3/8", "1/2", "7/8", "1/4"], "ans": 1, "exp": "Favourable: HHT, HTH, THH, HHH = 4 out of 8 ⇒ 4/8 = 1/2."}, {"id": 130, "num": 11, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "What is the value of log₂ 64 + log₃ 81?", "options": ["10", "8", "12", "24"], "ans": 0, "exp": "2⁶ = 64 ⇒ log₂ 64 = 6; 3⁴ = 81 ⇒ log₃ 81 = 4. Sum = 6 + 4 = 10."}, {"id": 131, "num": 12, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "For any square matrix A, the matrix A + Aᵀ is always:", "options": ["Skew-symmetric", "Symmetric", "Diagonal", "Singular"], "ans": 1, "exp": "(A + Aᵀ)ᵀ = Aᵀ + A = A + Aᵀ ⇒ always Symmetric."}, {"id": 132, "num": 13, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "In how many different ways can the letters of the word SCHOOL be arranged?", "options": ["180", "720", "120", "360"], "ans": 3, "exp": "6 letters with 'O' repeated twice: 6! / 2! = 720 / 2 = 360."}, {"id": 133, "num": 14, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "If A = [[1, 2], [3, 4]] and B = [[2, 0], [1, 3]], what is the trace of AB?", "options": ["12", "10", "16", "22"], "ans": 2, "exp": "Diagonal of AB: (AB)₁₁ = 1×2 + 2×1 = 4; (AB)₂₂ = 3×0 + 4×3 = 12.\nTrace(AB) = 4 + 12 = 16."}, {"id": 134, "num": 15, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "What is the value of the 3×3 determinant?\n| 2  1  3 |\n| 0  4  5 |\n| 1  0  6 |", "options": ["41", "47", "-41", "35"], "ans": 0, "exp": "Expand along row 1:\n2(4×6 − 5×0) − 1(0×6 − 5×1) + 3(0×0 − 4×1)\n= 2(24) − 1(−5) + 3(−4) = 48 + 5 − 12 = 41."}, {"id": 135, "num": 16, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "If f(x) = x² eˣ, what is the value of f'(1)?", "options": ["3e", "2e", "e²", "e"], "ans": 0, "exp": "Product rule: f'(x) = 2x·eˣ + x²·eˣ = eˣ(x² + 2x).\nf'(1) = e(1 + 2) = 3e."}, {"id": 136, "num": 17, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Set A has 3 elements and set B has 2 elements. How many different relations from A to B are possible?", "options": ["32", "64", "6", "8"], "ans": 1, "exp": "n(A × B) = 3 × 2 = 6; number of subsets (relations) = 2⁶ = 64."}, {"id": 137, "num": 18, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A is a square matrix of order 3 with |A| = 5. What is the value of |3A|?", "options": ["243", "135", "15", "45"], "ans": 1, "exp": "|kA| = kⁿ |A| = 3³ × 5 = 27 × 5 = 135."}, {"id": 138, "num": 19, "topic": "Mathematics", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "What is the sum of the first 20 terms of the AP: 3, 7, 11, 15, …?", "options": ["820", "800", "780", "860"], "ans": 0, "exp": "a = 3, d = 4, n = 20.\nS₂₀ = (20/2)[2(3) + 19(4)] = 10 × (6 + 76) = 820."}]}, {"id": 8, "category": "AIGraphics", "code": "AIG Mock 01", "title": "AI, Graphics & Tech — Mock 01", "subtitle": "2D/3D Transformations, RGB/CMY, AI Search, ML & Cloud/IoT", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 139, "num": 1, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Reflecting the point (4, 3) about the x-axis gives:", "options": ["(−4, 3)", "(4, −3)", "(3, 4)", "(−4, −3)"], "ans": 1, "exp": "Reflection about the x-axis maps (x, y) → (x, −y), so (4, 3) → (4, −3)."}, {"id": 140, "num": 2, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A colour in the RGB model is (0.2, 0.5, 1.0), with each component from 0 to 1. What is the same colour in the CMY model?", "options": ["(0.2, 0.5, 1.0)", "(0.8, 0.5, 0.0)", "(1.0, 0.5, 0.2)", "(0.8, 0.5, 1.0)"], "ans": 1, "exp": "(C, M, Y) = (1 − R, 1 − G, 1 − B) = (1 − 0.2, 1 − 0.5, 1 − 1.0) = (0.8, 0.5, 0.0)."}, {"id": 141, "num": 3, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "The point (3, −2) is reflected in the line y = x. What are its new coordinates?", "options": ["(−2, 3)", "(2, −3)", "(−3, 2)", "(3, 2)"], "ans": 0, "exp": "Reflection across y = x swaps x and y: (3, −2) → (−2, 3)."}, {"id": 142, "num": 4, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "Which of the following is NOT a basic 2D geometric transformation?", "options": ["Translation", "Rotation", "Scaling", "Rasterisation"], "ans": 3, "exp": "Rasterisation converts vector shapes into pixels; it is not a geometric transformation."}, {"id": 143, "num": 5, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "The point (3, 2) is scaled with sx = 2 and sy = 3 about the fixed point (1, 1). What are its new coordinates?", "options": ["(7, 7)", "(6, 6)", "(5, 4)", "(4, 5)"], "ans": 2, "exp": "x' = 1 + 2(3−1) = 5; y' = 1 + 3(2−1) = 4 → (5, 4)."}, {"id": 144, "num": 6, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "In computer graphics, clipping means:", "options": ["converting a line into pixels", "filling the area inside a polygon with colour", "mapping the window to the viewport", "removing the parts of a picture that lie outside the display window"], "ans": 3, "exp": "Clipping removes portions of graphics lying outside the display/clipping window."}, {"id": 145, "num": 7, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which 2D transformation changes the size of an object?", "options": ["Translation", "Rotation", "Scaling", "Reflection"], "ans": 2, "exp": "Scaling resizes an object: (x, y) → (x·Sx, y·Sy)."}, {"id": 146, "num": 8, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which line-drawing algorithm uses only integer addition and subtraction, which makes it faster than the DDA algorithm?", "options": ["Midpoint circle algorithm", "Bresenham's line algorithm", "Flood-fill algorithm", "Cohen–Sutherland algorithm"], "ans": 1, "exp": "Bresenham's line algorithm uses an integer decision parameter, avoiding slow floating-point math and rounding."}, {"id": 147, "num": 9, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which of the following file formats uses lossless compression?", "options": ["MP3", "JPEG", "PNG", "MPEG-4 video"], "ans": 2, "exp": "PNG uses lossless DEFLATE compression; MP3, JPEG, and MPEG-4 are lossy."}, {"id": 148, "num": 10, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "In 2D homogeneous coordinates, which 3 × 3 matrix translates a column vector [x, y, 1]ᵀ by (tx, ty)?", "options": ["[[1, 0, 0], [0, 1, 0], [tx, ty, 1]]", "[[1, 0, tx], [0, 1, ty], [0, 0, 1]]", "[[tx, 0, 0], [0, ty, 0], [0, 0, 1]]", "[[1, tx, 0], [ty, 1, 0], [0, 0, 1]]"], "ans": 1, "exp": "Multiplying [[1,0,tx],[0,1,ty],[0,0,1]] × [x,y,1]ᵀ produces [x+tx, y+ty, 1]ᵀ."}, {"id": 149, "num": 11, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "An 800 × 600 raster display refreshes 60 times/sec (ignoring retrace). Approximate time available per pixel?", "options": ["34.7 ns", "20.8 ns", "27.8 µs", "16.7 ms"], "ans": 0, "exp": "Pixels/s = 800×600×60 = 2.88×10⁷ ⇒ 1 / (2.88×10⁷) ≈ 34.7 ns."}, {"id": 150, "num": 12, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "In the midpoint (Bresenham) circle algorithm, points are calculated for one octant and mirrored using ______ of the circle.", "options": ["four-way symmetry", "eight-way symmetry", "two-way symmetry", "rotational asymmetry"], "ans": 1, "exp": "Every computed (x, y) yields 8 symmetric points: (±x, ±y) and (±y, ±x) → eight-way symmetry."}, {"id": 151, "num": 13, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regarding the Z-buffer hidden-surface removal method:\nI. Stores depth of the closest surface per pixel and overwrites only if nearer.\nII. Requires polygons to be sorted by depth before drawing.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Z-buffer processes polygons in arbitrary order without depth sorting (Only I)."}, {"id": 152, "num": 14, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Bresenham's line algorithm draws a line from (2, 3) to (12, 8). What is the initial decision parameter p₀?", "options": ["5", "0", "−5", "10"], "ans": 1, "exp": "dx = 10, dy = 5 ⇒ p₀ = 2dy − dx = 10 − 10 = 0."}, {"id": 153, "num": 15, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "In Cohen–Sutherland clipping (window 0≤x≤10, 0≤y≤10) with bit order Top-Bottom-Right-Left, what is the region code of (12, −3)?", "options": ["1001", "1010", "0101", "0110"], "ans": 3, "exp": "Top (y>10): 0, Bottom (y<0): 1, Right (x>10): 1, Left (x<0): 0 ⇒ 0110."}, {"id": 154, "num": 16, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following is NOT an input device?", "options": ["Light pen", "Scanner", "Joystick", "Plotter"], "ans": 3, "exp": "A plotter draws graphs and engineering plans on paper, making it an output device."}, {"id": 155, "num": 17, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "What is the aspect ratio of a display with a resolution of 1920 × 1080?", "options": ["4 : 3", "16 : 9", "16 : 10", "21 : 9"], "ans": 1, "exp": "Dividing 1920 : 1080 by 120 gives the standard Full HD widescreen ratio 16 : 9."}, {"id": 156, "num": 18, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "In the RGB colour model, what do R, G and B stand for?", "options": ["Red, Green and Black", "Red, Green and Blue", "Red, Grey and Blue", "Raster, Green and Blue"], "ans": 1, "exp": "RGB = Red, Green, Blue (additive colour model)."}]}, {"id": 9, "category": "AIGraphics", "code": "AIG Mock 02", "title": "AI, Graphics & Tech — Mock 02", "subtitle": "2D/3D Transformations, RGB/CMY, AI Search, ML & Cloud/IoT", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 157, "num": 1, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Which display type draws the picture by scanning line by line from top to bottom, refreshing every pixel?", "options": ["Random-scan (vector) display", "Raster-scan display", "Plotter", "Direct-view storage tube"], "ans": 1, "exp": "A raster-scan display refreshes pixels row by row from a frame buffer."}, {"id": 158, "num": 2, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "A 10 MB file is compressed to 2 MB. What is the compression ratio?", "options": ["2 : 10", "1 : 5", "8 : 1", "5 : 1"], "ans": 3, "exp": "Compression ratio = Original / Compressed = 10 / 2 = 5 : 1."}, {"id": 159, "num": 3, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "The smallest addressable element of a display screen is called a ______.", "options": ["pixel", "dot pitch", "raster", "frame"], "ans": 0, "exp": "A pixel (picture element) is the smallest controllable point on a display screen."}, {"id": 160, "num": 4, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "A display has a resolution of 1024 × 768. How many pixels does it have in total?", "options": ["1,792", "7,68,000", "10,24,768", "7,86,432"], "ans": 3, "exp": "Total pixels = 1024 × 768 = 7,86,432."}, {"id": 161, "num": 5, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following statements is/are correct?\nI. A MIDI file stores musical instructions (which note, how long, which instrument), not recorded sound.\nII. A WAV file normally stores uncompressed audio samples.", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Both statements are true: MIDI stores compact performance/note instructions, while WAV typically stores uncompressed PCM audio."}, {"id": 162, "num": 6, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "What are the coordinates of the point (3, −2) after reflection about the line y = x?", "options": ["(−2, 3)", "(2, −3)", "(−3, 2)", "(3, 2)"], "ans": 0, "exp": "Reflection across y = x swaps x and y: (3, −2) → (−2, 3)."}, {"id": 163, "num": 7, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "In computer graphics, what does DDA in the DDA line drawing algorithm stand for?", "options": ["Digital Differential Analyzer", "Digital Difference Algorithm", "Direct Differential Analyzer", "Digital Display Algorithm"], "ans": 0, "exp": "DDA stands for Digital Differential Analyzer."}, {"id": 164, "num": 8, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which mathematical transform is used in JPEG image compression?", "options": ["Discrete Cosine Transform (DCT)", "Fast Fourier Transform", "Laplace transform", "Hough transform"], "ans": 0, "exp": "JPEG converts 8×8 pixel blocks into frequency coefficients using the Discrete Cosine Transform (DCT)."}, {"id": 165, "num": 9, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "The point (6, 4) is scaled with sx = 2 and sy = 2 about the fixed point (2, 2). What are the new coordinates?", "options": ["(8, 6)", "(12, 8)", "(10, 6)", "(14, 10)"], "ans": 2, "exp": "x′ = 2 + (6−2)×2 = 10; y′ = 2 + (4−2)×2 = 6 ⇒ (10, 6)."}, {"id": 166, "num": 10, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "In the Cohen–Sutherland algorithm, the region codes of a line's endpoints are 0001 and 0100. Which is correct?", "options": ["The line is completely inside the window", "The line is neither trivially accepted nor trivially rejected, so it must be clipped further", "The line is completely outside and is rejected", "The line is a single point"], "ans": 1, "exp": "Both codes ≠ 0000 (not trivially accepted) and 0001 AND 0100 = 0000 (not trivially rejected) ⇒ must compute window intersections."}, {"id": 167, "num": 11, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "The point P(4, 1) is rotated by 90° anticlockwise about the point (1, 1). What are the new coordinates?", "options": ["(1, −2)", "(4, 1)", "(−2, 1)", "(1, 4)"], "ans": 3, "exp": "Translate to origin: (4−1, 1−1) = (3, 0). Rotate 90° CCW (−y, x): (0, 3). Translate back: (0+1, 3+1) = (1, 4)."}, {"id": 168, "num": 12, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "What is the size of the frame buffer needed for a 1024 × 768 display with 24-bit colour?", "options": ["2.25 MB", "768 KB", "3 MB", "18 MB"], "ans": 0, "exp": "1024 × 768 × 3 bytes = 2,359,296 bytes = 2,359,296 / (1024 × 1024) = 2.25 MB."}, {"id": 169, "num": 13, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which statements about a cubic Bezier curve are correct?\nI. It is defined by four control points.\nII. It passes through all four control points.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "A cubic Bezier curve uses 4 control points, but interpolates (passes through) only the first and last endpoints; the middle two shape the tangents."}, {"id": 170, "num": 14, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The component of an expert system that draws conclusions by applying the rules to the known facts is called the ______.", "options": ["inference engine", "knowledge engineer", "user interface", "explanation facility"], "ans": 0, "exp": "The inference engine applies rules (forward/backward chaining) from the knowledge base to known facts to derive conclusions."}, {"id": 171, "num": 15, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "A colour has CMY coordinates (0.3, 0.6, 1). What are its RGB coordinates?", "options": ["(0.3, 0.6, 1)", "(0.7, 0.4, 0)", "(0.7, 0.6, 0)", "(1.3, 1.6, 2)"], "ans": 1, "exp": "[R, G, B] = [1, 1, 1] − [C, M, Y] = (1 − 0.3, 1 − 0.6, 1 − 1) = (0.7, 0.4, 0)."}, {"id": 172, "num": 16, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "A triangle has vertices A(1, 1), B(4, 2) and C(2, 5). If it is scaled with sx = 3 and sy = 2 about the origin, what are the new coordinates?", "options": ["A(3, 2), B(12, 6), C(6, 15)", "A(2, 3), B(8, 6), C(4, 15)", "A(3, 2), B(12, 4), C(6, 10)", "A(4, 3), B(7, 4), C(5, 7)"], "ans": 2, "exp": "Scaling multiplies coordinates: x′ = x·sx, y′ = y·sy ⇒ A(1×3, 1×2) = (3, 2), B(4×3, 2×2) = (12, 4), C(2×3, 5×2) = (6, 10)."}, {"id": 173, "num": 17, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "What is the common file extension of an MPEG-4 video file?", "options": [".mp3", ".midi", ".wav", ".mp4"], "ans": 3, "exp": ".mp4 is MPEG-4 video; .mp3 is MPEG audio; .wav is uncompressed audio; .midi stores instrument instructions."}, {"id": 174, "num": 18, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which of the following is a non-emissive display?", "options": ["LCD", "Plasma panel", "LED display", "CRT"], "ans": 0, "exp": "LCD modulates light from a backlight rather than emitting its own light."}]}, {"id": 10, "category": "AIGraphics", "code": "AIG Mock 03", "title": "AI, Graphics & Tech — Mock 03", "subtitle": "2D/3D Transformations, RGB/CMY, AI Search, ML & Cloud/IoT", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 175, "num": 1, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "What are the CMY coordinates of RGB (0.2, 0.7, 1)?", "options": ["(0.2, 0.7, 1)", "(0.8, 0.3, 0)", "(0.8, 0.7, 0)", "(0.2, 0.3, 1)"], "ans": 1, "exp": "[C, M, Y] = [1−0.2, 1−0.7, 1−1] = (0.8, 0.3, 0)."}, {"id": 176, "num": 2, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Clipping window: lower-left (0, 0), upper-right (10, 10). What is the 4-bit region code (TBRL) of P(12, −3)?", "options": ["0101", "1010", "0110", "1001"], "ans": 2, "exp": "T(y>10)=0, B(y<0)=1, R(x>10)=1, L(x<0)=0 ⇒ 0110."}, {"id": 177, "num": 3, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Augmented Reality (AR) ________ digital information on the user's view of the real world.", "options": ["deletes", "replaces", "overlays", "compresses"], "ans": 2, "exp": "AR overlays digital content onto the real world (VR replaces the real world)."}, {"id": 178, "num": 4, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which statements are INCORRECT about the DDA line drawing algorithm?\ni) Uses floating-point arithmetic & rounding.\nii) Slower than Bresenham's.\niii) Uses only integer addition/subtraction/comparison.\niv) For |m| > 1, x increases by 1 at every step.", "options": ["Only iii", "iii and iv only", "i and iv only", "ii and iii only"], "ans": 1, "exp": "iii describes Bresenham (not DDA), and for |m| > 1, y (not x) increments by 1 ⇒ iii and iv are incorrect."}, {"id": 179, "num": 5, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Truthfulness:\ni) Point clipping checks if a point lies inside the clip window.\nii) Sutherland–Hodgman is for polygon clipping.\niii) Cohen–Sutherland assigns a 4-bit region code to each line endpoint.", "options": ["i-True, ii-True, iii-True", "i-True, ii-False, iii-True", "i-False, ii-True, iii-True", "i-True, ii-True, iii-False"], "ans": 0, "exp": "All three computer-graphics clipping statements are true."}, {"id": 180, "num": 6, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "In computer graphics, the three basic geometric transformations are ________, ________ and ________.", "options": ["translation; clipping; rendering", "clipping; shading; rendering", "translation; rotation; scaling", "scaling; shading; hiding"], "ans": 2, "exp": "Translation, rotation and scaling are the three basic geometric transformations."}, {"id": 181, "num": 7, "topic": "AI & Big Data", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Truthfulness:\ni) HDFS splits large files into replicated blocks.\nii) In MapReduce, Reduce runs before Map.\niii) NameNode stores metadata; DataNodes store blocks.", "options": ["i-False, ii-False, iii-True", "i-True, ii-True, iii-False", "i-True, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 2, "exp": "Map always executes before Reduce (ii False) ⇒ i-True, ii-False, iii-True."}, {"id": 182, "num": 8, "topic": "AI & Graphics", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which are colour models used in computer graphics?\ni) RGB  ii) CMYK  iii) HSV  iv) YIQ  v) FIFO", "options": ["i, ii, iii, iv and v", "Only i, ii, iii and iv", "Only v", "Only i and ii"], "ans": 1, "exp": "RGB, CMYK, HSV and YIQ are colour models; FIFO is a scheduling/queue policy."}, {"id": 183, "num": 9, "topic": "AI & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Match AI ethics concepts:\nA. Bias  B. Transparency  C. Privacy  D. Accountability\n1. Who is responsible for harm  2. Protecting personal data  3. Understanding how AI decided  4. Unfair outcomes from skewed data", "options": ["A-4, B-2, C-3, D-1", "A-1, B-2, C-3, D-4", "A-3, B-4, C-1, D-2", "A-4, B-3, C-2, D-1"], "ans": 3, "exp": "Bias→4, Transparency→3, Privacy→2, Accountability→1 ⇒ A-4, B-3, C-2, D-1."}, {"id": 184, "num": 10, "topic": "AI & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which of the following is NOT one of the 'V's commonly used to describe Big Data?", "options": ["Volume", "Visibility", "Variety", "Velocity"], "ans": 1, "exp": "Big Data V's are Volume, Velocity, Variety (plus Veracity, Value); Visibility is not one."}, {"id": 185, "num": 11, "topic": "AI & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which can be causes of bias in AI systems?\nI. Unrepresentative training data\nII. Prejudices of people who label data\nIII. Use of a large, diverse and balanced dataset", "options": ["Only I", "I, II and III", "Only I and II", "Only III"], "ans": 2, "exp": "Unrepresentative data and human labeling prejudices cause bias (I and II); a large, diverse dataset reduces bias."}, {"id": 186, "num": 12, "topic": "AI & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Match AI categories:\nA. Narrow AI  B. General AI  C. Super AI\n1. Surpasses human intelligence in all fields  2. Performs one specific task  3. Human-level ability across many tasks", "options": ["A-1, B-2, C-3", "A-2, B-3, C-1", "A-3, B-1, C-2", "A-2, B-1, C-3"], "ans": 1, "exp": "Narrow AI→2 (single task), General AI→3 (human-level), Super AI→1 (surpasses humans)."}, {"id": 187, "num": 13, "topic": "AI & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which of the following is a major challenge in the adoption of the Internet of Things (IoT)?", "options": ["The black-box nature of AI models", "Deepfake videos", "Security and privacy of connected devices", "Spreadsheet formatting"], "ans": 2, "exp": "Billions of connected IoT devices with weak security/updates make security and privacy a primary challenge."}, {"id": 188, "num": 14, "topic": "Green Computing", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Using technology in an environmentally responsible way — reducing energy use, using devices longer and recycling properly — is called ______.", "options": ["Cloud computing", "Green computing", "Edge computing", "Quantum computing"], "ans": 1, "exp": "Green computing minimizes environmental impact via energy efficiency and proper e-waste recycling."}, {"id": 189, "num": 15, "topic": "Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following are service models of cloud computing?\nI. SaaS  II. PaaS  III. IaaS", "options": ["I and II", "II and III", "I and III", "I, II and III"], "ans": 3, "exp": "Software as a Service (SaaS), Platform as a Service (PaaS), and Infrastructure as a Service (IaaS) are the three core cloud service models."}, {"id": 190, "num": 16, "topic": "Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is/are lossless compression formats?\nI. PNG   II. MP3", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "PNG is lossless image compression; MP3 is lossy audio compression."}, {"id": 191, "num": 17, "topic": "Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "If an image has a height of 6 inches and an aspect ratio of 16 : 9, what is its width?", "options": ["16/3 inch", "27/8 inch", "32/3 inch", "9 inch"], "ans": 2, "exp": "Width / Height = 16 / 9 ⇒ Width = 6 × (16/9) = 96/9 = 32/3 inch."}, {"id": 192, "num": 18, "topic": "Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Arrange the stages of the 3D viewing pipeline in the correct order:\nI. Modelling transformation  II. Viewing transformation  III. Projection transformation  IV. Viewport (device) transformation", "options": ["II, I, III, IV", "I, II, III, IV", "I, III, II, IV", "IV, III, II, I"], "ans": 1, "exp": "Modelling → World → Viewing → Projection → Viewport (Device) coordinates ⇒ I, II, III, IV."}]}, {"id": 11, "category": "AIGraphics", "code": "AIG Mock 04", "title": "AI, Graphics & Tech — Mock 04", "subtitle": "2D/3D Transformations, RGB/CMY, AI Search, ML & Cloud/IoT", "durationSec": 600, "timeLabel": "10-Min", "questions": [{"id": 193, "num": 1, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which attribute of <img> links the image to a <map> element for client-side clickable regions?", "options": ["map", "ismap", "href", "usemap"], "ans": 3, "exp": "usemap='#mapname' binds an image to a client-side <map> (ismap is server-side)."}, {"id": 194, "num": 2, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Using the DDA algorithm to draw a line from (2, 3) to (8, 7), what are the increments Δx and Δy at each step?", "options": ["Δx = 6, Δy = 4", "Δx ≈ 0.67, Δy = 1", "Δx = 1, Δy = 1.5", "Δx = 1, Δy ≈ 0.67"], "ans": 3, "exp": "dx = 6, dy = 4, steps = max(6, 4) = 6 ⇒ Δx = 6/6 = 1, Δy = 4/6 ≈ 0.67."}, {"id": 195, "num": 3, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "How do you make all images 50% transparent using CSS?", "options": ["img { opacity: 0.5; }", "img { transparency: 50%; }", "img { filter: transparent(50%); }", "img { alpha: 0.5; }"], "ans": 0, "exp": "CSS opacity accepts 0 (transparent) to 1 (opaque), so 50% is opacity: 0.5."}, {"id": 196, "num": 4, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "In the Phong reflection model of computer graphics, which component is NOT included?", "options": ["Ambient", "Diffuse", "Refractive", "Specular"], "ans": 2, "exp": "Phong model sums Ambient + Diffuse + Specular reflection (not Refraction)."}, {"id": 197, "num": 5, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "A computer program that captures the knowledge of human experts and gives advice in a specific field is called:", "options": ["an office automation system", "a transaction processing system", "an expert system", "a spreadsheet"], "ans": 2, "exp": "An Expert System combines a knowledge base and an inference engine (e.g., MYCIN)."}, {"id": 198, "num": 6, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "In which display is the electron beam swept across the screen one row at a time from top to bottom?", "options": ["Raster scan", "Random scan", "Vector scan", "Calligraphic display"], "ans": 0, "exp": "Raster-scan displays sweep the beam row-by-row (scan lines) using a frame buffer."}, {"id": 199, "num": 7, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "In computer graphics, which curve passes through every one of its control points?", "options": ["Interpolation spline", "B-spline curve", "Bezier curve", "Approximation spline"], "ans": 0, "exp": "An interpolation spline passes directly through all control points (Bezier/B-splines approximate them)."}, {"id": 200, "num": 8, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "In the Cohen–Sutherland line clipping algorithm, if the logical AND of the two endpoint region codes is NOT 0000, the line is _____.", "options": ["completely outside the window and rejected", "completely inside the window and accepted", "partially visible and must be clipped", "reduced to a point"], "ans": 0, "exp": "Non-zero bitwise AND means both endpoints share an outside region, so the line is trivially rejected."}, {"id": 201, "num": 9, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which Adobe Photoshop tool removes small spots and blemishes by automatically sampling surrounding pixels?", "options": ["Spot Healing Brush tool", "Paint Bucket tool", "Marquee tool", "Type tool"], "ans": 0, "exp": "The Spot Healing Brush blends neighbouring texture and colour seamlessly over blemishes."}, {"id": 202, "num": 10, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which image format uses lossy compression and is widely used for web photographs?", "options": ["JPEG", "PNG", "BMP", "GIF"], "ans": 0, "exp": "JPEG uses lossy compression ideal for photographs (PNG/GIF are lossless)."}, {"id": 203, "num": 11, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "What is the main function of the 'rotate' tool in image editing?", "options": ["Remove parts", "Resize image", "Change colour", "To turn the image through an angle"], "ans": 3, "exp": "Rotate turns an image or layer through a chosen angle (e.g. 90°, 180°)."}, {"id": 204, "num": 12, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Google Translate converting Hindi to English and a chatbot answering typed questions are applications of:", "options": ["Computer vision", "Natural Language Processing (NLP)", "Expert systems only", "Robotics"], "ans": 1, "exp": "NLP enables computers to understand, translate, and generate human language."}, {"id": 205, "num": 13, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "A school uses cameras that recognise each student's face to mark attendance automatically. Which AI field is this?", "options": ["Fuzzy logic", "Natural language processing", "Speech synthesis", "Computer vision"], "ans": 3, "exp": "Computer vision extracts information from images and video (face recognition, object detection)."}, {"id": 206, "num": 14, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "In a neural network, ReLU is f(x) = max(0, x). What are f(−3) and f(2.5)?", "options": ["3 and 2.5", "−3 and 2.5", "0 and 2.5", "0 and 1"], "ans": 2, "exp": "f(−3) = max(0, −3) = 0; f(2.5) = max(0, 2.5) = 2.5."}, {"id": 207, "num": 15, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A model is trained on emails already marked 'spam' or 'not spam' and predicts labels for new emails. This is:", "options": ["Supervised learning (classification)", "Unsupervised learning", "Reinforcement learning", "Clustering"], "ans": 0, "exp": "Training with labelled data to predict discrete categories is supervised learning (classification)."}, {"id": 208, "num": 16, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A machine-learning model achieves 99% accuracy on training data but performs poorly on unseen test data. This problem is called:", "options": ["Feature scaling", "Overfitting", "Normalisation", "Underfitting"], "ans": 1, "exp": "Overfitting happens when a model memorises training noise instead of generalising. Reduced via regularisation, more data, simpler models, or cross-validation."}, {"id": 209, "num": 17, "topic": "AI, Graphics & Emerging Tech", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "In computer graphics, the jagged 'staircase' appearance of slanted lines on a raster display is reduced by:", "options": ["Back-face culling", "Rasterisation", "Anti-aliasing", "Clipping"], "ans": 2, "exp": "Anti-aliasing shades boundary pixels with intermediate intensities to smooth jagged aliasing edges."}]}, {"id": 12, "category": "Physics", "code": "PHY Mock 01", "title": "Physics & Science — Mock 01", "subtitle": "EM Waves, Optics, Transformers, Semiconductors & General Science", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 210, "num": 1, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "What is the wavelength of an electromagnetic wave of frequency 3 GHz in free space?", "options": ["100 m", "1 m", "1 cm", "10 cm"], "ans": 3, "exp": "λ = c / f = (3 × 10⁸ m/s) / (3 × 10⁹ Hz) = 0.1 m = 10 cm."}, {"id": 211, "num": 2, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which statement about optical fibre is correct?", "options": ["The cladding has a higher refractive index than the core", "Light is kept inside the core by total internal reflection, because the core has a higher refractive index than the cladding", "Multimode fibre is used for longer distances than single-mode fibre", "Optical fibre is easily affected by electromagnetic interference"], "ans": 1, "exp": "Total internal reflection requires light in the denser core (higher refractive index) to hit the less dense cladding above the critical angle."}, {"id": 212, "num": 3, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A transformer works on the principle of ______.", "options": ["self-induction", "mutual induction", "the heating effect of current", "eddy currents"], "ans": 1, "exp": "A transformer operates on mutual induction between primary and secondary coils (AC only)."}, {"id": 213, "num": 4, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A Wheatstone bridge has P = 10 Ω, Q = 20 Ω and R = 15 Ω. For what value of S is the bridge balanced?", "options": ["25 Ω", "7.5 Ω", "40 Ω", "30 Ω"], "ans": 3, "exp": "P/Q = R/S ⇒ 10/20 = 15/S ⇒ S = 30 Ω."}, {"id": 214, "num": 5, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "In which of the following media does sound travel fastest?", "options": ["Air", "Water", "Steel", "Vacuum"], "ans": 2, "exp": "Sound travels fastest in solids (Steel ~5,000 m/s), slower in liquids and gases, and not at all in vacuum."}, {"id": 215, "num": 6, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "What is the energy of a photon of frequency 5 × 10¹⁴ Hz? (h = 6.6 × 10⁻³⁴ J s)", "options": ["6.6 × 10⁻²⁰ J", "3.3 × 10⁻¹⁹ J", "3.3 × 10⁻¹⁸ J", "1.3 × 10⁻⁴⁸ J"], "ans": 1, "exp": "E = hf = 6.6×10⁻³⁴ × 5×10¹⁴ = 3.3 × 10⁻¹⁹ J."}, {"id": 216, "num": 7, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A uniform wire of resistance R is stretched to twice its original length, its volume remaining unchanged. What is its new resistance?", "options": ["R/4", "2R", "R/2", "4R"], "ans": 3, "exp": "L → 2L and A → A/2 ⇒ R' = ρ(2L)/(A/2) = 4R."}, {"id": 217, "num": 8, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Which colour of visible light has the highest frequency?", "options": ["Red", "Yellow", "Green", "Violet"], "ans": 3, "exp": "Violet has the shortest wavelength (~400 nm) and thus the highest frequency in visible light."}, {"id": 218, "num": 9, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding total internal reflection?\nI. Light must travel from an optically denser medium to an optically rarer medium.\nII. The angle of incidence must be less than the critical angle.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "I is true; II is false because angle of incidence must be GREATER than the critical angle."}, {"id": 219, "num": 10, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Capacitors of 2 µF and 3 µF are connected in series across a 10 V supply. What is the potential difference across the 2 µF capacitor?", "options": ["5 V", "4 V", "6 V", "10 V"], "ans": 2, "exp": "C_eq = (2×3)/(2+3) = 1.2 µF; Q = 1.2 × 10 = 12 µC. V(2 µF) = Q/C = 12/2 = 6 V."}, {"id": 220, "num": 11, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "A 12 V battery drives a current of 3 A through a resistor. How much power is dissipated in the resistor?", "options": ["4 W", "15 W", "36 W", "108 W"], "ans": 2, "exp": "Power P = V × I = 12 × 3 = 36 W."}, {"id": 221, "num": 12, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "What happens to the depletion layer of a p-n junction diode when it is forward biased?", "options": ["It becomes narrower", "It becomes wider", "It remains unchanged", "It disappears permanently"], "ans": 0, "exp": "Forward bias opposes the built-in barrier potential, pushing majority carriers toward the junction and narrowing the depletion layer."}, {"id": 222, "num": 13, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Kirchhoff's current law (junction rule) is based on the conservation of ______.", "options": ["energy", "mass", "momentum", "charge"], "ans": 3, "exp": "KCL reflects conservation of electric charge (KVL reflects conservation of energy)."}, {"id": 223, "num": 14, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Two point charges of 2 µC each are placed 30 cm apart in air (k = 9 × 10⁹ N m² C⁻²). Magnitude of electrostatic force?", "options": ["0.4 N", "0.04 N", "4 N", "0.12 N"], "ans": 0, "exp": "F = (9×10⁹ × 4×10⁻¹²) / (0.3)² = 0.036 / 0.09 = 0.4 N."}, {"id": 224, "num": 15, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Resistors of 6 Ω and 3 Ω are joined in parallel, and this combination is joined in series with a 4 Ω resistor across an ideal 12 V battery. What power is dissipated in the 6 Ω resistor?", "options": ["16 W", "5.33 W", "2.67 W", "24 W"], "ans": 2, "exp": "6 ∥ 3 = 2 Ω; total R = 2 + 4 = 6 Ω; I = 12/6 = 2 A. Voltage across parallel branch = 2 × 2 = 4 V. Power in 6 Ω = V²/R = 16/6 ≈ 2.67 W."}, {"id": 225, "num": 16, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "If the speed of a moving body is doubled, its kinetic energy becomes ______.", "options": ["Four times", "Two times", "Half", "Unchanged"], "ans": 0, "exp": "KE = ½mv² ∝ v² ⇒ (2)² = 4 times."}, {"id": 226, "num": 17, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "100 J of heat is supplied to a gas, and the gas does 40 J of work on its surroundings. Change in internal energy?", "options": ["140 J", "60 J", "40 J", "100 J"], "ans": 1, "exp": "First law of thermodynamics: ΔU = ΔQ − ΔW = 100 − 40 = 60 J."}, {"id": 227, "num": 18, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "The refractive index of glass is 1.5. What is the speed of light in this glass? (Speed of light in vacuum = 3 × 10⁸ m/s)", "options": ["4.5 × 10⁸ m/s", "2 × 10⁸ m/s", "1.5 × 10⁸ m/s", "3 × 10⁸ m/s"], "ans": 1, "exp": "v = c / n = (3 × 10⁸) / 1.5 = 2 × 10⁸ m/s."}, {"id": 228, "num": 19, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Three resistors of 3 Ω each are connected so that two are in parallel and this combination is in series with the third. What is the equivalent resistance?", "options": ["1 Ω", "9 Ω", "4.5 Ω", "6 Ω"], "ans": 2, "exp": "Two 3 Ω resistors in parallel = 3/2 = 1.5 Ω; in series with the third 3 Ω resistor = 1.5 + 3 = 4.5 Ω."}, {"id": 229, "num": 20, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "If the length of a simple pendulum is made four times, its time period becomes ______.", "options": ["Twice", "Four times", "Half", "Unchanged"], "ans": 0, "exp": "T = 2π√(L/g) ⇒ T ∝ √L. Multiplying L by 4 multiplies T by √4 = 2 (Twice)."}, {"id": 230, "num": 21, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "In the photoelectric effect, what happens to the maximum kinetic energy of emitted electrons when the frequency of incident light increases (above threshold)?", "options": ["It increases", "It decreases", "It remains the same", "It becomes zero"], "ans": 0, "exp": "By Einstein's equation K_max = hν − φ, maximum kinetic energy increases linearly with frequency ν."}]}, {"id": 13, "category": "Physics", "code": "PHY Mock 02", "title": "Physics & Science — Mock 02", "subtitle": "EM Waves, Optics, Transformers, Semiconductors & General Science", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 231, "num": 1, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A bulb is rated 100 W, 220 V. What is the resistance of its filament when it glows normally?", "options": ["2.2 Ω", "484 Ω", "22,000 Ω", "48.4 Ω"], "ans": 1, "exp": "R = V² / P = (220 × 220) / 100 = 484 Ω."}, {"id": 232, "num": 2, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A force of 10 N moves a body through 5 m at an angle of 60° with the force. What is the work done?", "options": ["43.3 J", "50 J", "25 J", "0 J"], "ans": 2, "exp": "W = F · s · cos 60° = 10 × 5 × 0.5 = 25 J."}, {"id": 233, "num": 3, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "An object is placed 30 cm in front of a convex lens of focal length 20 cm. At what distance from the lens is the image formed?", "options": ["60 cm on the other side of the lens", "12 cm on the same side", "20 cm on the other side", "60 cm on the same side"], "ans": 0, "exp": "1/v − 1/u = 1/f with u = −30, f = +20 ⇒ 1/v = 1/20 − 1/30 = 1/60 ⇒ v = +60 cm (real image on the other side)."}, {"id": 234, "num": 4, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which statements about an n-type semiconductor are correct?\nI. Formed by doping silicon with a pentavalent impurity such as phosphorus.\nII. Holes are its majority charge carriers.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Pentavalent doping adds free electrons, making electrons (not holes) the majority charge carriers in an n-type semiconductor."}, {"id": 235, "num": 5, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Three resistors of 6 Ω each are connected in parallel. What is their equivalent resistance?", "options": ["6 Ω", "18 Ω", "2 Ω", "3 Ω"], "ans": 2, "exp": "1/R = 1/6 + 1/6 + 1/6 = 3/6 ⇒ R = 2 Ω. For n equal resistors R in parallel, R_eq = R/n."}, {"id": 236, "num": 6, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The core of an optical fibre has a refractive index of 1.48 and its cladding has a refractive index of 1.46. What is the numerical aperture of the fibre?", "options": ["0.14", "0.02", "0.99", "0.24"], "ans": 3, "exp": "NA = √(n₁² − n₂²) = √(1.48² − 1.46²) = √(2.1904 − 2.1316) = √0.0588 ≈ 0.24."}, {"id": 237, "num": 7, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Associated with streamline (laminar) flow:\ni) Every particle follows the exact path of the particle ahead.\nii) Velocity of liquid is greater than its critical velocity.", "options": ["Both (i) and (ii)", "Only (i)", "Neither (i) nor (ii)", "Only (ii)"], "ans": 1, "exp": "Streamline flow occurs BELOW critical velocity (exceeding it causes turbulent flow) ⇒ Only (i)."}, {"id": 238, "num": 8, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Match Moduli of Elasticity:\na) Young's  b) Bulk  c) Rigidity\ni) Shear stress / shear strain  ii) Longitudinal stress / strain  iii) Volumetric stress / strain", "options": ["a-ii, b-i, c-iii", "a-i, b-ii, c-iii", "a-iii, b-ii, c-i", "a-ii, b-iii, c-i"], "ans": 3, "exp": "Young's→ii, Bulk→iii, Rigidity→i ⇒ a-ii, b-iii, c-i."}, {"id": 239, "num": 9, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which correctly defines concurrent forces?", "options": ["Forces whose lines of action pass through a single point", "Forces lying in different planes", "Forces that are parallel to one another", "A single force keeping a body in equilibrium"], "ans": 0, "exp": "Concurrent forces have lines of action intersecting at a single common point."}, {"id": 240, "num": 10, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Truthfulness:\ni) Scalar quantities have magnitude only.\nii) Work is a vector quantity.\niii) Two equal, opposite parallel forces at different points form a couple.", "options": ["i-False, ii-False, iii-True", "i-True, ii-True, iii-False", "i-True, ii-False, iii-True", "i-True, ii-True, iii-True"], "ans": 2, "exp": "Work (W = F·s) is a scalar, not a vector (ii False) ⇒ i-True, ii-False, iii-True."}, {"id": 241, "num": 11, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which is the correct relation between wavelength (λ), propagation speed (c) and frequency (f)?", "options": ["λ = c × f", "λ = c + f", "λ = f / c", "λ = c / f"], "ans": 3, "exp": "Since c = f × λ, wavelength λ = c / f."}, {"id": 242, "num": 12, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which component of a CRT focuses the electron beam to a small spot on the screen?", "options": ["Heating filament", "Control grid", "Phosphor coating", "Focusing anode"], "ans": 3, "exp": "Cathode emits electrons, Control grid sets intensity/brightness, Focusing anode sharpens the beam into a small spot."}, {"id": 243, "num": 13, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "A 2 kg mass hangs from a spring and oscillates with period 0.4 s. By how much will the spring shorten when the body is removed? (g = 9.8 m/s²)", "options": ["0.004 m", "0.40 m", "0.040 m", "0.080 m"], "ans": 2, "exp": "T = 2π√(m/k) ⇒ x = mg/k = g(T/2π)² = 9.8 × (0.4 / 6.283)² ≈ 0.040 m."}, {"id": 244, "num": 14, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "A red LED emits light of wavelength λ = 6200 Å. Find the energy band gap (E_g) of the semiconductor.", "options": ["2.0 eV", "1.5 eV", "3.0 eV", "20 eV"], "ans": 0, "exp": "λ = 6200 Å = 620 nm ⇒ E_g ≈ 1240 / 620 = 2.0 eV."}, {"id": 245, "num": 15, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "An optical fibre has core refractive index 1.5 and cladding 1.2. What is the critical angle at the core–cladding interface?", "options": ["41.8°", "36.9°", "48.6°", "53.1°"], "ans": 3, "exp": "sin C = n₂/n₁ = 1.2/1.5 = 0.8 ⇒ C = sin⁻¹(0.8) ≈ 53.1°."}, {"id": 246, "num": 16, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which phenomenon explains the splitting of white light into its constituent colours through a prism?", "options": ["Reflection", "Diffraction", "Polarisation", "Dispersion"], "ans": 3, "exp": "Dispersion occurs because glass bends different wavelengths by different angles (violet most, red least)."}, {"id": 247, "num": 17, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Match physical quantity with SI unit:\nA. Heat  B. Temperature  C. Power  D. Pressure\n1. pascal  2. watt  3. kelvin  4. joule", "options": ["A-4, B-3, C-2, D-1", "A-1, B-2, C-3, D-4", "A-4, B-2, C-3, D-1", "A-3, B-4, C-1, D-2"], "ans": 0, "exp": "Heat = joule (4), Temperature = kelvin (3), Power = watt (2), Pressure = pascal (1)."}, {"id": 248, "num": 18, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Magnetic field lines of a bar magnet form _____ loops, and outside the magnet go from the _____ pole.", "options": ["closed ; north to the south", "open ; south to the north", "closed ; south to the north", "open ; north to the south"], "ans": 0, "exp": "Magnetic field lines are always closed loops running North → South outside and South → North inside."}, {"id": 249, "num": 19, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Two identical cells (each emf 2 V, internal resistance 0.4 Ω) are connected in series. If current is 2 A, find terminal potential difference.", "options": ["2.4 V", "4 V", "3.2 V", "1.6 V"], "ans": 0, "exp": "E = 4 V, r = 0.8 Ω ⇒ V = E − Ir = 4 − 2(0.8) = 2.4 V."}, {"id": 250, "num": 20, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "An electric heater rated 1,100 W works on a 220 V supply. What current does it draw and what is its resistance?", "options": ["0.2 A and 1100 Ω", "5 A and 44 Ω", "5 A and 220 Ω", "4.4 A and 50 Ω"], "ans": 1, "exp": "I = P/V = 1100/220 = 5 A; R = V/I = 220/5 = 44 Ω."}, {"id": 251, "num": 21, "topic": "Physics & General Science", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Which device is commonly used as a voltage regulator because it keeps an almost constant voltage across itself in reverse breakdown?", "options": ["Photodiode", "LED", "Zener diode", "Ordinary PN-junction rectifier diode"], "ans": 2, "exp": "A heavily doped Zener diode operates safely in reverse breakdown at a steady Zener voltage, regulating load voltage."}]}, {"id": 14, "category": "Arts", "code": "ART Mock 01", "title": "GK & Arts (Part B) — Mock 01", "subtitle": "Indian Tribal Arts, Culture & Part B General Knowledge", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 252, "num": 1, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Gond painting, made with dots and lines that fill the figures of animals and trees, is a tribal art form mainly from which state?", "options": ["Madhya Pradesh", "Kerala", "Nagaland", "Goa"], "ans": 0, "exp": "Gond painting is the traditional tribal art of the Gond community, predominantly from Madhya Pradesh."}, {"id": 253, "num": 2, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "Pattachitra, a traditional cloth-based scroll painting often depicting Lord Jagannath, is mainly associated with which state?", "options": ["Odisha", "Punjab", "Assam", "Madhya Pradesh"], "ans": 0, "exp": "Pattachitra is a traditional cloth scroll painting from Odisha."}, {"id": 254, "num": 3, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Bharatanatyam is a classical dance form that originated in which state?", "options": ["Kerala", "Andhra Pradesh", "Tamil Nadu", "Karnataka"], "ans": 2, "exp": "Bharatanatyam originated in Tamil Nadu."}, {"id": 255, "num": 4, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Madhubani painting, known for its bright colours and fine line work drawn with fingers, twigs and nib pens, is a folk art of which state?", "options": ["Odisha", "Bihar", "Rajasthan", "Gujarat"], "ans": 1, "exp": "Madhubani (Mithila) painting is a GI-tagged folk art from Bihar."}, {"id": 256, "num": 5, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Which Article of the Constitution of India allows the State to make special provisions for women and children?", "options": ["Article 14", "Article 15(3)", "Article 21A", "Article 45"], "ans": 1, "exp": "Article 15(3) empowers the State to make special provisions for women and children."}, {"id": 257, "num": 6, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Kathakali, a classical dance with elaborate make-up and costumes, belongs to which state?", "options": ["Tamil Nadu", "Kerala", "Andhra Pradesh", "Manipur"], "ans": 1, "exp": "Kathakali (along with Mohiniyattam) is a classical dance form of Kerala."}, {"id": 258, "num": 7, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Warli painting, which uses simple geometric figures to show daily life, is a folk art of which state?", "options": ["Madhya Pradesh", "Bihar", "Maharashtra", "Odisha"], "ans": 2, "exp": "Warli tribal painting is a traditional folk art of Maharashtra (Madhubani–Bihar, Gond–MP, Pattachitra–Odisha)."}, {"id": 259, "num": 8, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following are performing arts?\nI. Dance  II. Theatre  III. Sculpture", "options": ["I and III", "II and III", "I and II", "I, II and III"], "ans": 2, "exp": "Dance and Theatre are performing arts (presented live), whereas Sculpture, Painting, and Pottery are visual arts."}, {"id": 260, "num": 9, "topic": "Technical Writing", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Included in the conclusion of a laboratory report:\nI. Summary of main findings   II. Full list of apparatus used", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "The conclusion summarises main findings; apparatus has its own dedicated section."}, {"id": 261, "num": 10, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which are folk dances of India?\nI. Bihu   II. Garba   III. Bhangra", "options": ["I and II", "II and III", "I, II and III", "I and III"], "ans": 2, "exp": "Bihu (Assam), Garba (Gujarat) and Bhangra (Punjab) are all Indian folk dances."}, {"id": 262, "num": 11, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "The Constitution of India promotes equality through:\nI. Right to Equality (Articles 14–18)\nII. Directive Principles of State Policy", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Both Fundamental Rights (Art. 14–18) and DPSP promote legal and socio-economic equality."}, {"id": 263, "num": 12, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "What is folk art?\nI. Art produced by communities and passed down through generations.\nII. Art reflecting traditions and daily life of a region.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Folk art (Madhubani, Warli, Gond, etc.) is community-based and preserves regional traditions."}, {"id": 264, "num": 13, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which languages were added to the Eighth Schedule by the 92nd Constitutional Amendment (2003)?", "options": ["Bodo, Dogri, Maithili and Santhali", "Konkani, Manipuri and Nepali", "Sindhi only", "English"], "ans": 0, "exp": "92nd Amendment (2003) added Bodo, Dogri, Maithili and Santhali (21st = Sindhi; 71st = Konkani, Manipuri, Nepali)."}, {"id": 265, "num": 14, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which of the following is/are visual arts?\nI. Painting   II. Sculpture", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Both painting and sculpture are visual arts (music, dance and theatre are performing arts)."}, {"id": 266, "num": 15, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is/are forms of performing arts?\nI. Dance   II. Theatre   III. Music", "options": ["Only II", "II and III", "I, II and III", "I and II"], "ans": 2, "exp": "Dance, theatre/drama and music are all performing arts (painting and sculpture are visual arts)."}, {"id": 267, "num": 16, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which article of the Indian Constitution provides for free and compulsory education for all children of 6 to 14 years of age?", "options": ["Article 51A", "Article 45", "Article 15(3)", "Article 21A"], "ans": 3, "exp": "Article 21A (inserted by the 86th Constitutional Amendment Act, 2002) guarantees free and compulsory education for children aged 6–14."}, {"id": 268, "num": 17, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Who among the following is known as 'Deshbandhu'?", "options": ["Gopal Krishna Gokhale", "Bal Gangadhar Tilak", "Lala Lajpat Rai", "Chittaranjan Das"], "ans": 3, "exp": "Chittaranjan Das was called 'Deshbandhu' (Friend of the Nation). (Tilak = Lokmanya; Lajpat Rai = Punjab Kesari.)"}, {"id": 269, "num": 18, "topic": "General Knowledge & Arts", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "The newspaper 'Amrita Bazar Patrika' was first published in which language?", "options": ["Marathi", "Bengali", "Hindi", "Odia"], "ans": 1, "exp": "Started in 1868 by Sisir Kumar Ghosh and Moti Lal Ghosh as a Bengali weekly (later switched to English)."}]}]};
+
+    const STORAGE_ANS = "math_ai_sci_dsssb_answers_v1";
+    const STORAGE_SUB = "math_ai_sci_dsssb_submitted_v1";
+    const STORAGE_THEME = "math_ai_sci_dsssb_theme_v1";
+
+    function safeGet(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    function safeSet(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    let answers = safeGet(STORAGE_ANS, {});
+    let submittedMocks = safeGet(STORAGE_SUB, {});
+    let activeCategory = "CSMath";
+    let activeMockId = DATA.mocks[0].id;
+    let quizMode = "instant";
+    let activeFilter = "all";
+
+    const timerState = {};
+    DATA.mocks.forEach((m) => {
+      timerState[m.id] = { remaining: m.durationSec, running: false };
+    });
+    let tickInterval = null;
+
+    function getActiveMock() {
+      return DATA.mocks.find((m) => m.id === activeMockId);
+    }
+
+    function getCategoryMocks(catKey) {
+      return DATA.mocks.filter((m) => m.category === catKey);
+    }
+
+    function formatTime(sec) {
+      const s = Math.max(0, sec);
+      const mm = String(Math.floor(s / 60)).padStart(2, "0");
+      const ss = String(s % 60).padStart(2, "0");
+      return `${mm}:${ss}`;
+    }
+
+    function isRevealed(mockId, qId) {
+      if (quizMode === "instant") return answers[qId] !== undefined;
+      return Boolean(submittedMocks[mockId]);
+    }
+
+    function computeMockStats(mock) {
+      let attempted = 0, correct = 0, wrong = 0;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      mock.questions.forEach((q) => {
+        if (answers[q.id] !== undefined) {
+          attempted++;
+          if (showTruth) {
+            if (answers[q.id] === q.ans) correct++;
+            else wrong++;
+          }
+        }
+      });
+      const marks = showTruth ? (correct * 1 - wrong * 0.25) : 0;
+      const acc = showTruth && attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+      return { attempted, correct, wrong, marks, acc, showTruth, total: mock.questions.length };
+    }
+
+    function computeOverallStats() {
+      let done = 0, correct = 0, wrong = 0, total = 0;
+      DATA.mocks.forEach((m) => {
+        const showTruth = quizMode === "instant" || Boolean(submittedMocks[m.id]);
+        m.questions.forEach((q) => {
+          total++;
+          if (answers[q.id] !== undefined) {
+            done++;
+            if (showTruth) {
+              if (answers[q.id] === q.ans) correct++;
+              else wrong++;
+            }
+          }
+        });
+      });
+      return { done, total, marks: (correct - wrong * 0.25).toFixed(2) };
+    }
+
+    function stopInterval() {
+      if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
+    }
+
+    function pauseAllTimers() {
+      Object.keys(timerState).forEach((k) => { timerState[k].running = false; });
+      stopInterval();
+    }
+
+    function startTimerForActive() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      if (st.remaining <= 0) st.remaining = mock.durationSec;
+      pauseAllTimers();
+      st.running = true;
+      updateTimerUI();
+      tickInterval = setInterval(() => {
+        const cur = timerState[activeMockId];
+        if (!cur.running) { stopInterval(); return; }
+        cur.remaining = Math.max(0, cur.remaining - 1);
+        updateTimerUI();
+        if (cur.remaining === 0) {
+          cur.running = false;
+          stopInterval();
+          showScorecardModal("⏱ Time's Up!");
+        }
+      }, 1000);
+    }
+
+    function toggleTimer() {
+      const st = timerState[activeMockId];
+      if (st.running) {
+        st.running = false;
+        stopInterval();
+        updateTimerUI();
+      } else {
+        startTimerForActive();
+      }
+    }
+
+    function resetTimer() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      st.running = false;
+      st.remaining = mock.durationSec;
+      stopInterval();
+      updateTimerUI();
+    }
+
+    function updateTimerUI() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      const formatted = formatTime(st.remaining);
+      document.getElementById("heroTimerText").textContent = formatted;
+      document.getElementById("miniTimerText").textContent = formatted;
+      document.getElementById("timerLabel").textContent = `${mock.timeLabel.toUpperCase()} TIMER`;
+      document.getElementById("timerToggleBtn").textContent = st.running ? "Pause" : (st.remaining < mock.durationSec && st.remaining > 0 ? "Resume" : "Start");
+      document.getElementById("timerStatusBadge").textContent = st.remaining === 0 ? "TIME UP" : (st.running ? "LIVE" : (st.remaining < mock.durationSec ? "PAUSED" : "READY"));
+
+      const pct = Math.max(0, (st.remaining / mock.durationSec) * 100);
+      const bar = document.getElementById("timerProgressBar");
+      const miniPill = document.getElementById("miniTimerPill");
+      bar.style.width = `${pct}%`;
+
+      miniPill.classList.remove("timer-urgent", "bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300", "bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      bar.classList.remove("bg-emerald-300", "bg-amber-300", "bg-rose-400");
+
+      if (st.remaining <= 60) {
+        bar.classList.add("bg-rose-400");
+        miniPill.classList.add("bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300");
+        if (st.running) miniPill.classList.add("timer-urgent");
+      } else if (st.remaining <= 150) {
+        bar.classList.add("bg-amber-300");
+        miniPill.classList.add("bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      } else {
+        bar.classList.add("bg-emerald-300");
+      }
+    }
+
+    function openModal(title, bodyHtml, buttons) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalBody").innerHTML = bodyHtml;
+      const actions = document.getElementById("modalActions");
+      actions.innerHTML = "";
+      buttons.forEach((b) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = b.label;
+        btn.className = b.cls;
+        btn.addEventListener("click", () => {
+          closeModal();
+          if (b.onClick) b.onClick();
+        });
+        actions.appendChild(btn);
+      });
+      document.getElementById("modalBackdrop").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("modalBackdrop").classList.add("hidden");
+    }
+
+    function showScorecardModal(titlePrefix) {
+      const mock = getActiveMock();
+      submittedMocks[mock.id] = true;
+      safeSet(STORAGE_SUB, submittedMocks);
+      const st = computeMockStats(mock);
+      renderAll();
+      openModal(
+        `${titlePrefix} — ${mock.code} Scorecard`,
+        `
+          <div class="grid grid-cols-2 gap-2.5 text-center">
+            <div class="rounded-xl bg-indigo-50 dark:bg-indigo-500/15 p-3">
+              <div class="text-xl font-black text-indigo-700 dark:text-indigo-300">${st.marks.toFixed(2)} / ${st.total}</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">NET MARKS</div>
+            </div>
+            <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/15 p-3">
+              <div class="text-xl font-black text-emerald-700 dark:text-emerald-300">${st.acc}%</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">ACCURACY</div>
+            </div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Correct: <span class="text-emerald-600 dark:text-emerald-400">${st.correct}</span></div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Wrong: <span class="text-rose-600 dark:text-rose-400">${st.wrong}</span> &bull; Left: ${st.total - st.attempted}</div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">All answers and explanations for ${escapeHtml(mock.code)} are now unlocked below.</p>
+        `,
+        [
+          {
+            label: "Review Wrong Only",
+            cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer",
+            onClick: () => { activeFilter = "wrong"; renderAll(); }
+          },
+          {
+            label: "View All Solutions",
+            cls: "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer"
+          }
+        ]
+      );
+    }
+
+    function renderCategoryTabs() {
+      const wrap = document.getElementById("categoryTabs");
+      wrap.innerHTML = DATA.categories.map((c) => {
+        const active = c.key === activeCategory;
+        const catMocks = getCategoryMocks(c.key);
+        const done = catMocks.reduce((acc, m) => acc + m.questions.filter((q) => answers[q.id] !== undefined).length, 0);
+        const cls = active
+          ? "bg-slate-900 dark:bg-indigo-600 text-white border-slate-900 dark:border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-indigo-400";
+        const badgeCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300";
+        return `
+          <button type="button" data-cat="${escapeHtml(c.key)}"
+            class="cat-tab shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-extrabold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(c.label)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md tabular-nums ${badgeCls}">${c.mocks} Mocks &bull; ${done}/${c.count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderMockTabs() {
+      const wrap = document.getElementById("mockTabs");
+      const catMocks = getCategoryMocks(activeCategory);
+      wrap.innerHTML = catMocks.map((m) => {
+        const active = m.id === activeMockId;
+        const done = m.questions.filter((q) => answers[q.id] !== undefined).length;
+        const cls = active
+          ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700";
+        const pillCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400";
+        return `
+          <button type="button" data-mock-id="${m.id}"
+            class="mock-tab shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(m.code)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums ${pillCls}">${done}/${m.questions.length}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderHeroAndStats() {
+      const mock = getActiveMock();
+      const st = computeMockStats(mock);
+      const ov = computeOverallStats();
+
+      document.getElementById("heroBadge").textContent = `${mock.category} Dedicated Mock`;
+      document.getElementById("heroQCount").textContent = `${mock.questions.length} Questions · +1.00 / −0.25`;
+      document.getElementById("heroTitle").textContent = mock.title;
+      document.getElementById("heroSub").textContent = mock.subtitle;
+
+      document.getElementById("statAttempted").textContent = `${st.attempted}/${st.total}`;
+      document.getElementById("statMarks").textContent = st.showTruth ? st.marks.toFixed(2) : "—";
+      document.getElementById("statAccuracy").textContent = st.showTruth ? `${st.acc}%` : "—";
+      document.getElementById("overallScorePill").textContent = `${ov.done}/${ov.total} Done • ${ov.marks} Marks`;
+
+      const instBtn = document.getElementById("modeInstantBtn");
+      const examBtn = document.getElementById("modeExamBtn");
+      const subBtn = document.getElementById("submitExamBtn");
+
+      if (quizMode === "instant") {
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        subBtn.classList.add("hidden");
+      } else {
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        if (!submittedMocks[mock.id]) subBtn.classList.remove("hidden");
+        else subBtn.classList.add("hidden");
+      }
+
+      document.querySelectorAll("#filterGroup .flt-btn").forEach((btn) => {
+        const active = btn.dataset.filter === activeFilter;
+        btn.className = active
+          ? "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer"
+          : "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+
+      document.getElementById("prevMockBtn").disabled = activeMockId <= 1;
+      document.getElementById("nextMockBtn").disabled = activeMockId >= DATA.mocks.length;
+      updateTimerUI();
+    }
+
+    function renderPalette() {
+      const mock = getActiveMock();
+      const wrap = document.getElementById("questionPalette");
+      document.getElementById("paletteTitle").textContent = `Question Palette (Jump to Q1–Q${mock.questions.length})`;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      wrap.innerHTML = mock.questions.map((q) => {
+        const picked = answers[q.id];
+        let cls = "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+        if (picked !== undefined) {
+          if (!showTruth) cls = "bg-indigo-600 text-white border-indigo-600";
+          else if (picked === q.ans) cls = "bg-emerald-600 text-white border-emerald-600";
+          else cls = "bg-rose-600 text-white border-rose-600";
+        }
+        return `
+          <button type="button" data-jump="qcard-${q.id}"
+            class="pal-btn w-8 h-7 rounded-lg border text-[11px] font-bold tabular-nums hover:opacity-85 cursor-pointer ${cls}">
+            ${q.num}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderQuestions() {
+      const mock = getActiveMock();
+      const list = document.getElementById("questionsList");
+      const showTruthGlobal = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+
+      const filtered = mock.questions.filter((q) => {
+        const picked = answers[q.id];
+        if (activeFilter === "unanswered") return picked === undefined;
+        if (activeFilter === "wrong") {
+          return showTruthGlobal && picked !== undefined && picked !== q.ans;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 text-center space-y-2">
+            <p class="text-sm font-bold text-slate-700 dark:text-slate-200">No questions match the current filter.</p>
+            <button type="button" id="clearFilterBtn" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Show All Questions</button>
+          </div>
+        `;
+        const cf = document.getElementById("clearFilterBtn");
+        if (cf) cf.addEventListener("click", () => { activeFilter = "all"; renderAll(); });
+        return;
+      }
+
+      const letters = ["A", "B", "C", "D"];
+      list.innerHTML = filtered.map((q) => {
+        const picked = answers[q.id];
+        const revealed = isRevealed(mock.id, q.id);
+
+        const optsHtml = q.options.map((opt, idx) => {
+          let btnCls = "border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-800 dark:text-slate-100";
+          let badgeCls = "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+          let mark = "";
+
+          if (revealed) {
+            if (idx === q.ans) {
+              btnCls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200";
+              badgeCls = "bg-emerald-600 text-white border-emerald-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-emerald-600 dark:text-emerald-400">✓ Correct</span>';
+            } else if (picked === idx) {
+              btnCls = "border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200";
+              badgeCls = "bg-rose-600 text-white border-rose-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-rose-600 dark:text-rose-400">✗ Your Pick</span>';
+            } else {
+              btnCls = "border-slate-200/70 dark:border-slate-800/70 bg-white dark:bg-slate-900/40 text-slate-500 dark:text-slate-400 opacity-75";
+            }
+          } else if (picked === idx) {
+            btnCls = "border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200";
+            badgeCls = "bg-indigo-600 text-white border-indigo-600";
+            mark = '<span class="ml-auto text-xs font-bold text-indigo-600 dark:text-indigo-400">Selected</span>';
+          }
+
+          return `
+            <button type="button" data-qid="${q.id}" data-opt="${idx}"
+              class="opt-btn w-full text-left flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer ${btnCls}">
+              <span class="w-6 h-6 rounded-lg border text-xs font-extrabold flex items-center justify-center shrink-0 ${badgeCls}">${letters[idx]}</span>
+              <span class="flex-1 leading-snug font-mono sm:font-sans">${escapeHtml(opt)}</span>
+              ${mark}
+            </button>
+          `;
+        }).join("");
+
+        const expHtml = revealed && q.exp ? `
+          <div class="mt-3 rounded-xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 p-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+            <span class="font-extrabold text-indigo-700 dark:text-indigo-300">Explanation: </span>${escapeHtml(q.exp)}
+          </div>
+        ` : "";
+
+        const qBodyHtml = `<p class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line mb-3.5">${escapeHtml(q.q)}</p>`;
+
+        return `
+          <article id="qcard-${q.id}" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs scroll-mt-40">
+            <div class="flex flex-wrap items-center gap-2 mb-2.5">
+              <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white">Q${q.num}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${escapeHtml(mock.category)}</span>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border text-sky-800 dark:text-sky-300 bg-sky-100 dark:bg-sky-900/40 border-sky-200 dark:border-sky-800">📘 ${escapeHtml(q.exam)}</span>
+            </div>
+            ${qBodyHtml}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${optsHtml}
+            </div>
+            ${expHtml}
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderAll() {
+      renderCategoryTabs();
+      renderMockTabs();
+      renderHeroAndStats();
+      renderPalette();
+      renderQuestions();
+    }
+
+    document.getElementById("categoryTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat-tab");
+      if (!btn) return;
+      const nextCat = btn.dataset.cat;
+      if (nextCat === activeCategory) return;
+      pauseAllTimers();
+      activeCategory = nextCat;
+      const firstMock = getCategoryMocks(activeCategory)[0];
+      if (firstMock) activeMockId = firstMock.id;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("mockTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".mock-tab");
+      if (!btn) return;
+      const nextId = Number(btn.dataset.mockId);
+      if (nextId === activeMockId) return;
+      pauseAllTimers();
+      activeMockId = nextId;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("questionsList").addEventListener("click", (e) => {
+      const btn = e.target.closest(".opt-btn");
+      if (!btn) return;
+      const qId = Number(btn.dataset.qid);
+      const optIdx = Number(btn.dataset.opt);
+      const mock = getActiveMock();
+
+      const st = timerState[activeMockId];
+      if (!st.running && st.remaining === mock.durationSec) {
+        startTimerForActive();
+      }
+
+      if (quizMode === "instant") {
+        if (answers[qId] !== undefined) return;
+        answers[qId] = optIdx;
+      } else {
+        if (submittedMocks[mock.id]) return;
+        answers[qId] = optIdx;
+      }
+      safeSet(STORAGE_ANS, answers);
+      renderAll();
+    });
+
+    document.getElementById("questionPalette").addEventListener("click", (e) => {
+      const btn = e.target.closest(".pal-btn");
+      if (!btn) return;
+      const target = document.getElementById(btn.dataset.jump);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        activeFilter = "all";
+        renderAll();
+        setTimeout(() => {
+          const el = document.getElementById(btn.dataset.jump);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 50);
+      }
+    });
+
+    document.getElementById("filterGroup").addEventListener("click", (e) => {
+      const btn = e.target.closest(".flt-btn");
+      if (!btn) return;
+      activeFilter = btn.dataset.filter;
+      renderAll();
+    });
+
+    document.getElementById("modeInstantBtn").addEventListener("click", () => { quizMode = "instant"; renderAll(); });
+    document.getElementById("modeExamBtn").addEventListener("click", () => { quizMode = "exam"; renderAll(); });
+    document.getElementById("submitExamBtn").addEventListener("click", () => { pauseAllTimers(); showScorecardModal("Mock Submitted"); });
+    document.getElementById("timerToggleBtn").addEventListener("click", toggleTimer);
+    document.getElementById("timerResetBtn").addEventListener("click", resetTimer);
+
+    document.getElementById("resetMockBtn").addEventListener("click", () => {
+      const mock = getActiveMock();
+      openModal(
+        `Reset ${mock.code}?`,
+        `<p>This will clear all saved answers and reset the timer for <strong>${escapeHtml(mock.code)}</strong>.</p>`,
+        [
+          { label: "Cancel", cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer" },
+          {
+            label: "Reset Mock",
+            cls: "px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold cursor-pointer",
+            onClick: () => {
+              mock.questions.forEach((q) => { delete answers[q.id]; });
+              delete submittedMocks[mock.id];
+              safeSet(STORAGE_ANS, answers);
+              safeSet(STORAGE_SUB, submittedMocks);
+              resetTimer();
+              activeFilter = "all";
+              renderAll();
+            }
+          }
+        ]
+      );
+    });
+
+    document.getElementById("prevMockBtn").addEventListener("click", () => {
+      if (activeMockId > 1) {
+        pauseAllTimers();
+        activeMockId--;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("nextMockBtn").addEventListener("click", () => {
+      if (activeMockId < DATA.mocks.length) {
+        pauseAllTimers();
+        activeMockId++;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("modalCloseX").addEventListener("click", closeModal);
+    document.getElementById("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      document.documentElement.classList.toggle("dark", isDark);
+      document.getElementById("themeIcon").textContent = isDark ? "☀️" : "🌙";
+    }
+    applyTheme(safeGet(STORAGE_THEME, "light"));
+    document.getElementById("themeToggleBtn").addEventListener("click", () => {
+      const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+      safeSet(STORAGE_THEME, next);
+      applyTheme(next);
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

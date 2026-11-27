@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA & Software Engineering Mocks · HARIS SAIFI</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .timer-urgent { animation: pulseSoft 1s infinite; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen antialiased transition-colors duration-200">
+
+  <!-- Sticky Top Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-blue-700 text-white font-extrabold text-xs flex items-center justify-center shadow-sm shrink-0">
+          DSA
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
+            DSA &amp; SOFTWARE ENGINEERING MOCKS
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+            13 Separate Topic Mocks &bull; 244 Unique Qs &bull; CBT Timer &bull; <span class="font-bold text-indigo-600 dark:text-indigo-400">by HARIS SAIFI</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <div id="miniTimerPill" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-extrabold tabular-nums">
+          <span aria-hidden="true">⏱</span>
+          <span id="miniTimerText">11:00</span>
+        </div>
+
+        <div id="overallScorePill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-bold tabular-nums">
+          0/244 Done &bull; 0.00 Marks
+        </div>
+
+        <button id="themeToggleBtn" type="button" aria-label="Toggle dark mode"
+          class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Subject Category Tabs (C | C++ | Java | OOPS | Python) -->
+    <div class="border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/80">
+      <div id="categoryTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </div>
+
+    <!-- Mock Selector Strip for Active Subject -->
+    <nav aria-label="Select Mock Test" class="border-t border-slate-100 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/75">
+      <div id="mockTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-3 sm:px-5 py-5 space-y-5">
+
+    <!-- Active Mock Hero + Timer Panel -->
+    <section id="heroCard" class="rounded-2xl bg-gradient-to-br from-violet-700 via-indigo-700 to-blue-800 text-white p-5 sm:p-6 shadow-md">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="space-y-1.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="heroBadge" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/20 text-white"></span>
+            <span id="heroQCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-black/20 text-indigo-100"></span>
+          </div>
+          <h2 id="heroTitle" class="text-xl sm:text-2xl font-extrabold tracking-tight"></h2>
+          <p id="heroSub" class="text-xs sm:text-sm text-indigo-100/95"></p>
+        </div>
+
+        <!-- Timer + Score Box -->
+        <div class="flex flex-wrap sm:flex-nowrap items-stretch gap-3">
+          <div class="rounded-xl bg-black/25 border border-white/15 px-4 py-2.5 flex flex-col justify-center min-w-[160px]">
+            <div class="flex items-center justify-between gap-2">
+              <span id="timerLabel" class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">11-MIN TIMER</span>
+              <span id="timerStatusBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/15">READY</span>
+            </div>
+            <div id="heroTimerText" class="text-2xl sm:text-3xl font-black tabular-nums tracking-tight mt-0.5">11:00</div>
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <button id="timerToggleBtn" type="button"
+                class="flex-1 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white text-indigo-700 hover:bg-indigo-50 cursor-pointer">
+                Start
+              </button>
+              <button id="timerResetBtn" type="button"
+                class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white cursor-pointer">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white/12 border border-white/15 px-4 py-2.5 flex items-center gap-4 text-center">
+            <div>
+              <div id="statAttempted" class="text-lg sm:text-xl font-extrabold tabular-nums">0/20</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Attempted</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statMarks" class="text-lg sm:text-xl font-extrabold tabular-nums">0.00</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Marks</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statAccuracy" class="text-lg sm:text-xl font-extrabold tabular-nums">0%</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Accuracy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 h-1.5 w-full rounded-full bg-black/20 overflow-hidden">
+        <div id="timerProgressBar" class="h-full bg-emerald-300 transition-all duration-500" style="width: 100%;"></div>
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <section class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1" role="group" aria-label="Quiz Mode">
+          <button id="modeInstantBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer">
+            Instant Feedback
+          </button>
+          <button id="modeExamBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer">
+            Timed Exam (Submit)
+          </button>
+        </div>
+
+        <div id="filterGroup" class="inline-flex items-center gap-1" role="group" aria-label="Question filter">
+          <button type="button" data-filter="all" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer">All</button>
+          <button type="button" data-filter="unanswered" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Unanswered</button>
+          <button type="button" data-filter="wrong" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Wrong Only</button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="submitExamBtn" type="button"
+          class="hidden px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs cursor-pointer">
+          Submit Mock
+        </button>
+        <button id="resetMockBtn" type="button"
+          class="px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-800/70 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-xs font-bold cursor-pointer">
+          Reset Mock
+        </button>
+      </div>
+    </section>
+
+    <!-- Quick Question Palette -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex items-center justify-between mb-2">
+        <span id="paletteTitle" class="text-xs font-bold text-slate-600 dark:text-slate-300">Question Palette</span>
+        <span class="text-[11px] text-slate-500 dark:text-slate-400">Green = Correct &bull; Red = Wrong &bull; Indigo = Marked</span>
+      </div>
+      <div id="questionPalette" class="flex flex-wrap gap-1.5"></div>
+    </section>
+
+    <!-- Questions Container -->
+    <section id="questionsList" class="space-y-4"></section>
+
+    <!-- Bottom Navigation -->
+    <section class="flex items-center justify-between pt-2 pb-8">
+      <button id="prevMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 cursor-pointer">
+        &larr; Previous Mock
+      </button>
+      <button id="nextMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white disabled:opacity-40 cursor-pointer">
+        Next Mock &rarr;
+      </button>
+    </section>
+  </main>
+
+  <!-- In-Page Modal -->
+  <div id="modalBackdrop" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white"></h3>
+        <button id="modalCloseX" type="button" aria-label="Close modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg font-bold cursor-pointer">&times;</button>
+      </div>
+      <div id="modalBody" class="text-sm text-slate-600 dark:text-slate-300 space-y-3"></div>
+      <div id="modalActions" class="flex items-center justify-end gap-2 pt-1"></div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"categories": [{"key": "DSA", "label": "Data Structures & Algorithms", "count": 176, "mocks": 9, "desc": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity"}, {"key": "SE", "label": "Software Engineering", "count": 68, "mocks": 4, "desc": "SDLC Models, DFD, Cohesion/Coupling, COCOMO, Testing & Project Metrics"}], "mocks": [{"id": 1, "category": "DSA", "code": "DSA Mock 01", "title": "Data Structures & Algorithms — Mock 01", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 1, "num": 1, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Function calls and recursion are implemented by the system using a ______.", "options": ["queue", "stack", "graph", "hash table"], "ans": 1, "exp": "Each function call pushes an activation record onto the call stack and pops it on return (LIFO)."}, {"id": 2, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding a binary search tree (BST)?\nI. The smallest key is found at the leftmost node.\nII. The largest key is always found at a leaf node.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "The smallest key is always at the leftmost node (I is true). The largest key is at the rightmost node, which may have a left child and thus need not be a leaf (II is false)."}, {"id": 3, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding binary search?\nI. Binary search can be applied only to a sorted list.\nII. The worst-case time complexity of binary search is O(log n).", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Both statements are correct: binary search requires sorted order and halves the search space each step → O(log n)."}, {"id": 4, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "What is the average-case time complexity of quick sort?", "options": ["O(n²)", "O(n log n)", "O(n)", "O(log n)"], "ans": 1, "exp": "Quick sort runs in O(n log n) on average (worst case is O(n²))."}, {"id": 5, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "An adjacency matrix of a graph with n vertices needs ______ space.", "options": ["O(n)", "O(n + e)", "O(log n)", "O(n²)"], "ans": 3, "exp": "An adjacency matrix is an n × n 2D array, requiring O(n²) space regardless of the number of edges."}, {"id": 6, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding a binary heap?\nI. A binary heap is always a binary search tree.\nII. In a max-heap, the smallest element is always stored at the root.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 3, "exp": "A binary heap does not enforce BST left/right ordering, and a max-heap stores the largest (not smallest) element at the root. Neither is correct."}, {"id": 7, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which of the following lists the functions in increasing order of growth?", "options": ["log n, n log n, √n, n², 2ⁿ", "√n, log n, n log n, n², 2ⁿ", "log n, √n, n², n log n, 2ⁿ", "log n, √n, n log n, n², 2ⁿ"], "ans": 3, "exp": "For large n: log n < √n < n log n < n² < 2ⁿ."}, {"id": 8, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Huffman coding is mainly used for:", "options": ["sorting data", "lossless data compression", "lossy image compression", "encrypting data"], "ans": 1, "exp": "Huffman coding builds optimal variable-length prefix codes for lossless data compression."}, {"id": 9, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "What is the value of the prefix expression: * + 5 3 − 9 / 8 4 ?", "options": ["16", "40", "56", "72"], "ans": 2, "exp": "/ 8 4 = 2; − 9 2 = 7; + 5 3 = 8; * 8 7 = 56."}, {"id": 10, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A binary tree has 20 leaf nodes. How many nodes have exactly two children?", "options": ["20", "19", "21", "10"], "ans": 1, "exp": "In any binary tree, n₀ = n₂ + 1 ⇒ n₂ = 20 − 1 = 19."}, {"id": 11, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "______ sort repeatedly finds the minimum element of the unsorted part and swaps it into its correct position at the beginning.", "options": ["Insertion", "Bubble", "Selection", "Quick"], "ans": 2, "exp": "Selection sort repeatedly selects the minimum from the unsorted subarray and swaps it to the front."}, {"id": 12, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding collision resolution in hashing?\nI. In separate chaining, a colliding key is stored in the next empty slot of the table.\nII. Linear probing stores all the keys that hash to the same index in a linked list at that index.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 3, "exp": "The two descriptions are swapped, so neither statement is correct."}, {"id": 13, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "How many edges does a complete undirected graph with 5 vertices (K₅) have?", "options": ["5", "10", "20", "25"], "ans": 1, "exp": "n(n − 1)/2 = 5 × 4 / 2 = 10 edges."}, {"id": 14, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A singly linked list keeps pointers to both its first and last nodes. Which operation still takes O(n) time?", "options": ["Inserting at the front", "Deleting the last node", "Inserting at the end", "Deleting the first node"], "ans": 1, "exp": "Deleting the last node requires finding the second-last node by traversing from head → O(n)."}, {"id": 15, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "In a binary heap stored in an array with the root at index 1, the children of the node at index i are at indices ______.", "options": ["2i and 2i + 1", "2i − 1 and 2i", "i + 1 and i + 2", "2i + 1 and 2i + 2"], "ans": 0, "exp": "With 1-based indexing, left child = 2i and right child = 2i + 1."}, {"id": 16, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "The ______ method makes the choice that looks best at each step, without reconsidering the earlier choices.", "options": ["greedy", "dynamic programming", "backtracking", "branch and bound"], "ans": 0, "exp": "The greedy method makes locally optimal choices without backtracking."}, {"id": 17, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "The numbers 1, 2, 3, 4, 5 are pushed onto a stack in this order, and pops may be done at any time in between. Which output sequence is NOT possible?", "options": ["1 5 4 3 2", "3 2 5 4 1", "2 1 5 4 3", "4 5 3 1 2"], "ans": 3, "exp": "After popping 4, 5, 3, the stack has 2 above 1, so 2 must be popped before 1; `4 5 3 1 2` is impossible."}, {"id": 18, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A circular queue is stored in an array of size 10 (indices 0–9). front = 7 and rear = 3 (next insertion slot). How many elements are in the queue?", "options": ["6", "4", "−4", "14"], "ans": 0, "exp": "Count = (rear − front + N) mod N = (3 − 7 + 10) mod 10 = 6 (indices 7, 8, 9, 0, 1, 2)."}, {"id": 19, "num": 19, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "In ______ traversal of a binary tree, the root is visited first, then the left subtree and then the right subtree.", "options": ["inorder", "postorder", "preorder", "level-order"], "ans": 2, "exp": "Preorder = Root → Left → Right."}, {"id": 20, "num": 20, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A ______ always removes the element with the highest (or lowest) priority first, and it is usually implemented using a binary heap.", "options": ["stack", "circular queue", "priority queue", "deque"], "ans": 2, "exp": "A priority queue serves elements by priority and is typically backed by a binary heap."}]}, {"id": 2, "category": "DSA", "code": "DSA Mock 02", "title": "Data Structures & Algorithms — Mock 02", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 21, "num": 1, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "An undirected graph has edges A–B, A–D, B–C, B–E, D–E, D–G, C–F, E–F. Starting at A and visiting neighbours alphabetically, what is the BFS order?", "options": ["A D B G E C F", "A B C F E D G", "A B D C E F G", "A B D C E G F"], "ans": 3, "exp": "Queue trace: A → (B,D) → B adds (C,E) → D adds (G) → C adds (F) → BFS order: A B D C E G F."}, {"id": 22, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "For linked list 1 → 2 → 3 → 4 → 5 → 6, slow advances 1 step and fast advances 2 steps while `fast != NULL && fast->next != NULL`. What does `slow->data` return?", "options": ["6", "3", "5", "4"], "ans": 3, "exp": "Steps: (1,1) → (2,3) → (3,5) → (4,NULL). Loop stops with slow at 4."}, {"id": 23, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A compiler stores information about identifiers, such as their names, types and scopes, in the ______.", "options": ["symbol table", "parse tree", "activation record", "literal table"], "ans": 0, "exp": "The symbol table records identifier names, types, scopes, and memory locations."}, {"id": 24, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding dynamic programming?\nI. Dynamic programming is useful for problems with overlapping sub-problems and optimal substructure.\nII. Dynamic programming solves each sub-problem again every time it is needed.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "I is true; II is false because DP solves each sub-problem once and caches the result."}, {"id": 25, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "What is the postfix form of the infix expression A + B * C?", "options": ["A B + C *", "A B C * +", "+ A * B C", "A + B C *"], "ans": 1, "exp": "`*` has higher precedence than `+`: B*C → B C *, then A + (B C *) → `A B C * +`."}, {"id": 26, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "What is the maximum number of nodes in a binary tree of height 3, if the root is at height 0?", "options": ["7", "8", "15", "16"], "ans": 2, "exp": "Maximum nodes = 2^(h+1) − 1 = 2⁴ − 1 = 15."}, {"id": 27, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "In open addressing with linear probing, if the slot given by the hash function is already occupied, which slot is tried next?", "options": ["The next slot (index + 1), wrapping around to the start at the end of the table", "The slot at index + 1², then index + 2², and so on", "The slot given by a second hash function", "A linked list kept at the same index"], "ans": 0, "exp": "Linear probing sequentially probes (h(k) + i) mod m, starting with index + 1 and wrapping around."}, {"id": 28, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "______ sort builds the final sorted list one element at a time by inserting each new element into its correct position among the already sorted elements.", "options": ["Bubble", "Selection", "Insertion", "Merge"], "ans": 2, "exp": "Insertion sort builds the sorted prefix one element at a time, like sorting playing cards."}, {"id": 29, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding topological sorting?\nI. Topological sorting is possible only for a directed acyclic graph (DAG).\nII. A DAG always has exactly one topological order.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I is true (cycles forbid topological order). II is false because a DAG can have multiple valid topological orderings."}, {"id": 30, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "In an unweighted graph, ______ finds the shortest path (fewest edges) from the source vertex to every other vertex.", "options": ["Depth-First Search", "Breadth-First Search", "Inorder traversal", "Prim's algorithm"], "ans": 1, "exp": "BFS explores vertices level by level using a queue, guaranteeing the fewest-edge shortest path in unweighted graphs."}, {"id": 31, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "What is the time complexity of accessing an element of an array using its index?", "options": ["O(1)", "O(n)", "O(log n)", "O(n log n)"], "ans": 0, "exp": "Contiguous storage allows direct address computation (`base + i × size`) in O(1) constant time."}, {"id": 32, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Merge sort and binary search are based on the ______ technique of algorithm design.", "options": ["greedy", "dynamic programming", "divide and conquer", "backtracking"], "ans": 2, "exp": "Both merge sort and binary search recursively split the problem into smaller sub-problems (divide and conquer)."}, {"id": 33, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "In any undirected graph, the sum of the degrees of all the vertices is equal to:", "options": ["twice the number of edges", "the number of edges", "the number of vertices", "twice the number of vertices"], "ans": 0, "exp": "By the Handshaking Lemma, every edge contributes 1 to each of its two endpoints, so sum of degrees = 2 × |E|."}, {"id": 34, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Quick sort uses Lomuto partition with the last element as pivot. Array after the first partition of [7, 2, 9, 4, 3, 8, 5]?", "options": ["[4, 2, 3, 5, 9, 8, 7]", "[2, 4, 3, 5, 7, 9, 8]", "[2, 4, 3, 5, 9, 8, 7]", "[2, 3, 4, 5, 7, 8, 9]"], "ans": 2, "exp": "Elements ≤ 5 move left (2, 4, 3), then pivot 5 swaps with a[3] (7) ⇒ [2, 4, 3, 5, 9, 8, 7]."}, {"id": 35, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "How many different spanning trees does the complete graph K₄ have?", "options": ["64", "12", "16", "4"], "ans": 2, "exp": "By Cayley's formula, n^(n−2) = 4² = 16."}, {"id": 36, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Matrices A (10×20), B (20×5), C (5×30) are multiplied as A·B·C. Minimum scalar multiplications?", "options": ["1500", "9000", "3500", "2500"], "ans": 3, "exp": "(AB)C = 10·20·5 + 10·5·30 = 1000 + 1500 = 2500 (vs A(BC) = 9000)."}, {"id": 37, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Weighted undirected graph: A–B(3), A–D(1), B–D(4), B–C(2), C–D(5), C–E(6), D–E(7). Order Prim's algorithm (starting at A) adds vertices and total MST weight?", "options": ["A, B, C, D, E; total 12", "A, D, C, B, E; total 12", "A, D, B, C, E; total 12", "A, D, B, E, C; total 13"], "ans": 2, "exp": "A → A–D(1) → A–B(3) → B–C(2) → C–E(6). Order: A, D, B, C, E; total weight = 12."}, {"id": 38, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Keys 50, 30, 70, 20, 40, 60, 80, 65 are inserted into an empty BST, then 50 is deleted using its inorder successor. Preorder traversal of resulting tree?", "options": ["60 30 20 40 70 65 80", "40 30 20 70 60 65 80", "60 30 20 40 70 80 65", "65 30 20 40 70 60 80"], "ans": 0, "exp": "Inorder successor of 50 is 60; 65 moves up as left child of 70 ⇒ Preorder: 60 30 20 40 70 65 80."}, {"id": 39, "num": 19, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regarding Floyd–Warshall:\nI. Finds all-pairs shortest paths in Θ(V³) time.\nII. Gives correct results with negative edge weights provided there is no negative-weight cycle.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements are correct about the Floyd–Warshall DP algorithm."}, {"id": 40, "num": 20, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "A full binary tree (every node has 0 or 2 children) has 10 internal nodes. How many leaves does it have?", "options": ["9", "10", "11", "20"], "ans": 2, "exp": "In a full binary tree, leaves = internal nodes + 1 = 10 + 1 = 11."}]}, {"id": 3, "category": "DSA", "code": "DSA Mock 03", "title": "Data Structures & Algorithms — Mock 03", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 41, "num": 1, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "For a sorted array with uniformly distributed keys, the average-case time complexity of interpolation search is ______.", "options": ["O(1)", "O(n)", "O(log n)", "O(log log n)"], "ans": 3, "exp": "Interpolation search averages O(log log n) on uniformly distributed sorted keys."}, {"id": 42, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regarding circular linked lists:\nI. The next pointer of the last node points to the first node.\nII. Traversal stops when it reaches a node whose next pointer is NULL.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Circular lists have no NULL pointer; traversal stops when returning to `head` (Only I)."}, {"id": 43, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Seven people numbered 1 to 7 stand in a circle; starting from 1, every 2nd person is eliminated (2, 4, 6, ...). Who survives (Josephus k = 2)?", "options": ["1", "3", "5", "7"], "ans": 3, "exp": "Eliminations: 2, 4, 6, 1, 5, 3 ⇒ 7 survives (7 = 2² + 3 ⇒ 2(3)+1 = 7)."}, {"id": 44, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "The min-heap [2, 5, 3, 9, 6, 4, 8] is stored in an array. What is the array after one delete-min operation?", "options": ["[3, 5, 4, 9, 6, 8]", "[3, 5, 8, 9, 6, 4]", "[3, 4, 5, 9, 6, 8]", "[4, 5, 3, 9, 6, 8]"], "ans": 0, "exp": "Replace root 2 with last leaf 8: [8,5,3,9,6,4]. Swap 8 with smaller child 3 → [3,5,8,9,6,4]. Swap 8 with child 4 → [3,5,4,9,6,8]."}, {"id": 45, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "The number of structurally different binary trees that can be formed with 4 nodes is ______.", "options": ["24", "14", "16", "42"], "ans": 1, "exp": "Catalan number C(4) = 8! / (5! × 4!) = 14."}, {"id": 46, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "A binary tree has Preorder: G C A E F K H J M and Inorder: A C E F G H J K M. What is its Postorder traversal?", "options": ["A F E C J H M K G", "A E F C J H M K G", "A F E C H J M K G", "F E A C J H M K G"], "ans": 0, "exp": "Root G; left subtree C(A, E(−, F)) → postorder A F E C; right subtree K(H(−, J), M) → postorder J H M K; root G ⇒ A F E C J H M K G."}, {"id": 47, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Hash table size 11 uses double hashing: h₁(k) = k mod 11, h₂(k) = 7 − (k mod 7). Keys 14, 25, 36, 3 are inserted in order. At which index is 3 stored?", "options": ["8", "4", "10", "7"], "ans": 3, "exp": "14→3; 25→3(full),6; 36→3(full),9; 3 has h₁=3, h₂=7−3=4 ⇒ 3(full), (3+4) mod 11 = 7."}, {"id": 48, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Quick sort always chooses the first element as pivot. To sort an already sorted array of 10 distinct elements, how many comparisons does it make?", "options": ["10", "45", "100", "33"], "ans": 1, "exp": "Worst case: 9 + 8 + ... + 1 = 10×9/2 = 45 comparisons."}, {"id": 49, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "What is the solution of the recurrence T(n) = 3T(n/3) + n log n?", "options": ["Θ(n log² n)", "Θ(n log n)", "Θ(n²)", "Θ(n^1.5)"], "ans": 0, "exp": "a=3, b=3 ⇒ n^(log_b a) = n. Since f(n) = n log¹ n, Extended Master Theorem Case 2 gives Θ(n log² n)."}, {"id": 50, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Fractional knapsack capacity = 20 kg. Items (weight, value): A(8,40), B(10,30), C(5,35), D(6,24). Maximum total value?", "options": ["99", "102", "105", "94"], "ans": 1, "exp": "Value/kg: C(7), A(5), D(4), B(3). Take all C(5kg,35) + A(8kg,40) + D(6kg,24) + 1kg of B(3) = 102."}, {"id": 51, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Queue using two stacks S1, S2 (enqueue pushes S1; dequeue pops S2, moving all S1→S2 only if S2 is empty). Operations: enq 1, enq 2, enq 3, deq, enq 4, deq, deq. Total pushes?", "options": ["4", "7", "10", "6"], "ans": 1, "exp": "enq 1,2,3 (3 pushes to S1) + 1st deq moves 3 elements to S2 (3 pushes) + enq 4 (1 push to S1) + next two deq pop from S2 (0 pushes) = 7 pushes."}, {"id": 52, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "A connected planar graph has 10 vertices, each of degree 3. How many faces (including the outer face) does any planar drawing have?", "options": ["17", "5", "9", "7"], "ans": 3, "exp": "2E = 10×3 = 30 ⇒ E = 15. Euler's formula: V − E + F = 2 ⇒ 10 − 15 + F = 2 ⇒ F = 7."}, {"id": 53, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Regarding binary heaps:\nI. Searching for an arbitrary key in a binary min-heap takes O(log n) time.\nII. A binary heap can be built from an unsorted array of n elements in O(n) time.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Searching an arbitrary key in a heap takes O(n) (I false); bottom-up heapify builds a heap in O(n) (II true)."}, {"id": 54, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following statement(s) is/are correct regarding a B-tree?\nI. The leaf nodes of a B-tree may be at different levels.\nII. A B-tree is a binary tree in which every node has at most two children.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 3, "exp": "Both are false: a B-tree is a balanced multi-way search tree (order m → up to m children) where all leaf nodes are strictly at the same level."}, {"id": 55, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "What is the value of the postfix expression: 5 3 2 * + 4 − 9 3 / + ?", "options": ["10", "7", "12", "4"], "ans": 0, "exp": "3*2=6 → 5+6=11 → 11−4=7 → 9/3=3 → 7+3 = 10."}, {"id": 56, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "The keys 50, 30, 70, 20, 40, 60, 80, 35, 45, 65 are inserted in this order into an empty binary search tree. What is the postorder traversal?", "options": ["20, 35, 45, 40, 30, 60, 65, 80, 70, 50", "20, 35, 45, 40, 30, 65, 60, 80, 70, 50", "20, 40, 35, 45, 30, 65, 60, 80, 70, 50", "35, 45, 20, 40, 30, 65, 60, 80, 70, 50"], "ans": 1, "exp": "Left subtree of 50 (postorder): 20, 35, 45, 40, 30. Right subtree (65 is right child of 60): 65, 60, 80, 70. Root: 50 → 20, 35, 45, 40, 30, 65, 60, 80, 70, 50."}, {"id": 57, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "In hashing, what is a collision?", "options": ["A key is stored at the index given by the hash function", "Two different keys are mapped by the hash function to the same slot", "The hash table becomes full", "Two equal keys are inserted into the table"], "ans": 1, "exp": "A collision happens when two distinct keys hash to the same index/slot; handled via chaining or open addressing."}, {"id": 58, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following sorting algorithms does NOT have a worst-case time complexity of O(n²)?", "options": ["Bubble sort", "Insertion sort", "Selection sort", "Merge sort"], "ans": 3, "exp": "Bubble, Insertion, and Selection sort are O(n²) in the worst case. Merge sort is always O(n log n)."}, {"id": 59, "num": 19, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "In a min-heap, the value of every parent node is:", "options": ["greater than or equal to its children", "less than or equal to its children", "smaller than its right child and greater than its left child", "equal to the smaller of its two children"], "ans": 1, "exp": "In a min-heap, every parent is ≤ its children so the minimum element is always at the root."}, {"id": 60, "num": 20, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "How many edges does a spanning tree of a connected graph with n vertices have?", "options": ["n", "n − 1", "n + 1", "n/2"], "ans": 1, "exp": "A spanning tree connects all n vertices with no cycles, so it always has exactly n − 1 edges."}]}, {"id": 4, "category": "DSA", "code": "DSA Mock 04", "title": "Data Structures & Algorithms — Mock 04", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 61, "num": 1, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "What is the worst-case time complexity of merge sort?", "options": ["O(n²)", "O(n)", "O(log n)", "O(n log n)"], "ans": 3, "exp": "Merge sort divides in log n levels and merges in O(n) per level → O(n log n) in best, average, and worst cases."}, {"id": 62, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the minimum number of moves needed to solve the Tower of Hanoi puzzle with 5 disks?", "options": ["31", "32", "25", "15"], "ans": 0, "exp": "Minimum moves = 2ⁿ − 1 = 2⁵ − 1 = 31."}, {"id": 63, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Which of the following is NOT an application of the stack data structure?", "options": ["Round-robin CPU scheduling", "Managing function calls and recursion", "Evaluating postfix expressions", "Implementing undo in a text editor"], "ans": 0, "exp": "Round-robin scheduling uses a FIFO queue, not a LIFO stack."}, {"id": 64, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "A circular singly linked list is accessed via a pointer to its last node. Time complexity to insert a new node at the beginning?", "options": ["O(log n)", "O(n)", "O(1)", "O(n²)"], "ans": 2, "exp": "`new->next = last->next; last->next = new;` executes in O(1) time."}, {"id": 65, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Keys 40, 20, 60, 10, 30, 50, 70 are inserted in order into an empty BST. What is its level-order traversal?", "options": ["10, 30, 20, 50, 70, 60, 40", "10, 20, 30, 40, 50, 60, 70", "40, 20, 10, 30, 60, 50, 70", "40, 20, 60, 10, 30, 50, 70"], "ans": 3, "exp": "Root 40; level 1: 20, 60; level 2: 10, 30, 50, 70 ⇒ 40, 20, 60, 10, 30, 50, 70."}, {"id": 66, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "A ______ is a linear data structure that works on the FIFO (First In, First Out) principle.", "options": ["stack", "queue", "tree", "graph"], "ans": 1, "exp": "A queue inserts at the rear and removes from the front (FIFO)."}, {"id": 67, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the maximum number of swaps performed by selection sort on an array of n elements?", "options": ["n − 1", "n(n − 1)/2", "n²", "n log n"], "ans": 0, "exp": "Selection sort performs at most one swap per pass across n − 1 passes."}, {"id": 68, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Regarding graph representations:\nI. An adjacency matrix needs O(V²) space.\nII. An adjacency list needs O(V + E) space and is preferred for sparse graphs.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements are correct."}, {"id": 69, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Dijkstra's algorithm is used to find:", "options": ["the shortest paths from a single source vertex to all other vertices (with non-negative edge weights)", "a minimum spanning tree", "a topological ordering of a DAG", "all strongly connected components"], "ans": 0, "exp": "Dijkstra's greedy algorithm computes single-source shortest paths for graphs with non-negative edge weights."}, {"id": 70, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the time complexity of binary search on a sorted array of n elements?", "options": ["O(n)", "O(1)", "O(log n)", "O(n log n)"], "ans": 2, "exp": "Halving the search space each step yields O(log n)."}, {"id": 71, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the value of the prefix expression − + 8 / 6 3 2?", "options": ["12", "6", "8", "4"], "ans": 2, "exp": "Scanning right to left: / 6 3 = 2, + 8 2 = 10, − 10 2 = 8 (infix: (8 + 6/3) − 2 = 8)."}, {"id": 72, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "In an input-restricted double-ended queue (deque), ______.", "options": ["deletion is allowed at only one end, but insertion at both ends", "insertion is allowed at only one end, but deletion is allowed at both ends", "insertion and deletion are allowed at only one end", "no insertion is allowed"], "ans": 1, "exp": "An input-restricted deque restricts insertion to one end while permitting deletion from both ends."}, {"id": 73, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "A new node q is to be inserted after node p in a singly linked list. Which sequence of statements is correct?", "options": ["q->next = p->next; p->next = q;", "p->next = q; q->next = p->next;", "q->next = p; p->next = q;", "p->next = q->next; q->next = p;"], "ans": 0, "exp": "First point q->next to p's current successor, then update p->next to q; reversing the order loses the rest of the list."}, {"id": 74, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the height of a complete binary tree with 100 nodes, if the root is at height 0?", "options": ["5", "7", "6", "50"], "ans": 2, "exp": "Height = ⌊log₂ 100⌋ = 6 (since 2⁶ = 64 ≤ 100 < 128 = 2⁷)."}, {"id": 75, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "In a max-heap, the largest element is always stored at the ______.", "options": ["root", "leftmost leaf", "last node", "rightmost leaf"], "ans": 0, "exp": "In a max-heap, every parent ≥ its children, so the maximum element is always at the root."}, {"id": 76, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following sorting algorithms is NOT comparison-based?", "options": ["Heap sort", "Counting sort", "Merge sort", "Quick sort"], "ans": 1, "exp": "Counting sort (like Radix and Bucket sort) counts key frequencies directly in O(n + k) time without element-to-element comparisons."}, {"id": 77, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "What is the maximum number of comparisons needed by binary search on a sorted array of 1000 elements?", "options": ["11", "9", "10", "500"], "ans": 2, "exp": "Maximum comparisons = ⌊log₂ 1000⌋ + 1 = 9 + 1 = 10 (since 2¹⁰ = 1024 ≥ 1000)."}, {"id": 78, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Kruskal's algorithm is used to find the ______ of a connected weighted graph.", "options": ["shortest path between two vertices", "minimum spanning tree", "topological order", "maximum flow"], "ans": 1, "exp": "Kruskal's greedy algorithm sorts edges by weight and adds non-cycle-forming edges to construct a Minimum Spanning Tree (MST)."}, {"id": 79, "num": 19, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following is NOT true about linear search?", "options": ["It can be used on an unsorted list", "Its worst-case time complexity is O(n)", "It requires the list to be sorted before searching", "It checks the elements one by one"], "ans": 2, "exp": "Linear search works on unsorted lists as well; it is binary search that requires a sorted list."}, {"id": 80, "num": 20, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Numbers 1, 2, 3, 4 are pushed onto a stack in order, and pops may occur at any time. Which output sequence is NOT possible?", "options": ["4, 1, 2, 3", "1, 2, 3, 4", "2, 1, 4, 3", "3, 2, 4, 1"], "ans": 0, "exp": "To pop 4 first, 1, 2, 3 must already be on the stack with 3 on top, so 1 cannot be popped immediately after 4."}]}, {"id": 5, "category": "DSA", "code": "DSA Mock 05", "title": "Data Structures & Algorithms — Mock 05", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 81, "num": 1, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which data structures are used to implement Breadth-First Search (BFS) and Depth-First Search (DFS) respectively?", "options": ["Queue and stack", "Stack and queue", "Queue and queue", "Stack and stack"], "ans": 0, "exp": "BFS uses a Queue (FIFO) for level-by-level traversal; DFS uses a Stack (LIFO) or recursion."}, {"id": 82, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Two circular singly linked lists are each represented by a pointer to their last node. What is the time complexity of joining them into one circular list?", "options": ["O(log n)", "O(n)", "O(n + m)", "O(1)"], "ans": 3, "exp": "With tail pointers, both heads (`tail->next`) and tails are accessible immediately, requiring only constant pointer reassignments: O(1)."}, {"id": 83, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Inorder traversal of a binary search tree gives the keys in ______ order.", "options": ["descending", "ascending", "level-wise", "random"], "ans": 1, "exp": "Visiting Left → Root → Right in a BST always produces keys in ascending sorted order."}, {"id": 84, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "In an AVL tree, the balance factor of every node must be:", "options": ["−1, 0 or +1", "0 only", "from −2 to +2", "any integer value"], "ans": 0, "exp": "Every node in an AVL tree maintains balance factor (height_L − height_R) ∈ {−1, 0, +1}."}, {"id": 85, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "What is the worst-case time complexity of quick sort on n elements?", "options": ["O(n log n)", "O(n)", "O(n²)", "O(log n)"], "ans": 2, "exp": "Quick sort degrades to O(n²) when the pivot consistently produces maximally unbalanced partitions."}, {"id": 86, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "A hash table of size 10 uses h(k) = k mod 10 with linear probing. Keys 12, 22, 32 are inserted in order into an empty table. In which slot is 32 stored?", "options": ["2", "3", "4", "5"], "ans": 2, "exp": "12 → slot 2; 22 → collision at 2, stored at slot 3; 32 → collisions at 2, 3, stored at slot 4."}, {"id": 87, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Huffman coding, used for lossless data compression, is an example of a ______ algorithm.", "options": ["divide and conquer", "dynamic programming", "greedy", "backtracking"], "ans": 2, "exp": "Huffman coding greedily merges the two lowest-frequency nodes at every step."}, {"id": 88, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which data structure is used to evaluate a postfix expression such as `2 3 4 * +`?", "options": ["Queue", "Binary search tree", "Graph", "Stack"], "ans": 3, "exp": "Postfix evaluation pushes operands onto a Stack and pops two operands upon encountering each binary operator."}, {"id": 89, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "In a B+ tree of order 4 (each internal node has at most 4 children), what is the maximum number of keys in an internal node?", "options": ["2", "4", "5", "3"], "ans": 3, "exp": "An internal node with at most p children holds at most p − 1 keys ⇒ 4 − 1 = 3."}, {"id": 90, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "What is the postfix form of the infix expression `A + B * C − D / E`?", "options": ["A B C + * D E / −", "A B + C * D E / −", "A B C * + D E / −", "A B C * D E / + −"], "ans": 2, "exp": "Precedence (* and / before + and −, left-to-right): (A + (B*C)) − (D/E) → A B C * + D E / −."}, {"id": 91, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A priority queue uses a binary min-heap of n elements. What are the time complexities of inserting an element and deleting the minimum?", "options": ["O(n) and O(1)", "O(1) and O(n)", "O(log n) and O(log n)", "O(log n) and O(1)"], "ans": 2, "exp": "Both insert (heapify-up) and delete-min (heapify-down) take O(log n) time."}, {"id": 92, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Two pointers start at the head of a singly linked list; slow moves 1 node and fast moves 2 nodes at a time. When fast reaches the end, where is slow?", "options": ["At the last node", "At the middle node", "At the head node", "At the second node"], "ans": 1, "exp": "Because fast moves twice as fast as slow, when fast reaches the end, slow is at the middle node."}, {"id": 93, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "What is the maximum number of nodes in a binary tree of height 4 (root at height 0)?", "options": ["16", "31", "32", "15"], "ans": 1, "exp": "Maximum nodes = 2^(h+1) − 1 = 2⁵ − 1 = 31."}, {"id": 94, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Keys 50, 30, 70, 60, 80, 65 are inserted in order into an empty BST. If root (50) is deleted using its in-order successor, which key becomes the new root?", "options": ["60", "65", "70", "30"], "ans": 0, "exp": "The in-order successor of 50 is the minimum key in its right subtree (70 → left → 60), so 60 becomes the new root."}, {"id": 95, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "The list `9, 5, 7, 1, 3` is sorted ascending using insertion sort. What is the list after the third pass?", "options": ["1, 3, 5, 7, 9", "1, 5, 7, 9, 3", "5, 7, 9, 1, 3", "1, 5, 9, 7, 3"], "ans": 1, "exp": "Pass 1 (insert 5): 5,9,7,1,3; Pass 2 (insert 7): 5,7,9,1,3; Pass 3 (insert 1): 1,5,7,9,3."}, {"id": 96, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A hash table with 10 slots uses separate chaining and stores 25 keys. What is its load factor?", "options": ["0.4", "2.5", "25", "10"], "ans": 1, "exp": "Load factor α = keys / slots = 25 / 10 = 2.5."}, {"id": 97, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "An undirected weighted graph has edges A–B(4), A–C(1), B–C(2), B–D(5), C–D(8), D–E(3), C–E(7). What is the total weight of its MST?", "options": ["12", "13", "11", "10"], "ans": 2, "exp": "Kruskal selects: A–C(1), B–C(2), D–E(3), [skip A–B(4) cycle], B–D(5). Total MST weight = 1 + 2 + 3 + 5 = 11."}, {"id": 98, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "The running time of binary search satisfies T(n) = T(n/2) + c. What is its solution?", "options": ["O(n)", "O(log n)", "O(n log n)", "O(1)"], "ans": 1, "exp": "Halving n at each step yields log₂n constant-work steps ⇒ O(log n)."}, {"id": 99, "num": 19, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "What is the value of the postfix expression `6 2 3 + − 3 8 2 / + *`?", "options": ["1", "7", "49", "5"], "ans": 1, "exp": "6,2,3,+ → 6,5; − → 1; 3,8,2,/ → 1,3,4; + → 1,7; * → 7."}, {"id": 100, "num": 20, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "In a circular queue with array size 6 (indices 0 to 5), FRONT = 4 and REAR = 1. How many elements are in the queue?", "options": ["5", "3", "4", "2"], "ans": 2, "exp": "Elements occupy indices 4, 5, 0, 1 ⇒ Count = (1 − 4 + 6) mod 6 + 1 = 4."}]}, {"id": 6, "category": "DSA", "code": "DSA Mock 06", "title": "Data Structures & Algorithms — Mock 06", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 101, "num": 1, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "In a singly linked list with only a head pointer, which operation takes O(1) time?", "options": ["Insertion at the end", "Insertion at the beginning", "Deletion of the last node", "Searching for a given value"], "ans": 1, "exp": "Inserting at the beginning only updates two pointers (new->next = head; head = new) in O(1) time, without traversal."}, {"id": 102, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "A binary tree has 20 leaf nodes. How many nodes of degree 2 does it have?", "options": ["10", "20", "21", "19"], "ans": 3, "exp": "In every binary tree, n₀ = n₂ + 1 ⇒ n₂ = 20 − 1 = 19."}, {"id": 103, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "The in-order traversal of a binary tree is D, B, E, A, F, C, G and its pre-order is A, B, D, E, C, F, G. What is its post-order traversal?", "options": ["D, E, F, G, B, C, A", "D, B, E, F, C, G, A", "E, D, B, G, F, C, A", "D, E, B, F, G, C, A"], "ans": 3, "exp": "Root = A; left subtree = B(D, E); right subtree = C(F, G). Post-order (L-R-Root) = D, E, B, F, G, C, A."}, {"id": 104, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which sorting algorithm has the same time complexity in the best, average, and worst cases?", "options": ["Insertion sort", "Quick sort", "Merge sort", "Bubble sort with an early-exit flag"], "ans": 2, "exp": "Merge sort always runs in Θ(n log n) across best, average, and worst cases."}, {"id": 105, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Keys 10, 17, 24 are inserted in order into an empty hash table of size 7 using h(k) = k mod 7 and quadratic probing (h(k) + i²) mod 7. In which slot is 24 stored?", "options": ["0", "5", "6", "2"], "ans": 0, "exp": "10 → slot 3. 17 → 3 (coll), (3+1)=4. 24 → 3 (coll), 4 (coll), (3+4) mod 7 = 0 ⇒ slot 0."}, {"id": 106, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which statements are correct?\nI. Dijkstra's algorithm always gives correct shortest paths even with negative edge weights.\nII. The Bellman–Ford algorithm can detect a negative-weight cycle reachable from the source.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Dijkstra's greedy algorithm fails on negative edge weights, whereas Bellman–Ford handles negative edges and detects reachable negative-weight cycles."}, {"id": 107, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "A 50 kg knapsack is filled with items (weight, value) = (10, 60), (20, 100), (30, 120). Using the greedy fractional knapsack method, what is the maximum value?", "options": ["180", "220", "240", "160"], "ans": 2, "exp": "Value/kg ratios: 6, 5, 4. Take all of item 1 (10 kg → 60) + all of item 2 (20 kg → 100) + 20/30 of item 3 (80) = 240."}, {"id": 108, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "An array is declared with index values from 5 to 24. How many elements does it contain?", "options": ["19", "29", "20", "24"], "ans": 2, "exp": "Number of elements = Upper bound − Lower bound + 1 = 24 − 5 + 1 = 20."}, {"id": 109, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "In binary search on an array sorted in ascending order, if the key is greater than the element at Mid, which update is made?", "options": ["Beg = Mid − 1", "End = Mid − 1", "Beg = Mid + 1", "End = Mid + 1"], "ans": 2, "exp": "Since the array is ascending and key > A[Mid], the target must lie in the right half, so Beg is updated to Mid + 1."}, {"id": 110, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Arrange the following in increasing order of their worst-case time complexity:\nBubble sort, Binary search, Merge sort, Linear search", "options": ["Linear search, Binary search, Merge sort, Bubble sort", "Binary search, Linear search, Merge sort, Bubble sort", "Binary search, Linear search, Bubble sort, Merge sort", "Linear search, Binary search, Bubble sort, Merge sort"], "ans": 1, "exp": "Worst-case complexities: Binary search O(log n) < Linear search O(n) < Merge sort O(n log n) < Bubble sort O(n²)."}, {"id": 111, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "What is the equivalent infix expression of the postfix expression:\nA, B, +, C, D, −, *, E, F, G, /, +, −", "options": ["A + B * C − D − E + F / G", "(A + B) * (C − D) − (E + F) / G", "(A + B) * (C − D) − (E + F / G)", "(A + B) * (C − D − E) + F / G"], "ans": 2, "exp": "Stack trace: A,B,+ → (A+B); C,D,− → (C−D); * → (A+B)*(C−D); E,F,G,/ → E, F/G; + → (E + F/G); − → (A + B) * (C − D) − (E + F / G)."}, {"id": 112, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The elements 50, 30, 70, 20, 40, 60, 80, 35 are inserted, in this order, into an empty binary search tree. Which element will be at the lowest level?", "options": ["80", "35", "20", "60"], "ans": 1, "exp": "Root = 50 (level 0); 30, 70 (level 1); 20, 40, 60, 80 (level 2); 35 < 50, > 30, < 40 ⇒ left child of 40 at level 3 (lowest)."}, {"id": 113, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following arrays represents a max-heap?", "options": ["90, 80, 70, 85, 60, 50, 40", "90, 70, 80, 30, 60, 50, 40", "50, 70, 90, 30, 60, 80, 40", "90, 60, 80, 70, 30, 50, 40"], "ans": 1, "exp": "In (b): 90 ≥ (70, 80); 70 ≥ (30, 60); 80 ≥ (50, 40) — every parent ≥ its children. In (a) 80 < 85; in (c) 50 < 70; in (d) 60 < 70."}, {"id": 114, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "A node is inserted into the right subtree of the left child of a node, making that node unbalanced in an AVL tree. Which rotation is needed?", "options": ["LL rotation", "RR rotation", "RL rotation", "LR rotation"], "ans": 3, "exp": "Path from unbalanced node to inserted node is Left then Right (LR), requiring an LR double rotation (left on left child, then right on unbalanced node)."}, {"id": 115, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "A red-black tree has a black-height of 3 (counted from the root, not including it, down to NULL leaves). What is the minimum number of internal nodes in the tree?", "options": ["3", "7", "8", "15"], "ans": 1, "exp": "A subtree rooted at x has at least 2^bh(x) − 1 internal nodes. For bh = 3: 2³ − 1 = 7 internal nodes."}, {"id": 116, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The keys 30, 10, 40, 5 and 15 are inserted in order into an empty AVL tree. If key 20 is now inserted, which key will be at the root of the resultant AVL tree?", "options": ["20", "10", "15", "30"], "ans": 2, "exp": "20 becomes right child of 15, making root 30 unbalanced (BF = +2, LR case). Left rotation at 10 then right rotation at 30 promotes 15 to the root."}, {"id": 117, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The preorder traversal of a binary search tree is 45, 25, 15, 35, 30, 65, 55, 75, 90. What is the postorder traversal of the tree?", "options": ["15, 25, 30, 35, 45, 55, 65, 75, 90", "15, 30, 35, 25, 55, 90, 75, 65, 45", "15, 35, 30, 25, 55, 75, 90, 65, 45", "30, 15, 35, 25, 90, 55, 75, 65, 45"], "ans": 1, "exp": "Root = 45; Left subtree = {25: L=15, R=(35: L=30)}; Right subtree = {65: L=55, R=(75: R=90)}. Postorder (L-R-Root) = 15, 30, 35, 25, 55, 90, 75, 65, 45."}, {"id": 118, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which symbol is used in a flowchart for input/output?", "options": ["Diamond", "Rectangle", "Parallelogram", "Oval"], "ans": 2, "exp": "In flowcharts: Parallelogram = Input/Output, Oval = Start/Stop, Rectangle = Process, Diamond = Decision."}, {"id": 119, "num": 19, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "A 2D array in which most elements are zero is known as a ______ matrix.", "options": ["dense", "irregular", "sparse", "regular"], "ans": 2, "exp": "A sparse matrix contains mostly zero entries and is stored compactly."}]}, {"id": 7, "category": "DSA", "code": "DSA Mock 07", "title": "Data Structures & Algorithms — Mock 07", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 120, "num": 1, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Sort [42, 17, 63, 8, 55, 29, 71, 34] in ascending order using Bubble sort. What is the sequence after the 2nd pass?", "options": ["17, 8, 42, 55, 29, 34, 63, 71", "17, 42, 8, 55, 29, 63, 34, 71", "8, 17, 29, 34, 42, 55, 63, 71", "17, 8, 42, 29, 55, 34, 63, 71"], "ans": 3, "exp": "Pass 1: 17, 42, 8, 55, 29, 63, 34, 71. Pass 2: 17, 8, 42, 29, 55, 34, 63, 71."}, {"id": 121, "num": 2, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Keys 15, 24, 33, 7, 16 are inserted into an empty hash table of size 9 using h(k) = k mod 9 and linear probing. Which slot stores 16?", "options": ["7", "8", "1", "0"], "ans": 2, "exp": "15→6; 24(6)→7; 33(6)→8; 7(7)→0; 16(7) probes 7→8→0→1 ⇒ Slot 1."}, {"id": 122, "num": 3, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which BST traversals list all keys in sorted (ascending or descending) order?\nI. In-order   II. Reverse in-order   III. Level-order", "options": ["II and III only", "I and III only", "I and II only", "I, II and III"], "ans": 2, "exp": "In-order gives ascending order; Reverse in-order gives descending order."}, {"id": 123, "num": 4, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which rotations in an AVL tree are single rotations?", "options": ["LL and RR", "LR and RL", "LL and LR", "RL and RR"], "ans": 0, "exp": "LL (right rotation) and RR (left rotation) are single rotations; LR and RL are double rotations."}, {"id": 124, "num": 5, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Minimum interchanges to convert [12, 25, 7, 40, 31, 18, 60, 3, 50] into a max-heap using bottom-up heapify?", "options": ["6", "5", "4", "7"], "ans": 0, "exp": "Swaps: 40↔50 (1), 7↔60 (1), 25↔50 & 25↔40 (2), 12↔60 & 12↔18 (2) ⇒ Total = 6 interchanges."}, {"id": 125, "num": 6, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Sort [170, 45, 75, 90, 802, 24, 2, 66] with LSD Radix sort. Output after 2nd pass (tens digit)?", "options": ["170, 90, 802, 2, 24, 45, 75, 66", "802, 2, 24, 45, 66, 170, 75, 90", "2, 24, 45, 66, 75, 90, 170, 802", "2, 802, 24, 45, 66, 75, 170, 90"], "ans": 1, "exp": "Pass 1 (units): 170, 90, 802, 2, 24, 45, 75, 66. Pass 2 (tens, stable): 802, 2, 24, 45, 66, 170, 75, 90."}, {"id": 126, "num": 7, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Sort [D, B, F, A, C, E] using selection sort. Output after 3rd pass?", "options": ["A, B, C, D, F, E", "A, B, F, D, C, E", "A, B, C, F, D, E", "A, B, C, D, E, F"], "ans": 0, "exp": "Pass 1: A,B,F,D,C,E; Pass 2: A,B,F,D,C,E; Pass 3 (swap F & C): A, B, C, D, F, E."}, {"id": 127, "num": 8, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which asymptotic notation provides a tight bound (both upper and lower bound)?", "options": ["Θ", "O", "Ω", "o"], "ans": 0, "exp": "Big-Theta (Θ) bounds f(n) both from above and below."}, {"id": 128, "num": 9, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "If A, B, C and D are pushed onto a stack in that order and two pops are performed, which element is on top?", "options": ["A", "D", "C", "B"], "ans": 3, "exp": "Pushing A,B,C,D puts D on top; two pops remove D and C, leaving B on top."}, {"id": 129, "num": 10, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which statement(s) is/are true about the linear search algorithm?\nI. It can be applied on an unsorted array.\nII. Its worst-case time complexity is O(log n).\nIII. It can be applied on a linked list.", "options": ["I and II", "II and III", "I and III", "I, II and III"], "ans": 2, "exp": "Linear search checks elements sequentially (works on unsorted arrays and linked lists) with O(n) worst-case complexity, not O(log n)."}, {"id": 130, "num": 11, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is/are true?\nI. f(n) = O(g(n)) means g(n) is an asymptotic upper bound for f(n).\nII. f(n) = Ω(g(n)) means g(n) is an asymptotic upper bound for f(n).", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Big-O gives an asymptotic upper bound, whereas Big-Ω gives an asymptotic lower bound. So only I is true."}, {"id": 131, "num": 12, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "What is the maximum number of nodes at level L of a binary tree, if the root is at level 0?", "options": ["2ᴸ⁺¹ − 1", "2ᴸ − 1", "2ᴸ", "L + 1"], "ans": 2, "exp": "At level 0 there is 1 node (2⁰), level 1 has 2 (2¹), ..., level L has at most 2ᴸ nodes."}, {"id": 132, "num": 13, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is NOT a hash function method?", "options": ["Division method", "Linear probing", "Folding method", "Mid-square method"], "ans": 1, "exp": "Linear probing is a collision-resolution technique (open addressing), not a hash function method."}, {"id": 133, "num": 14, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is an unstable sorting algorithm?", "options": ["Bubble sort", "Heap sort", "Merge sort", "Insertion sort"], "ans": 1, "exp": "Bubble, Insertion and Merge sort are stable. Heap sort (like Quick & Selection sort) is unstable."}, {"id": 134, "num": 15, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "In-order traversal of a binary tree is ______.", "options": ["Node, Left, Right", "Left, Right, Node", "Left, Node, Right", "Right, Node, Left"], "ans": 2, "exp": "In-order traversal visits Left subtree, then Node (root), then Right subtree (produces sorted keys for a BST)."}, {"id": 135, "num": 16, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "In an AVL tree, which balance factor (height of left subtree − height of right subtree) shows that a rotation is required at that node?", "options": ["0", "−2", "−1", "1"], "ans": 1, "exp": "Valid AVL balance factors are −1, 0, +1. A balance factor of −2 (or +2) indicates imbalance requiring rotation."}, {"id": 136, "num": 17, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Consider a max heap represented by the array [90, 70, 80, 40, 60, 50, 30]. What will be the new heap after inserting 85?", "options": ["85, 90, 80, 70, 60, 50, 30, 40", "90, 70, 80, 40, 60, 50, 30, 85", "90, 85, 80, 40, 60, 50, 30, 70", "90, 85, 80, 70, 60, 50, 30, 40"], "ans": 3, "exp": "85 is added as child of 40 (index 8), swaps up with 40, then swaps up with 70, and stops below 90 ⇒ 90, 85, 80, 70, 60, 50, 30, 40."}, {"id": 137, "num": 18, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Match algorithms with design techniques:\n1. Merge sort  2. Prim's MST  3. N-Queens  4. Longest common subsequence\ni. Greedy  ii. Backtracking  iii. Divide & conquer  iv. Dynamic programming", "options": ["1-iii, 2-i, 3-ii, 4-iv", "1-i, 2-iii, 3-ii, 4-iv", "1-iii, 2-ii, 3-i, 4-iv", "1-iv, 2-i, 3-ii, 4-iii"], "ans": 0, "exp": "Merge sort → Divide & conquer (iii), Prim's → Greedy (i), N-Queens → Backtracking (ii), LCS → Dynamic programming (iv)."}, {"id": 138, "num": 19, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "The time complexity of an algorithm expresses its running time as a function of ______.", "options": ["the programming language", "the processor speed", "the input size", "the make of the memory chip"], "ans": 2, "exp": "Time complexity is machine-independent and expressed as a function of the input size n."}]}, {"id": 8, "category": "DSA", "code": "DSA Mock 08", "title": "Data Structures & Algorithms — Mock 08", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 139, "num": 1, "topic": "DSA", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which statement(s) is/are true about a flowchart?\nI. It is a pictorial representation of an algorithm.\nII. It is easy to modify a large and complex flowchart.\nIII. It helps in understanding the logic of a program.", "options": ["I and III", "II and III", "I and II", "I, II and III"], "ans": 0, "exp": "Flowcharts pictorially represent algorithms and clarify logic (I, III), but large flowcharts are difficult to modify (II is false)."}, {"id": 140, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "A connected undirected graph has vertices 1..7 and edges (1,2),(2,3),(1,3),(3,4),(4,5),(5,6),(4,6),(6,7). What are its articulation points?", "options": ["3, 4 and 6", "3 and 4 only", "2, 3 and 4", "4, 5 and 6"], "ans": 0, "exp": "Removing 3 disconnects {1,2}; removing 4 separates {1,2,3} from {5,6,7}; removing 6 separates vertex 7 ⇒ 3, 4 and 6."}, {"id": 141, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "In a complete graph K_n with n vertices, the number of edges is _____.", "options": ["2n", "n²", "n − 1", "n(n − 1)/2"], "ans": 3, "exp": "Every unordered pair of distinct vertices is connected: C(n, 2) = n(n − 1)/2."}, {"id": 142, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which is NOT an application of Dynamic Programming?", "options": ["0/1 Knapsack problem", "Binary search", "Floyd–Warshall all-pairs shortest path", "Matrix chain multiplication"], "ans": 1, "exp": "Binary search uses Divide-and-Conquer without overlapping sub-problems."}, {"id": 143, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Arrange in increasing order of growth: O(n log n), O(1), O(n³), O(log n), O(n), O(2ⁿ)", "options": ["O(1), O(log n), O(n log n), O(n), O(n³), O(2ⁿ)", "O(1), O(n), O(log n), O(n log n), O(2ⁿ), O(n³)", "O(log n), O(1), O(n), O(n³), O(n log n), O(2ⁿ)", "O(1), O(log n), O(n), O(n log n), O(n³), O(2ⁿ)"], "ans": 3, "exp": "Standard asymptotic order: O(1) < O(log n) < O(n) < O(n log n) < O(n³) < O(2ⁿ)."}, {"id": 144, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which flowchart symbol joins two parts of a flowchart on the SAME page?", "options": ["Small circle", "Pentagon (home-plate shape)", "Parallelogram", "Diamond"], "ans": 0, "exp": "Small circle = On-page connector; Pentagon = Off-page connector."}, {"id": 145, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "For sum-of-subsets with w[1:5] = {1, 2, 5, 6, 8} and target Sum = 9, which binary inclusion vectors are solutions?", "options": ["11010; 01100", "11010; 10001", "10001; 00110", "11100; 10001"], "ans": 1, "exp": "11010 → 1 + 2 + 6 = 9 ✓; 10001 → 1 + 8 = 9 ✓."}, {"id": 146, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "A step-by-step description of an algorithm written in a mixture of English and programming-language constructs is called:", "options": ["Pseudocode", "Flowchart", "Machine code", "Object code"], "ans": 0, "exp": "Pseudocode uses structured English + control keywords without strict language syntax."}, {"id": 147, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which flowchart symbol represents a decision?", "options": ["Rectangle", "Parallelogram", "Diamond (rhombus)", "Oval"], "ans": 2, "exp": "Diamond = Decision; Rectangle = Process; Parallelogram = Input/Output; Oval = Start/Stop."}, {"id": 148, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "The operations of a _____ require that the last element inserted is the first one removed.", "options": ["queue", "stack", "graph", "tree"], "ans": 1, "exp": "A Stack follows LIFO (Last In, First Out)."}, {"id": 149, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which algorithm characteristic means 'it must terminate after a finite number of steps'?", "options": ["Definiteness", "Finiteness", "Effectiveness", "Generality"], "ans": 1, "exp": "Finiteness guarantees termination after a finite number of steps."}, {"id": 150, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which statements are TRUE about a Stack?\n(i) Insertion and deletion take place at the same end (top).\n(ii) A stack follows the FIFO principle.", "options": ["Neither (i) nor (ii)", "Both (i) and (ii)", "Only (ii)", "Only (i)"], "ans": 3, "exp": "(i) is true; (ii) is false because a stack is LIFO (FIFO is a queue)."}, {"id": 151, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which type of computational problems require only a 'yes' or 'no' answer?", "options": ["Optimisation problems", "Counting problems", "Decision problems", "Search problems"], "ans": 2, "exp": "Decision problems output only Yes/No (True/False)."}, {"id": 152, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which asymptotic notation gives an asymptotic LOWER bound on running time?", "options": ["Omega (Ω)", "Big Oh (O)", "Theta (Θ)", "Small oh (o)"], "ans": 0, "exp": "Ω = lower bound; O = upper bound; Θ = tight bound."}, {"id": 153, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which case states the guaranteed upper limit on an algorithm's running time for any input of size n?", "options": ["Best case", "Worst case", "Average case", "Test case"], "ans": 1, "exp": "Worst-case complexity guarantees the maximum time across all inputs of size n."}, {"id": 154, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which sorting technique is best suited for external sorting of very large data stored on disk?", "options": ["Bubble sort", "Insertion sort", "Selection sort", "Merge sort"], "ans": 3, "exp": "Merge sort processes sequential runs efficiently when data exceeds RAM."}, {"id": 155, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "In a doubly linked list, each node consists of:", "options": ["data and next pointer only", "data value, address of the previous node, and address of the next node", "only data value", "previous address only"], "ans": 1, "exp": "Each node stores prev, data, and next."}, {"id": 156, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which statement is CORRECT about binary search?", "options": ["Works on both sorted and unsorted arrays", "Most efficient search for a linked list", "Recurrence is T(n) = 2T(n/2) + O(1)", "Its worst-case time complexity is O(log n)"], "ans": 3, "exp": "Binary search halves the sorted array each step: T(n) = T(n/2) + O(1) = O(log n)."}, {"id": 157, "num": 19, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which is a disadvantage of a linked list compared to an array?", "options": ["Size can change at runtime", "Insertion at beginning takes O(1)", "Extra memory is needed to store the pointers", "No shifting needed on deletion"], "ans": 2, "exp": "Every linked-list node requires extra memory for its pointer(s) and lacks random access."}]}, {"id": 9, "category": "DSA", "code": "DSA Mock 09", "title": "Data Structures & Algorithms — Mock 09", "subtitle": "Stacks, Queues, Trees, BST, Heaps, Graphs, Sorting, Searching & Complexity", "durationSec": 660, "timeLabel": "11-Min", "questions": [{"id": 158, "num": 1, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Time complexity of inserting an element at the end of an array with free space:", "options": ["O(n)", "O(log n)", "O(1)", "O(n²)"], "ans": 2, "exp": "Direct placement at index n needs zero shifts → O(1)."}, {"id": 159, "num": 2, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "On an empty queue: ENQUEUE(10), ENQUEUE(20), ENQUEUE(30), DEQUEUE, ENQUEUE(40), DEQUEUE, ENQUEUE(50). What remains (front → rear)?", "options": ["30, 40, 50", "50, 40, 30", "20, 30, 50", "10, 20, 50"], "ans": 0, "exp": "FIFO trace: [10,20,30] → DEQUEUE 10 [20,30] → [20,30,40] → DEQUEUE 20 [30,40] → [30,40,50]."}, {"id": 160, "num": 3, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Two sorted lists of 5 and 4 elements are merged into one sorted list. What is the maximum number of comparisons needed?", "options": ["8", "9", "4", "20"], "ans": 0, "exp": "Worst-case merge comparisons = m + n − 1 = 5 + 4 − 1 = 8."}, {"id": 161, "num": 4, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "What is the space complexity of the recursive function below for computing n!?", "options": ["O(log n)", "O(1)", "O(n²)", "O(n)"], "ans": 3, "exp": "n nested stack frames stay active simultaneously on the call stack → O(n) space."}, {"id": 162, "num": 5, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Depth-first search (DFS) starts at vertex A of the graph below (edges: A–B, A–C, B–D, C–D, C–F, D–E), visiting unvisited neighbours in alphabetical order. What is the DFS order?", "options": ["A B D E C F", "A B C D E F", "A B D C F E", "A C D B E F"], "ans": 2, "exp": "A → B → D → C (alphabetically before E) → F → backtrack to D → E.\nOrder: A B D C F E."}, {"id": 163, "num": 6, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "A stack checks balanced brackets in ((a + b) * [c − (d / e)]). What is the maximum number of elements on the stack at any time?", "options": ["6", "2", "4", "3"], "ans": 3, "exp": "Stack depth trace: ( [1], (( [2], ) [1], ([ [2], ([( [3], ) [2], ] [1], ) [0]. Max size = 3."}, {"id": 164, "num": 7, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "What is the value of the expression represented by the expression tree below?", "options": ["12", "27", "16", "8"], "ans": 2, "exp": "Left subtree: 4 × 3 = 12; Right subtree: 9 − 5 = 4; Root: 12 + 4 = 16."}, {"id": 165, "num": 8, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Keys 12, 7, 22, 17, 3 and 8 are inserted into a hash table of size 5 using h(k) = k mod 5 with separate chaining. How many keys are in the longest chain?", "options": ["4", "3", "6", "2"], "ans": 0, "exp": "mod 5 values: 12→2, 7→2, 22→2, 17→2, 3→3, 8→3. Slot 2 has 4 keys (12→7→22→17)."}, {"id": 166, "num": 9, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "In linear search on an unsorted array of 100 distinct elements (key present, all positions equally likely), what is the average number of comparisons?", "options": ["100", "7", "50.5", "50"], "ans": 2, "exp": "Average = (n + 1)/2 = 101/2 = 50.5 comparisons."}, {"id": 167, "num": 10, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Inserting a new element at the beginning of a list of n elements takes what time in (i) an array and (ii) a singly linked list with a head pointer?", "options": ["(i) O(n), (ii) O(n)", "(i) O(log n), (ii) O(1)", "(i) O(1), (ii) O(n)", "(i) O(n), (ii) O(1)"], "ans": 3, "exp": "Array requires shifting n elements → O(n). Linked list updates head pointer directly → O(1)."}, {"id": 168, "num": 11, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "On an empty stack, operations PUSH(5), PUSH(8), POP, PUSH(3), PUSH(7), POP, POP, PUSH(9) are performed. What is the popped order and final stack (bottom → top)?", "options": ["Popped 8, 7, 3; stack: 9, 5", "Popped 8, 3, 7; stack: 5, 9", "Popped 8, 7, 3; stack: 5, 9", "Popped 5, 7, 3; stack: 8, 9"], "ans": 2, "exp": "Trace (LIFO): [5] → [5,8] → POP 8 [5] → [5,3] → [5,3,7] → POP 7 [5,3] → POP 3 [5] → [5,9].\nPopped: 8, 7, 3; Final stack (bottom → top): 5, 9."}, {"id": 169, "num": 12, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Keys 45, 25, 65, 15, 35, 55, 75, 30, 32 are inserted into an empty BST. What is the height (root at level 0) and the in-order successor of 30?", "options": ["3 and 35", "3 and 32", "4 and 35", "4 and 32"], "ans": 3, "exp": "Longest path: 45 → 25 → 35 → 30 → 32 (4 edges ⇒ height = 4).\nIn-order sequence: 15, 25, 30, 32, 35, 45, 55, 65, 75 ⇒ successor of 30 is 32."}, {"id": 170, "num": 13, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Binary search finds 58 in sorted array (index 0..14): [3, 8, 12, 17, 21, 26, 30, 35, 41, 47, 52, 58, 63, 70, 77]. How many elements are compared before 58 is found?", "options": ["3", "1", "2", "4"], "ans": 2, "exp": "Step 1: low=0, high=14 → mid=7, a[7]=35 (<58 → low=8).\nStep 2: low=8, high=14 → mid=11, a[11]=58 (Found!). Total comparisons = 2."}, {"id": 171, "num": 14, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "An optimised bubble sort stops if a pass makes no swap. How many comparisons does it make on the already-sorted array [4, 9, 13, 21, 30, 42]?", "options": ["0", "5", "6", "15"], "ans": 1, "exp": "In pass 1, it compares n − 1 = 5 adjacent pairs, finds 0 swaps, and stops. Best-case time = O(n)."}, {"id": 172, "num": 15, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "How many times does count++ execute when n = 100, and what is the loop's time complexity?", "options": ["5 times; O(log n)", "33 times; O(n)", "6 times; O(√n)", "4 times; O(log n)"], "ans": 0, "exp": "i takes values 1, 3, 9, 27, 81 (5 times); 243 ≥ 100 stops loop. Multiplying by 3 gives O(log₃ n) = O(log n)."}, {"id": 173, "num": 16, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "An undirected graph has 7 vertices with degrees 3, 3, 2, 2, 2, 1, 1. How many edges does it have?", "options": ["7", "8", "14", "6"], "ans": 0, "exp": "Handshaking lemma: 2E = sum of degrees = 3+3+2+2+2+1+1 = 14 ⇒ E = 7."}, {"id": 174, "num": 17, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A 2-D array A[0..9][0..14] (10 rows, 15 cols) is stored in column-major order starting at address 500, with 2 bytes per element. What is the address of A[4][6]?", "options": ["628", "624", "676", "596"], "ans": 0, "exp": "Column-major: Base + (j × R + i) × w = 500 + (6 × 10 + 4) × 2 = 500 + 128 = 628."}, {"id": 175, "num": 18, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "In a threaded binary tree, what are the NULL child pointers used for?", "options": ["They point to the root node", "They are removed to save memory", "They point to the in-order predecessor or successor, allowing traversal without stack or recursion", "They store the height of each node"], "ans": 2, "exp": "Threaded binary trees repurpose NULL left/right pointers as threads to in-order predecessor/successor for stackless, non-recursive traversal."}, {"id": 176, "num": 19, "topic": "Data Structures & Algorithms", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Which data structure is best suited for an 'autocomplete' feature that quickly finds all stored words starting with a prefix like 'com'?", "options": ["Trie (prefix tree)", "Binary heap", "Circular queue", "Stack"], "ans": 0, "exp": "A Trie (prefix tree) shares common prefix paths from the root, retrieving all words with prefix length L in O(L + matches) time."}]}, {"id": 10, "category": "SE", "code": "SE Mock 01", "title": "Software Engineering — Mock 01", "subtitle": "SDLC Models, DFD, Cohesion/Coupling, COCOMO, Testing & Project Metrics", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 177, "num": 1, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A project of 20,000 lines of code took 25 person-months, and one person-month costs ₹50,000. What are the productivity and the cost per line of code?", "options": ["800 LOC per person-month; ₹2.50 per LOC", "800 LOC per person-month; ₹62.50 per LOC", "1.25 LOC per person-month; ₹62.50 per LOC", "400 LOC per person-month; ₹125 per LOC"], "ans": 1, "exp": "Productivity = 20,000 / 25 = 800 LOC/PM. Total cost = 25 × 50,000 = ₹12,50,000 → Cost/LOC = 12,50,000 / 20,000 = ₹62.50."}, {"id": 178, "num": 2, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which of the following is true of a level-0 data flow diagram (context diagram)?", "options": ["It shows the whole system as a single process with its external entities and data flows", "It shows every process and every data store in detail", "It shows the flow of control and decisions in the program", "It has no external entities"], "ans": 0, "exp": "A level-0 DFD (context diagram) depicts the entire system as one single process bubble interacting with external entities via data flows."}, {"id": 179, "num": 3, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "\"Are we building the product right?\" is the question answered by:", "options": ["Certification", "Validation", "Verification", "Acceptance"], "ans": 2, "exp": "Verification = 'Are we building the product right?'; Validation = 'Are we building the right product?'."}, {"id": 180, "num": 4, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "Which of the following is NOT one of the six quality characteristics of the ISO/IEC 9126 model?", "options": ["Profitability", "Reliability", "Maintainability", "Portability"], "ans": 0, "exp": "ISO/IEC 9126 lists Functionality, Reliability, Usability, Efficiency, Maintainability, and Portability—not Profitability."}, {"id": 181, "num": 5, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A module contains statements that open files, reset counters, and show a welcome screen—grouped only because they all run at program startup. Which cohesion is this?", "options": ["Procedural cohesion", "Logical cohesion", "Temporal cohesion", "Communicational cohesion"], "ans": 2, "exp": "Elements grouped solely because they execute at the same time (e.g., initialization) exhibit Temporal cohesion."}, {"id": 182, "num": 6, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A program accepts a student's age only if it is from 10 to 18 (inclusive). Using equivalence class partitioning, what is the minimum number of test cases needed to cover all classes?", "options": ["6", "2", "4", "3"], "ans": 3, "exp": "3 equivalence classes: invalid (<10), valid (10–18), and invalid (>18) → 3 test cases."}, {"id": 183, "num": 7, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Testing in which the software is used by selected customers at the developer's site, under the developer's observation, before release is called:", "options": ["Alpha testing", "Beta testing", "Regression testing", "Integration testing"], "ans": 0, "exp": "Alpha testing occurs at the developer's site under observation; Beta testing occurs at customer sites."}, {"id": 184, "num": 8, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Which UML diagram shows the interaction between objects arranged in the time order of the messages exchanged?", "options": ["Activity diagram", "Communication (collaboration) diagram", "Sequence diagram", "State machine diagram"], "ans": 2, "exp": "A UML Sequence diagram displays objects with vertical lifelines and messages ordered chronologically top-to-bottom."}, {"id": 185, "num": 9, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "A project has 10 EI (wt 4), 8 EO (wt 5), 5 EQ (wt 4), 4 ILF (wt 10), 2 EIF (wt 7), and ΣFi = 42. Function point count?", "options": ["154", "164.78", "100.10", "169.40"], "ans": 1, "exp": "UFP = 40+40+20+40+14 = 154. VAF = 0.65 + 0.42 = 1.07. FP = 154 × 1.07 = 164.78."}, {"id": 186, "num": 10, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Activities (duration, pred): A(3,−), B(4,A), C(2,A), D(5,B), E(3,B&C), F(2,D&E). Minimum project duration and float of E?", "options": ["14 days; float of E = 2 days", "14 days; float of E = 0", "12 days; float of E = 2 days", "19 days; float of E = 0"], "ans": 0, "exp": "Critical path A→B→D→F = 14 days. E has ES=7, LS=9 ⇒ float = 2 days."}, {"id": 187, "num": 11, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "A function takes two independent integer inputs with valid ranges. How many test cases does normal (non-robust) boundary value analysis produce?", "options": ["25", "13", "5", "9"], "ans": 3, "exp": "Normal BVA produces 4n + 1 = 4(2) + 1 = 9 test cases."}, {"id": 188, "num": 12, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regarding Extreme Programming (XP):\nI. In pair programming, one (driver) writes code while the other (navigator) reviews continuously.\nII. Pair programming is a core practice of the classical Waterfall model.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Pair programming is an XP/Agile practice, not Waterfall (Only I)."}, {"id": 189, "num": 13, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Using Basic COCOMO for an organic project of 32 KLOC (E = 2.4 × (KLOC)^1.05 person-months), what is the approximate effort?", "options": ["About 146 person-months", "About 77 person-months", "About 91 person-months", "About 38 person-months"], "ans": 2, "exp": "32^1.05 = 2^5.25 ≈ 38.05 ⇒ E = 2.4 × 38.05 ≈ 91.3 person-months."}, {"id": 190, "num": 14, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "A system has MTTF = 950 hours and MTTR = 50 hours. What is its availability?", "options": ["94.7%", "95%", "90%", "5.3%"], "ans": 1, "exp": "Availability = MTTF / (MTTF + MTTR) = 950 / 1000 = 95%."}, {"id": 191, "num": 15, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "A function has two independent sequential if statements (if (a>0){...}; if (b>0){...};) with no else parts. Minimum test cases for 100% branch coverage?", "options": ["1", "4", "2", "3"], "ans": 2, "exp": "Two tests suffice: (a=1, b=1) covers both True branches and (a=−1, b=−1) covers both False branches."}, {"id": 192, "num": 16, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "______ testing checks the functionality of software using only its inputs and expected outputs, without any knowledge of the internal code.", "options": ["White-box", "Black-box", "Glass-box", "Structural"], "ans": 1, "exp": "Black-box (functional) testing verifies behavior strictly from inputs and outputs without inspecting internal code."}, {"id": 193, "num": 17, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "In the waterfall model, which phase comes immediately after requirement analysis?", "options": ["Testing", "Coding", "System design", "Maintenance"], "ans": 2, "exp": "Waterfall sequence: Requirement analysis → System design → Implementation (coding) → Testing → Deployment → Maintenance."}]}, {"id": 11, "category": "SE", "code": "SE Mock 02", "title": "Software Engineering — Mock 02", "subtitle": "SDLC Models, DFD, Cohesion/Coupling, COCOMO, Testing & Project Metrics", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 194, "num": 1, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A well-designed software module should have:", "options": ["low cohesion and high coupling", "high cohesion and high coupling", "high cohesion and low coupling", "low cohesion and low coupling"], "ans": 2, "exp": "High cohesion (strong internal focus) and low coupling (minimal inter-module dependency) yield maintainable modular software."}, {"id": 195, "num": 2, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following is NOT a symbol used in a Data Flow Diagram (DFD)?", "options": ["Process", "Data store", "External entity", "Decision diamond"], "ans": 3, "exp": "DFD uses Process, Data store, External entity, and Data flow. The Decision diamond belongs to flowcharts."}, {"id": 196, "num": 3, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following statements about Scrum is correct?", "options": ["The Scrum Master assigns tasks to team members and approves their work", "The Product Owner manages and prioritises the product backlog", "The scope of a sprint is changed by the team whenever new requirements arrive", "A sprint review is held only at the end of the whole project"], "ans": 1, "exp": "In Scrum, the Product Owner owns and prioritizes the product backlog; the Scrum Master is a facilitator, and Sprint Review occurs after every sprint."}, {"id": 197, "num": 4, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "In the V-model of software development, unit testing is paired with which development phase?", "options": ["Requirements analysis", "Detailed (module) design", "Architectural (high-level) design", "System specification"], "ans": 1, "exp": "In the V-model, Detailed (module) design corresponds to Unit testing."}, {"id": 198, "num": 5, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Modifying software so that it runs on a new version of the operating system is an example of ______ maintenance.", "options": ["Corrective", "Adaptive", "Perfective", "Preventive"], "ans": 1, "exp": "Adaptive maintenance updates software to work in a changed OS/hardware/regulatory environment."}, {"id": 199, "num": 6, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which type of testing is carried out to make sure that recent changes in the code have not broken existing functionality?", "options": ["Stress testing", "Smoke testing", "Regression testing", "Acceptance testing"], "ans": 2, "exp": "Regression testing re-executes previous test cases after code modifications to verify existing functionality remains intact."}, {"id": 200, "num": 7, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which SDLC model is based on repeated cycles in which risk analysis is a key activity?", "options": ["Spiral model", "Waterfall model", "V-model", "Big Bang model"], "ans": 0, "exp": "Barry Boehm's Spiral model develops software in iterative cycles, each incorporating planning, risk analysis, engineering, and evaluation."}, {"id": 201, "num": 8, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which of the following is a non-functional requirement?", "options": ["The system should let the admin add new courses", "The system should allow a student to register for an exam", "The system should generate a monthly fee report", "The system should respond to a query within 2 seconds"], "ans": 3, "exp": "Response time ('within 2 seconds') is a performance/quality constraint — a non-functional requirement."}, {"id": 202, "num": 9, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which SDLC model is most suitable when requirements are well understood, stable, and unlikely to change?", "options": ["Agile model", "Prototype model", "Spiral model", "Waterfall model"], "ans": 3, "exp": "The linear sequential Waterfall model works best when requirements are fixed and clearly defined upfront."}, {"id": 203, "num": 10, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Which type of coupling between modules is considered the worst?", "options": ["Data coupling", "Content coupling", "Stamp coupling", "Control coupling"], "ans": 1, "exp": "Coupling order (best to worst): Data < Stamp < Control < External < Common < Content. Content coupling is the worst."}, {"id": 204, "num": 11, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Which statements are correct?\nI. Alpha testing is carried out by users at the developer's site.\nII. Beta testing is carried out by real users at their own sites before final release.", "options": ["Neither I nor II", "Only I", "Only II", "Both I and II"], "ans": 3, "exp": "Both Alpha (controlled, developer's site) and Beta (real-world, user's site) are forms of acceptance testing. Both statements are correct."}, {"id": 205, "num": 12, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Using basic COCOMO, what is the effort for an organic-mode project of 10 KLOC? (Effort = 2.4 × (KLOC)^1.05 person-months)", "options": ["About 24 person-months", "About 26.9 person-months", "About 30 person-months", "About 21.5 person-months"], "ans": 1, "exp": "10^1.05 = 10 × 10^0.05 ≈ 11.22 ⇒ Effort = 2.4 × 11.22 ≈ 26.9 person-months."}, {"id": 206, "num": 13, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "The control flow graph of a module contains three simple if–else decisions and one while loop. What is its cyclomatic complexity?", "options": ["4", "5", "3", "6"], "ans": 1, "exp": "V(G) = Number of predicate nodes + 1 = (3 + 1) + 1 = 5."}, {"id": 207, "num": 14, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is/are Lehman's laws of software evolution?\nI. Continuing change\nII. Increasing complexity", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Lehman's laws state that real-world E-type software must continuously adapt (Continuing Change) and its complexity increases over time unless actively refactored (Increasing Complexity)."}, {"id": 208, "num": 15, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Basis path testing is a ______.", "options": ["regression testing method", "black box testing method", "acceptance testing method", "white box testing method"], "ans": 3, "exp": "Basis path testing (McCabe) derives independent execution paths from the program's control flow graph, making it a white-box testing technique."}, {"id": 209, "num": 16, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "A level-0 DFD, which shows the entire system as a single process with its external entities, is also known as ______.", "options": ["flowchart", "structure chart", "context diagram", "ER diagram"], "ans": 2, "exp": "A Level-0 Data Flow Diagram represents the entire system as one bubble interacting with external entities and is called a context diagram."}, {"id": 210, "num": 17, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "In the ______ model, a working model of the system is built early to understand the requirements, and is refined using customer feedback.", "options": ["Prototype", "Waterfall", "V-shaped", "Big bang"], "ans": 0, "exp": "The Prototype model builds an early working prototype when requirements are unclear and refines it iteratively via customer feedback."}]}, {"id": 12, "category": "SE", "code": "SE Mock 03", "title": "Software Engineering — Mock 03", "subtitle": "SDLC Models, DFD, Cohesion/Coupling, COCOMO, Testing & Project Metrics", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 211, "num": 1, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "What is the full form of SRS in software engineering?", "options": ["System Requirements Statement", "Software Requirements Specification", "Software Review Standard", "System Resource Specification"], "ans": 1, "exp": "SRS stands for Software Requirements Specification, documenting functional and non-functional requirements agreed upon by client and developer."}, {"id": 212, "num": 2, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "According to Boehm, what are the definitions of verification and validation?", "options": ["Verification: Are we building the product right? Validation: Are we building the right product?", "Verification: Are we building the right product? Validation: Are we building the product right?", "Verification: Is the software commercially viable? Validation: Is the software free of errors?", "Verification: Is the software free of errors? Validation: Is the software commercially viable?"], "ans": 0, "exp": "Boehm defined Verification as 'Are we building the product right?' (meeting specs) and Validation as 'Are we building the right product?' (meeting user needs)."}, {"id": 213, "num": 3, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which statement(s) is/are correct regarding the feasibility study?\nI. Operational feasibility checks whether the users will accept and use the system.\nII. Economic feasibility is judged by cost–benefit analysis.", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "A feasibility study evaluates technical, economic (cost–benefit), operational (user acceptance), legal, and schedule feasibility. Both I and II are correct."}, {"id": 214, "num": 4, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "The control flow graph of a program has 9 edges and 7 nodes. What is McCabe's cyclomatic complexity V(G)?", "options": ["4", "18", "14", "2"], "ans": 0, "exp": "McCabe's Cyclomatic Complexity V(G) = E − N + 2 = 9 − 7 + 2 = 4."}, {"id": 215, "num": 5, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following are included in the technical (system) documentation of a program?\nI. Source code listing with comments\nII. Description of data structures and file layouts\nIII. Step-by-step instructions for the end-user to install and run the program", "options": ["I and III", "II and III", "I and II", "I, II and III"], "ans": 2, "exp": "Technical documentation (for programmers/maintainers) covers algorithms, flowcharts, source code listings, and data structures. End-user instructions belong to user documentation."}, {"id": 216, "num": 6, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "What is the full form of MTTR in software reliability?", "options": ["Mean Test Time Rate", "Maximum Time To Restart", "Minimum Time To Run", "Mean Time To Repair"], "ans": 3, "exp": "MTTR = Mean Time To Repair (MTBF = MTTF + MTTR)."}, {"id": 217, "num": 7, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Match DFD symbols:\n1. Circle  2. Rectangle  3. Open rectangle  4. Arrow\ni. External entity  ii. Process  iii. Data flow  iv. Data store", "options": ["1-i, 2-ii, 3-iv, 4-iii", "1-ii, 2-i, 3-iv, 4-iii", "1-ii, 2-iv, 3-i, 4-iii", "1-iii, 2-i, 3-iv, 4-ii"], "ans": 1, "exp": "Circle→Process (ii), Rectangle→External entity (i), Open rect→Data store (iv), Arrow→Data flow (iii)."}, {"id": 218, "num": 8, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "According to modular design principles, good software design should have ______.", "options": ["low cohesion and low coupling", "low cohesion and high coupling", "high cohesion and high coupling", "high cohesion and low coupling"], "ans": 3, "exp": "High cohesion within modules and low coupling between modules make software maintainable."}, {"id": 219, "num": 9, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which UML diagram shows the interaction between users (actors) and system functions?", "options": ["Use case diagram", "Class diagram", "Sequence diagram", "Deployment diagram"], "ans": 0, "exp": "Use case diagrams depict actors and the system functions (use cases) they interact with."}, {"id": 220, "num": 10, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "What is COHESION in software design?", "options": ["Total number of modules", "Interdependence between two modules", "A measure of how closely elements within a module are related to one another", "Number of lines of code in a module"], "ans": 2, "exp": "Cohesion measures intra-module strength (Functional cohesion is best; Coincidental is worst)."}, {"id": 221, "num": 11, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Correct regarding black-box testing:\nI. Tests functionality without knowledge of internal code.\nII. Equivalence partitioning & boundary value analysis are black-box techniques.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 0, "exp": "Both statements accurately describe black-box testing."}, {"id": 222, "num": 12, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "For integer marks in [0, 100], which test set is most appropriate for Boundary Value Analysis?", "options": ["10, 20, 30", "−1, 0, 1, 99, 100, 101", "50 only", "0, 50, 100"], "ans": 1, "exp": "BVA tests a−1, a, a+1 and b−1, b, b+1 ⇒ −1, 0, 1, 99, 100, 101."}, {"id": 223, "num": 13, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which of the following is NOT a valid software life cycle model?", "options": ["V-model", "Pyramid model", "RAD model", "Spiral model"], "ans": 1, "exp": "V-model, RAD and Spiral are valid SDLC models; there is no 'Pyramid model'."}, {"id": 224, "num": 14, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "True for the Prototype model:\ni) Useful when requirements are unclear.\nii) Shown to user for feedback.\niii) Strict phase-by-phase with no user feedback.\niv) Always reduces cost by delivering prototype as final product.", "options": ["i, ii and iii only", "i and ii only", "ii and iv only", "i, ii and iv only"], "ans": 1, "exp": "Prototyping clarifies unclear requirements via user feedback (i and ii); iii describes Waterfall and prototypes are usually discarded."}, {"id": 225, "num": 15, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "In basic COCOMO, a project built by a small team of experienced developers in a familiar environment is classified as:", "options": ["Embedded", "Semi-detached", "Organic", "Hybrid"], "ans": 2, "exp": "Organic mode = small, simple projects with experienced teams (2.4 × KLOC^1.05)."}, {"id": 226, "num": 16, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "What is the full form of MTBF in software reliability?", "options": ["Minimum Time Between Failures", "Maximum Time Before Failure", "Mean Time Between Failures", "Median Time Between Faults"], "ans": 2, "exp": "MTBF stands for Mean Time Between Failures (MTBF = MTTF + MTTR)."}, {"id": 227, "num": 17, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which model builds a quick working model of the system so that the user can evaluate it before the final system is developed?", "options": ["Spiral model", "Waterfall model", "RAD model", "Prototype model"], "ans": 3, "exp": "The Prototype model builds a quick partial system for user feedback to clarify unclear requirements."}]}, {"id": 13, "category": "SE", "code": "SE Mock 04", "title": "Software Engineering — Mock 04", "subtitle": "SDLC Models, DFD, Cohesion/Coupling, COCOMO, Testing & Project Metrics", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 228, "num": 1, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "______ model, proposed by Barry Boehm, combines iterative development with risk analysis in each loop.", "options": ["Prototype", "RAD", "Waterfall", "Spiral"], "ans": 3, "exp": "Barry Boehm's Spiral model combines iterative development with explicit risk analysis in every loop."}, {"id": 229, "num": 2, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following is an empirical estimation model in software engineering?", "options": ["COCOMO", "Waterfall", "DFD", "Gantt chart"], "ans": 0, "exp": "COCOMO (Constructive Cost Model, Boehm 1981) is an empirical cost/effort estimation model."}, {"id": 230, "num": 3, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which statement(s) is/are true regarding a Gantt chart?\nI. It is a bar chart that shows activities against time.\nII. It clearly shows the dependencies between tasks, like a PERT network.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "A Gantt chart displays tasks as horizontal bars over time (I is true), but does not clearly show task dependencies like PERT/CPM (II is false)."}, {"id": 231, "num": 4, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Match process models with features:\nList-I: 1. Waterfall  2. Spiral  3. Incremental\nList-II: i. Risk analysis  ii. Linear sequential flow  iii. Delivered in increments", "options": ["1-ii, 2-i, 3-iii", "1-i, 2-ii, 3-iii", "1-iii, 2-i, 3-ii", "1-ii, 2-iii, 3-i"], "ans": 0, "exp": "Waterfall → Linear sequential (ii), Spiral → Risk analysis (i), Incremental → Delivered in increments (iii)."}, {"id": 232, "num": 5, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "What is COUPLING in software design?", "options": ["A measure of the interdependence among the modules of a software", "A measure of the functional strength within a single module", "The complexity of a single statement", "The number of lines of code in a module"], "ans": 0, "exp": "Coupling measures interdependence between modules (cohesion measures strength within a single module)."}, {"id": 233, "num": 6, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which of the following is NOT a risk response strategy in software project management?", "options": ["Risk amplification", "Risk transfer", "Risk mitigation", "Risk avoidance"], "ans": 0, "exp": "Standard risk responses are Avoidance, Transfer, Mitigation, and Acceptance — never Amplification."}, {"id": 234, "num": 7, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "In the Capability Maturity Model (CMM), which level is called the 'Optimizing' level?", "options": ["Level 5", "Level 3", "Level 4", "Level 2"], "ans": 0, "exp": "CMM levels: 1 Initial, 2 Repeatable, 3 Defined, 4 Managed, 5 Optimizing."}, {"id": 235, "num": 8, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which statement is NOT true about the Spiral model?", "options": ["It is best suited for small, low-risk projects with fixed requirements.", "Each loop of the spiral represents a phase of the process.", "It is a risk-driven process model.", "It combines prototyping with the systematic waterfall approach."], "ans": 0, "exp": "Boehm's Spiral model is designed for large, complex, high-risk projects — too costly for small low-risk projects."}, {"id": 236, "num": 9, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which is NOT a phase of the RAD (Rapid Application Development) model?", "options": ["Business modelling", "Data modelling", "Application generation", "Risk analysis"], "ans": 3, "exp": "Risk analysis belongs to the Spiral model; RAD phases are Business, Data, Process modelling, Application generation, Testing & turnover."}, {"id": 237, "num": 10, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which activity ensures that a software product conforms to specified requirements and standards through reviews, audits, and testing?", "options": ["Software Quality Assurance", "Software Configuration Management", "Software Cost Estimation", "Software Re-engineering"], "ans": 0, "exp": "Software Quality Assurance (SQA) systematically verifies process and product compliance through reviews, audits, and testing."}, {"id": 238, "num": 11, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which system test executes a system in a manner that demands resources in abnormal quantity, frequency, or volume?", "options": ["Stress testing", "Recovery testing", "Security testing", "Regression testing"], "ans": 0, "exp": "Stress testing pushes a system past normal operating limits to find its breaking point."}, {"id": 239, "num": 12, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which process model delivers software in a series of releases, each adding new functionality to the previous one?", "options": ["Incremental model", "Waterfall model", "Big Bang model", "V-model"], "ans": 0, "exp": "The Incremental model delivers a core product first and adds features in successive increments."}, {"id": 240, "num": 13, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which software quality factor refers to the ease of transferring software from one hardware/software environment to another?", "options": ["Maintainability", "Usability", "Efficiency", "Portability"], "ans": 3, "exp": "Portability measures how easily software adapts and installs in a different environment."}, {"id": 241, "num": 14, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Which statement correctly distinguishes testing from debugging?", "options": ["Debugging is done only by end users", "Both mean exactly the same", "Testing fixes errors, while debugging finds them", "Testing shows that defects are present; debugging finds the cause of a known defect and removes it"], "ans": 3, "exp": "Testing reveals failures/defects; debugging locates and fixes the faulty code."}, {"id": 242, "num": 15, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Combining all modules of a system at once and testing them together as a whole is called:", "options": ["Top-down integration", "Sandwich integration", "Bottom-up integration", "Big-bang integration"], "ans": 3, "exp": "Big-bang integration combines all modules together at once (simple, though isolating faults is harder)."}, {"id": 243, "num": 16, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "In top-down integration testing, a dummy module replacing an undeveloped lower-level module is called:", "options": ["A stub", "A driver", "A harness", "An oracle"], "ans": 0, "exp": "Top-down integration uses Stubs (standing in for called lower modules); Bottom-up integration uses Drivers (standing in for calling higher modules)."}, {"id": 244, "num": 17, "topic": "Software Engineering", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Restructuring internal code (renaming variables, splitting long functions) without changing its external behaviour is called:", "options": ["Regression", "Refactoring", "Re-engineering of requirements", "Reverse engineering"], "ans": 1, "exp": "Refactoring improves code readability and maintainability while keeping external behaviour identical."}]}]};
+
+    const STORAGE_ANS = "dsa_se_dsssb_answers_v1";
+    const STORAGE_SUB = "dsa_se_dsssb_submitted_v1";
+    const STORAGE_THEME = "dsa_se_dsssb_theme_v1";
+
+    function safeGet(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    function safeSet(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    let answers = safeGet(STORAGE_ANS, {});
+    let submittedMocks = safeGet(STORAGE_SUB, {});
+    let activeCategory = "DSA";
+    let activeMockId = DATA.mocks[0].id;
+    let quizMode = "instant";
+    let activeFilter = "all";
+
+    const timerState = {};
+    DATA.mocks.forEach((m) => {
+      timerState[m.id] = { remaining: m.durationSec, running: false };
+    });
+    let tickInterval = null;
+
+    function getActiveMock() {
+      return DATA.mocks.find((m) => m.id === activeMockId);
+    }
+
+    function getCategoryMocks(catKey) {
+      return DATA.mocks.filter((m) => m.category === catKey);
+    }
+
+    function formatTime(sec) {
+      const s = Math.max(0, sec);
+      const mm = String(Math.floor(s / 60)).padStart(2, "0");
+      const ss = String(s % 60).padStart(2, "0");
+      return `${mm}:${ss}`;
+    }
+
+    function isRevealed(mockId, qId) {
+      if (quizMode === "instant") return answers[qId] !== undefined;
+      return Boolean(submittedMocks[mockId]);
+    }
+
+    function computeMockStats(mock) {
+      let attempted = 0, correct = 0, wrong = 0;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      mock.questions.forEach((q) => {
+        if (answers[q.id] !== undefined) {
+          attempted++;
+          if (showTruth) {
+            if (answers[q.id] === q.ans) correct++;
+            else wrong++;
+          }
+        }
+      });
+      const marks = showTruth ? (correct * 1 - wrong * 0.25) : 0;
+      const acc = showTruth && attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+      return { attempted, correct, wrong, marks, acc, showTruth, total: mock.questions.length };
+    }
+
+    function computeOverallStats() {
+      let done = 0, correct = 0, wrong = 0, total = 0;
+      DATA.mocks.forEach((m) => {
+        const showTruth = quizMode === "instant" || Boolean(submittedMocks[m.id]);
+        m.questions.forEach((q) => {
+          total++;
+          if (answers[q.id] !== undefined) {
+            done++;
+            if (showTruth) {
+              if (answers[q.id] === q.ans) correct++;
+              else wrong++;
+            }
+          }
+        });
+      });
+      return { done, total, marks: (correct - wrong * 0.25).toFixed(2) };
+    }
+
+    function stopInterval() {
+      if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
+    }
+
+    function pauseAllTimers() {
+      Object.keys(timerState).forEach((k) => { timerState[k].running = false; });
+      stopInterval();
+    }
+
+    function startTimerForActive() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      if (st.remaining <= 0) st.remaining = mock.durationSec;
+      pauseAllTimers();
+      st.running = true;
+      updateTimerUI();
+      tickInterval = setInterval(() => {
+        const cur = timerState[activeMockId];
+        if (!cur.running) { stopInterval(); return; }
+        cur.remaining = Math.max(0, cur.remaining - 1);
+        updateTimerUI();
+        if (cur.remaining === 0) {
+          cur.running = false;
+          stopInterval();
+          showScorecardModal("⏱ Time's Up!");
+        }
+      }, 1000);
+    }
+
+    function toggleTimer() {
+      const st = timerState[activeMockId];
+      if (st.running) {
+        st.running = false;
+        stopInterval();
+        updateTimerUI();
+      } else {
+        startTimerForActive();
+      }
+    }
+
+    function resetTimer() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      st.running = false;
+      st.remaining = mock.durationSec;
+      stopInterval();
+      updateTimerUI();
+    }
+
+    function updateTimerUI() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      const formatted = formatTime(st.remaining);
+      document.getElementById("heroTimerText").textContent = formatted;
+      document.getElementById("miniTimerText").textContent = formatted;
+      document.getElementById("timerLabel").textContent = `${mock.timeLabel.toUpperCase()} TIMER`;
+      document.getElementById("timerToggleBtn").textContent = st.running ? "Pause" : (st.remaining < mock.durationSec && st.remaining > 0 ? "Resume" : "Start");
+      document.getElementById("timerStatusBadge").textContent = st.remaining === 0 ? "TIME UP" : (st.running ? "LIVE" : (st.remaining < mock.durationSec ? "PAUSED" : "READY"));
+
+      const pct = Math.max(0, (st.remaining / mock.durationSec) * 100);
+      const bar = document.getElementById("timerProgressBar");
+      const miniPill = document.getElementById("miniTimerPill");
+      bar.style.width = `${pct}%`;
+
+      miniPill.classList.remove("timer-urgent", "bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300", "bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      bar.classList.remove("bg-emerald-300", "bg-amber-300", "bg-rose-400");
+
+      if (st.remaining <= 60) {
+        bar.classList.add("bg-rose-400");
+        miniPill.classList.add("bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300");
+        if (st.running) miniPill.classList.add("timer-urgent");
+      } else if (st.remaining <= 150) {
+        bar.classList.add("bg-amber-300");
+        miniPill.classList.add("bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      } else {
+        bar.classList.add("bg-emerald-300");
+      }
+    }
+
+    function openModal(title, bodyHtml, buttons) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalBody").innerHTML = bodyHtml;
+      const actions = document.getElementById("modalActions");
+      actions.innerHTML = "";
+      buttons.forEach((b) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = b.label;
+        btn.className = b.cls;
+        btn.addEventListener("click", () => {
+          closeModal();
+          if (b.onClick) b.onClick();
+        });
+        actions.appendChild(btn);
+      });
+      document.getElementById("modalBackdrop").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("modalBackdrop").classList.add("hidden");
+    }
+
+    function showScorecardModal(titlePrefix) {
+      const mock = getActiveMock();
+      submittedMocks[mock.id] = true;
+      safeSet(STORAGE_SUB, submittedMocks);
+      const st = computeMockStats(mock);
+      renderAll();
+      openModal(
+        `${titlePrefix} — ${mock.code} Scorecard`,
+        `
+          <div class="grid grid-cols-2 gap-2.5 text-center">
+            <div class="rounded-xl bg-indigo-50 dark:bg-indigo-500/15 p-3">
+              <div class="text-xl font-black text-indigo-700 dark:text-indigo-300">${st.marks.toFixed(2)} / ${st.total}</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">NET MARKS</div>
+            </div>
+            <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/15 p-3">
+              <div class="text-xl font-black text-emerald-700 dark:text-emerald-300">${st.acc}%</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">ACCURACY</div>
+            </div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Correct: <span class="text-emerald-600 dark:text-emerald-400">${st.correct}</span></div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Wrong: <span class="text-rose-600 dark:text-rose-400">${st.wrong}</span> &bull; Left: ${st.total - st.attempted}</div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">All answers and explanations for ${escapeHtml(mock.code)} are now unlocked below.</p>
+        `,
+        [
+          {
+            label: "Review Wrong Only",
+            cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer",
+            onClick: () => { activeFilter = "wrong"; renderAll(); }
+          },
+          {
+            label: "View All Solutions",
+            cls: "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer"
+          }
+        ]
+      );
+    }
+
+    function renderCategoryTabs() {
+      const wrap = document.getElementById("categoryTabs");
+      wrap.innerHTML = DATA.categories.map((c) => {
+        const active = c.key === activeCategory;
+        const catMocks = getCategoryMocks(c.key);
+        const done = catMocks.reduce((acc, m) => acc + m.questions.filter((q) => answers[q.id] !== undefined).length, 0);
+        const cls = active
+          ? "bg-slate-900 dark:bg-indigo-600 text-white border-slate-900 dark:border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-indigo-400";
+        const badgeCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300";
+        return `
+          <button type="button" data-cat="${escapeHtml(c.key)}"
+            class="cat-tab shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-extrabold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(c.label)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md tabular-nums ${badgeCls}">${c.mocks} Mocks &bull; ${done}/${c.count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderMockTabs() {
+      const wrap = document.getElementById("mockTabs");
+      const catMocks = getCategoryMocks(activeCategory);
+      wrap.innerHTML = catMocks.map((m) => {
+        const active = m.id === activeMockId;
+        const done = m.questions.filter((q) => answers[q.id] !== undefined).length;
+        const cls = active
+          ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700";
+        const pillCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400";
+        return `
+          <button type="button" data-mock-id="${m.id}"
+            class="mock-tab shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(m.code)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums ${pillCls}">${done}/${m.questions.length}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderHeroAndStats() {
+      const mock = getActiveMock();
+      const st = computeMockStats(mock);
+      const ov = computeOverallStats();
+
+      document.getElementById("heroBadge").textContent = `${mock.category} Dedicated Mock`;
+      document.getElementById("heroQCount").textContent = `${mock.questions.length} Questions · +1.00 / −0.25`;
+      document.getElementById("heroTitle").textContent = mock.title;
+      document.getElementById("heroSub").textContent = mock.subtitle;
+
+      document.getElementById("statAttempted").textContent = `${st.attempted}/${st.total}`;
+      document.getElementById("statMarks").textContent = st.showTruth ? st.marks.toFixed(2) : "—";
+      document.getElementById("statAccuracy").textContent = st.showTruth ? `${st.acc}%` : "—";
+      document.getElementById("overallScorePill").textContent = `${ov.done}/${ov.total} Done • ${ov.marks} Marks`;
+
+      const instBtn = document.getElementById("modeInstantBtn");
+      const examBtn = document.getElementById("modeExamBtn");
+      const subBtn = document.getElementById("submitExamBtn");
+
+      if (quizMode === "instant") {
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        subBtn.classList.add("hidden");
+      } else {
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        if (!submittedMocks[mock.id]) subBtn.classList.remove("hidden");
+        else subBtn.classList.add("hidden");
+      }
+
+      document.querySelectorAll("#filterGroup .flt-btn").forEach((btn) => {
+        const active = btn.dataset.filter === activeFilter;
+        btn.className = active
+          ? "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer"
+          : "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+
+      document.getElementById("prevMockBtn").disabled = activeMockId <= 1;
+      document.getElementById("nextMockBtn").disabled = activeMockId >= DATA.mocks.length;
+      updateTimerUI();
+    }
+
+    function renderPalette() {
+      const mock = getActiveMock();
+      const wrap = document.getElementById("questionPalette");
+      document.getElementById("paletteTitle").textContent = `Question Palette (Jump to Q1–Q${mock.questions.length})`;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      wrap.innerHTML = mock.questions.map((q) => {
+        const picked = answers[q.id];
+        let cls = "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+        if (picked !== undefined) {
+          if (!showTruth) cls = "bg-indigo-600 text-white border-indigo-600";
+          else if (picked === q.ans) cls = "bg-emerald-600 text-white border-emerald-600";
+          else cls = "bg-rose-600 text-white border-rose-600";
+        }
+        return `
+          <button type="button" data-jump="qcard-${q.id}"
+            class="pal-btn w-8 h-7 rounded-lg border text-[11px] font-bold tabular-nums hover:opacity-85 cursor-pointer ${cls}">
+            ${q.num}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderQuestions() {
+      const mock = getActiveMock();
+      const list = document.getElementById("questionsList");
+      const showTruthGlobal = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+
+      const filtered = mock.questions.filter((q) => {
+        const picked = answers[q.id];
+        if (activeFilter === "unanswered") return picked === undefined;
+        if (activeFilter === "wrong") {
+          return showTruthGlobal && picked !== undefined && picked !== q.ans;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 text-center space-y-2">
+            <p class="text-sm font-bold text-slate-700 dark:text-slate-200">No questions match the current filter.</p>
+            <button type="button" id="clearFilterBtn" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Show All Questions</button>
+          </div>
+        `;
+        const cf = document.getElementById("clearFilterBtn");
+        if (cf) cf.addEventListener("click", () => { activeFilter = "all"; renderAll(); });
+        return;
+      }
+
+      const letters = ["A", "B", "C", "D"];
+      list.innerHTML = filtered.map((q) => {
+        const picked = answers[q.id];
+        const revealed = isRevealed(mock.id, q.id);
+
+        const optsHtml = q.options.map((opt, idx) => {
+          let btnCls = "border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-800 dark:text-slate-100";
+          let badgeCls = "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+          let mark = "";
+
+          if (revealed) {
+            if (idx === q.ans) {
+              btnCls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200";
+              badgeCls = "bg-emerald-600 text-white border-emerald-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-emerald-600 dark:text-emerald-400">✓ Correct</span>';
+            } else if (picked === idx) {
+              btnCls = "border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200";
+              badgeCls = "bg-rose-600 text-white border-rose-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-rose-600 dark:text-rose-400">✗ Your Pick</span>';
+            } else {
+              btnCls = "border-slate-200/70 dark:border-slate-800/70 bg-white dark:bg-slate-900/40 text-slate-500 dark:text-slate-400 opacity-75";
+            }
+          } else if (picked === idx) {
+            btnCls = "border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200";
+            badgeCls = "bg-indigo-600 text-white border-indigo-600";
+            mark = '<span class="ml-auto text-xs font-bold text-indigo-600 dark:text-indigo-400">Selected</span>';
+          }
+
+          return `
+            <button type="button" data-qid="${q.id}" data-opt="${idx}"
+              class="opt-btn w-full text-left flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer ${btnCls}">
+              <span class="w-6 h-6 rounded-lg border text-xs font-extrabold flex items-center justify-center shrink-0 ${badgeCls}">${letters[idx]}</span>
+              <span class="flex-1 leading-snug font-mono sm:font-sans">${escapeHtml(opt)}</span>
+              ${mark}
+            </button>
+          `;
+        }).join("");
+
+        const expHtml = revealed && q.exp ? `
+          <div class="mt-3 rounded-xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 p-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+            <span class="font-extrabold text-indigo-700 dark:text-indigo-300">Explanation: </span>${escapeHtml(q.exp)}
+          </div>
+        ` : "";
+
+        const qBodyHtml = `<p class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line mb-3.5">${escapeHtml(q.q)}</p>`;
+
+        return `
+          <article id="qcard-${q.id}" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs scroll-mt-40">
+            <div class="flex flex-wrap items-center gap-2 mb-2.5">
+              <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white">Q${q.num}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${escapeHtml(mock.category)}</span>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border text-sky-800 dark:text-sky-300 bg-sky-100 dark:bg-sky-900/40 border-sky-200 dark:border-sky-800">📘 ${escapeHtml(q.exam)}</span>
+            </div>
+            ${qBodyHtml}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${optsHtml}
+            </div>
+            ${expHtml}
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderAll() {
+      renderCategoryTabs();
+      renderMockTabs();
+      renderHeroAndStats();
+      renderPalette();
+      renderQuestions();
+    }
+
+    document.getElementById("categoryTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat-tab");
+      if (!btn) return;
+      const nextCat = btn.dataset.cat;
+      if (nextCat === activeCategory) return;
+      pauseAllTimers();
+      activeCategory = nextCat;
+      const firstMock = getCategoryMocks(activeCategory)[0];
+      if (firstMock) activeMockId = firstMock.id;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("mockTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".mock-tab");
+      if (!btn) return;
+      const nextId = Number(btn.dataset.mockId);
+      if (nextId === activeMockId) return;
+      pauseAllTimers();
+      activeMockId = nextId;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("questionsList").addEventListener("click", (e) => {
+      const btn = e.target.closest(".opt-btn");
+      if (!btn) return;
+      const qId = Number(btn.dataset.qid);
+      const optIdx = Number(btn.dataset.opt);
+      const mock = getActiveMock();
+
+      const st = timerState[activeMockId];
+      if (!st.running && st.remaining === mock.durationSec) {
+        startTimerForActive();
+      }
+
+      if (quizMode === "instant") {
+        if (answers[qId] !== undefined) return;
+        answers[qId] = optIdx;
+      } else {
+        if (submittedMocks[mock.id]) return;
+        answers[qId] = optIdx;
+      }
+      safeSet(STORAGE_ANS, answers);
+      renderAll();
+    });
+
+    document.getElementById("questionPalette").addEventListener("click", (e) => {
+      const btn = e.target.closest(".pal-btn");
+      if (!btn) return;
+      const target = document.getElementById(btn.dataset.jump);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        activeFilter = "all";
+        renderAll();
+        setTimeout(() => {
+          const el = document.getElementById(btn.dataset.jump);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 50);
+      }
+    });
+
+    document.getElementById("filterGroup").addEventListener("click", (e) => {
+      const btn = e.target.closest(".flt-btn");
+      if (!btn) return;
+      activeFilter = btn.dataset.filter;
+      renderAll();
+    });
+
+    document.getElementById("modeInstantBtn").addEventListener("click", () => { quizMode = "instant"; renderAll(); });
+    document.getElementById("modeExamBtn").addEventListener("click", () => { quizMode = "exam"; renderAll(); });
+    document.getElementById("submitExamBtn").addEventListener("click", () => { pauseAllTimers(); showScorecardModal("Mock Submitted"); });
+    document.getElementById("timerToggleBtn").addEventListener("click", toggleTimer);
+    document.getElementById("timerResetBtn").addEventListener("click", resetTimer);
+
+    document.getElementById("resetMockBtn").addEventListener("click", () => {
+      const mock = getActiveMock();
+      openModal(
+        `Reset ${mock.code}?`,
+        `<p>This will clear all saved answers and reset the timer for <strong>${escapeHtml(mock.code)}</strong>.</p>`,
+        [
+          { label: "Cancel", cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer" },
+          {
+            label: "Reset Mock",
+            cls: "px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold cursor-pointer",
+            onClick: () => {
+              mock.questions.forEach((q) => { delete answers[q.id]; });
+              delete submittedMocks[mock.id];
+              safeSet(STORAGE_ANS, answers);
+              safeSet(STORAGE_SUB, submittedMocks);
+              resetTimer();
+              activeFilter = "all";
+              renderAll();
+            }
+          }
+        ]
+      );
+    });
+
+    document.getElementById("prevMockBtn").addEventListener("click", () => {
+      if (activeMockId > 1) {
+        pauseAllTimers();
+        activeMockId--;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("nextMockBtn").addEventListener("click", () => {
+      if (activeMockId < DATA.mocks.length) {
+        pauseAllTimers();
+        activeMockId++;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("modalCloseX").addEventListener("click", closeModal);
+    document.getElementById("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      document.documentElement.classList.toggle("dark", isDark);
+      document.getElementById("themeIcon").textContent = isDark ? "☀️" : "🌙";
+    }
+    applyTheme(safeGet(STORAGE_THEME, "light"));
+    document.getElementById("themeToggleBtn").addEventListener("click", () => {
+      const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+      safeSet(STORAGE_THEME, next);
+      applyTheme(next);
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

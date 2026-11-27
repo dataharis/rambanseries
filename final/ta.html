@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedagogy & Education Policy (NEP 2020) Mocks · HARIS SAIFI</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .timer-urgent { animation: pulseSoft 1s infinite; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen antialiased transition-colors duration-200">
+
+  <!-- Sticky Top Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-3 sm:px-5 py-2.5 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-600 to-indigo-700 text-white font-extrabold text-xs flex items-center justify-center shadow-sm shrink-0">
+          PED
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white truncate">
+            PEDAGOGY &amp; EDUCATION POLICY (NEP 2020)
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+            10 Dedicated Mocks &bull; 202 Unique Qs &bull; CBT Timer &bull; <span class="font-bold text-indigo-600 dark:text-indigo-400">by HARIS SAIFI</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <div id="miniTimerPill" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-extrabold tabular-nums">
+          <span aria-hidden="true">⏱</span>
+          <span id="miniTimerText">09:00</span>
+        </div>
+
+        <div id="overallScorePill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-bold tabular-nums">
+          0/202 Done &bull; 0.00 Marks
+        </div>
+
+        <button id="themeToggleBtn" type="button" aria-label="Toggle dark mode"
+          class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Subject Category Tabs (C | C++ | Java | OOPS | Python) -->
+    <div class="border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/80">
+      <div id="categoryTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </div>
+
+    <!-- Mock Selector Strip for Active Subject -->
+    <nav aria-label="Select Mock Test" class="border-t border-slate-100 dark:border-slate-800/80 bg-white/75 dark:bg-slate-900/75">
+      <div id="mockTabs" class="max-w-5xl mx-auto px-3 sm:px-5 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar"></div>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-3 sm:px-5 py-5 space-y-5">
+
+    <!-- Active Mock Hero + Timer Panel -->
+    <section id="heroCard" class="rounded-2xl bg-gradient-to-br from-sky-600 via-blue-700 to-indigo-800 text-white p-5 sm:p-6 shadow-md">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="space-y-1.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="heroBadge" class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/20 text-white"></span>
+            <span id="heroQCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-black/20 text-indigo-100"></span>
+          </div>
+          <h2 id="heroTitle" class="text-xl sm:text-2xl font-extrabold tracking-tight"></h2>
+          <p id="heroSub" class="text-xs sm:text-sm text-indigo-100/95"></p>
+        </div>
+
+        <!-- Timer + Score Box -->
+        <div class="flex flex-wrap sm:flex-nowrap items-stretch gap-3">
+          <div class="rounded-xl bg-black/25 border border-white/15 px-4 py-2.5 flex flex-col justify-center min-w-[160px]">
+            <div class="flex items-center justify-between gap-2">
+              <span id="timerLabel" class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">9-MIN TIMER</span>
+              <span id="timerStatusBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/15">READY</span>
+            </div>
+            <div id="heroTimerText" class="text-2xl sm:text-3xl font-black tabular-nums tracking-tight mt-0.5">09:00</div>
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <button id="timerToggleBtn" type="button"
+                class="flex-1 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white text-indigo-700 hover:bg-indigo-50 cursor-pointer">
+                Start
+              </button>
+              <button id="timerResetBtn" type="button"
+                class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white cursor-pointer">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-white/12 border border-white/15 px-4 py-2.5 flex items-center gap-4 text-center">
+            <div>
+              <div id="statAttempted" class="text-lg sm:text-xl font-extrabold tabular-nums">0/20</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Attempted</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statMarks" class="text-lg sm:text-xl font-extrabold tabular-nums">0.00</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Marks</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div>
+              <div id="statAccuracy" class="text-lg sm:text-xl font-extrabold tabular-nums">0%</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-100">Accuracy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 h-1.5 w-full rounded-full bg-black/20 overflow-hidden">
+        <div id="timerProgressBar" class="h-full bg-emerald-300 transition-all duration-500" style="width: 100%;"></div>
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <section class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1" role="group" aria-label="Quiz Mode">
+          <button id="modeInstantBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer">
+            Instant Feedback
+          </button>
+          <button id="modeExamBtn" type="button"
+            class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer">
+            Timed Exam (Submit)
+          </button>
+        </div>
+
+        <div id="filterGroup" class="inline-flex items-center gap-1" role="group" aria-label="Question filter">
+          <button type="button" data-filter="all" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer">All</button>
+          <button type="button" data-filter="unanswered" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Unanswered</button>
+          <button type="button" data-filter="wrong" class="flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Wrong Only</button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="submitExamBtn" type="button"
+          class="hidden px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs cursor-pointer">
+          Submit Mock
+        </button>
+        <button id="resetMockBtn" type="button"
+          class="px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-800/70 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 text-xs font-bold cursor-pointer">
+          Reset Mock
+        </button>
+      </div>
+    </section>
+
+    <!-- Quick Question Palette -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs">
+      <div class="flex items-center justify-between mb-2">
+        <span id="paletteTitle" class="text-xs font-bold text-slate-600 dark:text-slate-300">Question Palette</span>
+        <span class="text-[11px] text-slate-500 dark:text-slate-400">Green = Correct &bull; Red = Wrong &bull; Indigo = Marked</span>
+      </div>
+      <div id="questionPalette" class="flex flex-wrap gap-1.5"></div>
+    </section>
+
+    <!-- Questions Container -->
+    <section id="questionsList" class="space-y-4"></section>
+
+    <!-- Bottom Navigation -->
+    <section class="flex items-center justify-between pt-2 pb-8">
+      <button id="prevMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-40 cursor-pointer">
+        &larr; Previous Mock
+      </button>
+      <button id="nextMockBtn" type="button"
+        class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs sm:text-sm font-bold text-white disabled:opacity-40 cursor-pointer">
+        Next Mock &rarr;
+      </button>
+    </section>
+  </main>
+
+  <!-- In-Page Modal -->
+  <div id="modalBackdrop" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <h3 id="modalTitle" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white"></h3>
+        <button id="modalCloseX" type="button" aria-label="Close modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg font-bold cursor-pointer">&times;</button>
+      </div>
+      <div id="modalBody" class="text-sm text-slate-600 dark:text-slate-300 space-y-3"></div>
+      <div id="modalActions" class="flex items-center justify-end gap-2 pt-1"></div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"categories": [{"key": "Pedagogy", "label": "Pedagogy & NEP 2020", "count": 202, "mocks": 10, "desc": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020"}], "mocks": [{"id": 1, "category": "Pedagogy", "code": "PED Mock 01", "title": "Pedagogy & NEP 2020 — Mock 01", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 1, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Students are given a program that gives the wrong output, and they must find which statement causes the error and why. In the revised Bloom's taxonomy, this task is mainly at which level?", "options": ["Analysing", "Remembering", "Applying", "Creating"], "ans": 0, "exp": "Debugging and tracing how code parts cause an erroneous output involves breaking down and examining relationships → Analysing."}, {"id": 2, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "According to Erik Erikson, the central psychosocial conflict of adolescence (about 12 to 18 years) is:", "options": ["Initiative versus guilt", "Industry versus inferiority", "Intimacy versus isolation", "Identity versus role confusion"], "ans": 3, "exp": "Erikson’s adolescent stage (12–18 years) centres on Identity versus role confusion."}, {"id": 3, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A student says, \"I don't copy code in the test only because I will be punished if I am caught.\" According to Kohlberg, this reasoning is at which level of moral development?", "options": ["Formal operational", "Conventional", "Post-conventional", "Pre-conventional"], "ans": 3, "exp": "Judging actions by personal consequences such as avoiding punishment (Stage 1) belongs to Kohlberg’s Pre-conventional level."}, {"id": 4, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A teacher keeps a collection of each student's programs, project reports and reflections made throughout the year to show the student's growth. This is:", "options": ["Rating scale", "Norm-referenced testing", "Anecdotal record", "Portfolio assessment"], "ans": 3, "exp": "A purposeful, longitudinal collection of student work and reflections showing growth is Portfolio assessment."}, {"id": 5, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Before starting a lesson on database tables, a teacher shows a chart linking a spreadsheet (which students already know) to a table, with rows as records and columns as fields. According to David Ausubel, this introductory chart is:", "options": ["A summative test", "A behavioural objective", "An advance organiser", "A mnemonic"], "ans": 2, "exp": "Ausubel’s advance organiser bridges prior knowledge to new concepts before instruction begins."}, {"id": 6, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "A gifted student finishes the class work on sorting quickly. The teacher gives her an extra project to compare the performance of different sorting algorithms on large data sets, while she stays in the same class. This is an example of:", "options": ["Enrichment", "Acceleration", "Remedial teaching", "Ability grouping"], "ans": 0, "exp": "Providing deeper or broader exploration within the same grade/age group is Enrichment (skipping a grade is Acceleration)."}, {"id": 7, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "According to the National Education Policy 2020, the holistic progress card used in school should include:", "options": ["Only marks in the board examinations", "Only attendance and marks", "Only the teacher's remarks on discipline", "Self-assessment, peer assessment and teacher assessment (360-degree assessment)"], "ans": 3, "exp": "NEP 2020 mandates a 360-degree multidimensional holistic progress card incorporating self, peer, and teacher assessments."}, {"id": 8, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 20 · Real Exam", "q": "Which national digital platform provides e-content, such as energised textbooks with QR codes, for school students and teachers in India?", "options": ["e-PG Pathshala", "SWAYAM", "NPTEL", "DIKSHA"], "ans": 3, "exp": "DIKSHA (Digital Infrastructure for Knowledge Sharing) is India’s national digital platform for school education and QR-coded textbooks."}, {"id": 9, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "In a computer lab, a student who understands loops helps a classmate debug by giving hints instead of answers. According to Vygotsky, the helper is acting as:", "options": ["A source of negative reinforcement", "A passive observer", "A More Knowledgeable Other (MKO)", "An advance organiser"], "ans": 2, "exp": "In Vygotsky's theory, a More Knowledgeable Other (MKO) provides scaffolding within the learner's ZPD."}, {"id": 10, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A student stuck on a recursion problem suddenly sees how it breaks into smaller self-copies and solves it at once. This learning is best explained by:", "options": ["Classical conditioning (Pavlov)", "Trial and error (Thorndike)", "Insight learning (Köhler)", "Operant conditioning (Skinner)"], "ans": 2, "exp": "Sudden holistic restructuring of a problem is Wolfgang Köhler's Insight learning."}, {"id": 11, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A student never copies code, always credits sources, and follows ethics consistently as part of who he is. In Krathwohl's affective domain, this is:", "options": ["Characterisation by a value", "Valuing", "Responding", "Organisation"], "ans": 0, "exp": "When a value consistently guides behaviour as part of one's character, it is the highest level: Characterisation by a value."}, {"id": 12, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "After asking a question, a teacher deliberately pauses 3 to 5 seconds before calling on anyone, improving answer quality. This technique is called:", "options": ["Redirecting", "Probing", "Prompting", "Wait time"], "ans": 3, "exp": "Pausing 3–5 seconds after a question is Mary Budd Rowe's Wait time technique."}, {"id": 13, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "In an item analysis, 20 students are in the upper group (16 correct) and 20 in the lower group (6 correct). What is the discrimination index?", "options": ["0.50", "0.55", "0.25", "1.10"], "ans": 0, "exp": "D = (RU − RL) / n = (16 − 6) / 20 = 0.50."}, {"id": 14, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "According to NEP 2020, the medium of instruction should, wherever possible, be the home language or mother tongue at least until:", "options": ["Grade 5, preferably till Grade 8 and beyond", "Grade 2", "Grade 10", "Grade 12"], "ans": 0, "exp": "NEP 2020 recommends mother tongue/home language at least until Grade 5, and preferably till Grade 8 and beyond."}, {"id": 15, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "Under the RTE Act, 2009, what share of entry-level seats must private unaided schools reserve for children from weaker sections and disadvantaged groups?", "options": ["10%", "15%", "20%", "25%"], "ans": 3, "exp": "Section 12(1)(c) of the RTE Act, 2009 mandates 25% reservation at the entry level."}, {"id": 16, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 19 · Real Exam", "q": "A teacher wants to use, adapt and share an online tutorial released under Creative Commons CC BY-SA. What must she do?", "options": ["Only give credit to the author", "Give credit to the author and share any adapted version under the same licence", "Use it only for non-commercial purposes", "Use it without changing it"], "ans": 1, "exp": "BY = Attribution (credit author); SA = ShareAlike (release adaptations under the same licence)."}, {"id": 17, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Students compare bubble sort and insertion sort and justify which one is better for a nearly sorted list. In revised Bloom's taxonomy, this task is mainly at which level?", "options": ["Applying", "Analysing", "Evaluating", "Creating"], "ans": 2, "exp": "Making a criteria-based judgement and justifying it is Evaluating."}, {"id": 18, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A student thought a variable holds only one value; upon learning arrays, she modifies her mental model to include arrays holding a list of values. In Piaget's terms, this is:", "options": ["Equilibration", "Assimilation", "Accommodation", "Conservation"], "ans": 2, "exp": "Modifying an existing schema to fit new information is Accommodation."}, {"id": 19, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Students use a rubric to check their own programs and decide what to improve before submitting. This is an example of:", "options": ["Assessment of learning", "Assessment as learning", "Assessment for learning", "Norm-referenced assessment"], "ans": 1, "exp": "Student self-assessment to monitor and improve their own work is Assessment as learning."}, {"id": 20, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A student explains programming concepts clearly aloud but struggles severely with handwriting code (poorly formed letters, uneven spacing, very slow). This difficulty is most likely:", "options": ["Dyslexia", "Dysgraphia", "Dyscalculia", "Dysphasia"], "ans": 1, "exp": "Dysgraphia is a specific learning difficulty affecting handwriting and written expression."}, {"id": 21, "num": 21, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "A CS teacher studies why her own class struggles with recursion, tries a new tracing method, collects classroom data, and refines her teaching. This is:", "options": ["Action research", "Fundamental research", "Historical research", "Survey research"], "ans": 0, "exp": "Practitioner-led research to solve an immediate local classroom problem is Action research."}]}, {"id": 2, "category": "Pedagogy", "code": "PED Mock 02", "title": "Pedagogy & NEP 2020 — Mock 02", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 22, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "During micro-teaching, a trainee teacher moves around the room, modulates voice tone, uses gestures, and switches between board and projector to hold attention. This skill is:", "options": ["Reinforcement", "Stimulus variation", "Probing questions", "Set induction"], "ans": 1, "exp": "Deliberately varying movement, voice, gestures, and medium is Stimulus variation."}, {"id": 23, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "Students advance to the functions unit only after scoring ≥80% on the loops test; others receive corrective activities and retesting. This approach is:", "options": ["Discovery learning", "Programmed instruction", "Mastery learning", "Cooperative learning"], "ans": 2, "exp": "Benjamin Bloom's Mastery learning requires reaching a set mastery threshold with correctives and retesting."}, {"id": 24, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 18 · Real Exam", "q": "According to the SAMR model, replacing a paper worksheet with an online quiz that auto-grades and gives instant feedback is an example of:", "options": ["Augmentation", "Substitution", "Modification", "Redefinition"], "ans": 0, "exp": "Replacing a tool with functional improvement (auto-grading + instant feedback) is Augmentation."}, {"id": 25, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "A class 10 student reasons: 'If the loop counter were never incremented, the condition would stay true and the loop would run forever.' According to Piaget, this hypothetical reasoning is typical of which stage?", "options": ["Pre-operational", "Concrete operational", "Formal operational", "Sensorimotor"], "ans": 2, "exp": "Abstract and hypothetical 'what-if' reasoning characterizes Piaget's Formal Operational stage (11+ years)."}, {"id": 26, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Students learn simple algorithms in class 6, flowcharts in class 8, and algorithm efficiency in class 11—revisiting the same idea at deeper levels. This curriculum design is based on:", "options": ["Thorndike's law of exercise", "Skinner's programmed instruction", "Ausubel's advance organiser", "Bruner's spiral curriculum"], "ans": 3, "exp": "Jerome Bruner's spiral curriculum revisits core concepts repeatedly with increasing depth and formality."}, {"id": 27, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "A teacher grades a programming project with separate scores and level descriptions for logic, readability, testing, and documentation. The teacher is using:", "options": ["An anecdotal record", "A holistic rubric", "A checklist", "An analytic rubric"], "ans": 3, "exp": "An analytic rubric scores each criterion separately with performance-level descriptors."}, {"id": 28, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "A teacher says: 'Anyone who submits the lab file on time will not have to do the extra Saturday assignment.' Removing an unpleasant task to increase on-time submission is:", "options": ["Positive reinforcement", "Negative reinforcement", "Punishment", "Extinction"], "ans": 1, "exp": "Strengthening a desired behaviour by removing an aversive/unpleasant stimulus is Negative Reinforcement."}, {"id": 29, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "A student knows her own strengths and weaknesses well, reflects on how she learns best, and sets her own goals. In Gardner's theory, this shows strong:", "options": ["Existential intelligence", "Interpersonal intelligence", "Logical-mathematical intelligence", "Intrapersonal intelligence"], "ans": 3, "exp": "Intrapersonal intelligence is self-awareness and the ability to reflect on and direct one's own learning."}, {"id": 30, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Before starting a new unit on C arrays, a teacher gives a short test to find specific misconceptions about loops and indexing so they can be addressed. This is:", "options": ["Summative assessment", "Diagnostic assessment", "Norm-referenced assessment", "Achievement test"], "ans": 1, "exp": "Diagnostic assessment identifies specific learning gaps and misconceptions prior to instruction."}, {"id": 31, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "Under the 5 + 3 + 3 + 4 structure of the National Education Policy 2020, the Preparatory Stage covers:", "options": ["Grades 3 to 5", "Grades 1 and 2", "Grades 6 to 8", "Grades 9 to 12"], "ans": 0, "exp": "NEP 2020 stages: Foundational (Pre-school + 1–2), Preparatory (Grades 3–5), Middle (6–8), Secondary (9–12)."}, {"id": 32, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 17 · Real Exam", "q": "In groups of four, each student studies one topic (arrays, strings, functions, recursion), meets in 'expert groups' with peers studying the same topic, and returns to teach their home group. This strategy is:", "options": ["Jigsaw", "Think-Pair-Share", "Brainstorming", "Role play"], "ans": 0, "exp": "Elliot Aronson's Jigsaw cooperative strategy uses expert groups and interdependent peer teaching."}, {"id": 33, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "A teacher who reflects on her lessons during and after teaching and adapts her methods follows Donald Schön's idea of the ______.", "options": ["reflective practitioner", "programmed learner", "behaviour modifier", "authoritarian manager"], "ans": 0, "exp": "Donald Schön coined 'reflective practitioner' (reflection-in-action and reflection-on-action)."}, {"id": 34, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Rats exploring a maze unrewarded ran it almost error-free once food appeared. Edward Tolman called this ______.", "options": ["insight learning", "latent learning", "trial-and-error learning", "classical conditioning"], "ans": 1, "exp": "Tolman's latent learning shows learning occurs via cognitive maps even without immediate reinforcement."}, {"id": 35, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "A child of chronological age 10 years has a mental age of 12 years. What is his IQ?", "options": ["83", "100", "120", "125"], "ans": 2, "exp": "IQ = (MA / CA) × 100 = (12 / 10) × 100 = 120."}, {"id": 36, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Noam Chomsky proposed that children have an innate capacity for language called the ______.", "options": ["Language Acquisition Device (LAD)", "Zone of Proximal Development", "Law of Effect", "Schema"], "ans": 0, "exp": "Chomsky hypothesized the inborn Language Acquisition Device (LAD) housing universal grammar."}, {"id": 37, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regarding Bernard Weiner's attribution theory:\nI. Classifies causes by locus, stability, and controllability.\nII. Saying 'I failed because I did not study enough' is an internal, unstable, controllable attribution.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements accurately reflect Weiner's three-dimensional attribution theory."}, {"id": 38, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Mapping students' preferred project partners in a diagram to identify stars and isolates is called ______.", "options": ["anecdotal record", "sociometry (sociogram)", "rating scale", "case study"], "ans": 1, "exp": "J. L. Moreno's sociometry plots group choices as a sociogram."}, {"id": 39, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "In a ______, several experts each present a prepared talk on a different aspect of one topic, followed by audience questions.", "options": ["panel discussion", "debate", "brainstorming session", "symposium"], "ans": 3, "exp": "A symposium features formal prepared talks on aspects of a shared topic, followed by Q&A."}, {"id": 40, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "Regarding split-half reliability:\nI. Splits one test into two equivalent halves (e.g., odd/even) and correlates scores.\nII. Uses the Spearman–Brown formula to estimate full-test reliability.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements are correct: r(full) = 2r / (1 + r)."}, {"id": 41, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "A three-dimensional chart showing weightage of objectives, content units, and question types before setting a paper is called the ______.", "options": ["blueprint", "marking scheme", "answer key", "item bank"], "ans": 0, "exp": "A test blueprint ensures balanced coverage of objectives, content, and item formats."}, {"id": 42, "num": 21, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 02", "q": "According to Albert Bandura, observational learning involves four processes. Which is NOT one of them?", "options": ["Attention", "Retention", "Reproduction", "Extinction"], "ans": 3, "exp": "Bandura's four processes are Attention, Retention, Reproduction, and Motivation; Extinction belongs to conditioning."}]}, {"id": 3, "category": "Pedagogy", "code": "PED Mock 03", "title": "Pedagogy & NEP 2020 — Mock 03", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 43, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Regarding the halo effect in evaluation:\nI. It occurs when a teacher's general impression of a student influences marks given to a specific answer.\nII. It increases the reliability of essay-type tests.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "The halo effect introduces scorer bias and therefore LOWERS reliability (Only I is correct)."}, {"id": 44, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "In Robert Gagné's hierarchy of eight types of learning, the highest type is ______.", "options": ["signal learning", "problem solving", "chaining", "concept learning"], "ans": 1, "exp": "Gagné's 8 levels progress from Signal learning (lowest) up to Problem solving (highest)."}, {"id": 45, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Regarding Flanders' Interaction Analysis Category System (FIACS):\nI. FIACS classifies classroom verbal behaviour into 7 categories.\nII. Category 10 records the student's response to the teacher.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 3, "exp": "FIACS has 10 categories (7 teacher talk, 2 student talk, 1 silence/confusion). Category 10 is silence/confusion (Category 8 is student response)."}, {"id": 46, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Which of the following is NOT a projective technique of personality assessment?", "options": ["Rorschach Inkblot Test", "Thematic Apperception Test (TAT)", "Sentence Completion Test", "Minnesota Multiphasic Personality Inventory (MMPI)"], "ans": 3, "exp": "MMPI is an objective self-report inventory (true/false questionnaire), not a projective technique."}, {"id": 47, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "The Education Commission of 1964–66 (Kothari Commission) titled its report ______.", "options": ["Learning Without Burden", "Education and National Development", "Learning to Be", "Challenge of Education"], "ans": 1, "exp": "The Kothari Commission (1964–66) submitted 'Education and National Development'."}, {"id": 48, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "In Continuous and Comprehensive Evaluation (CCE), 'comprehensive' refers to assessing ______.", "options": ["only the scholastic subjects", "only the year-end examination", "both the scholastic and the co-scholastic areas of a learner's development", "only the attendance of the learner"], "ans": 2, "exp": "'Comprehensive' encompasses both scholastic (academic) and co-scholastic (life skills, values, co-curricular) development."}, {"id": 49, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Before running a loop program, a teacher asks students to write what they think it will print, then runs it and asks them to explain any difference. This strategy is:", "options": ["Predict–Observe–Explain (POE)", "Think–Pair–Share", "Jigsaw", "Brainstorming"], "ans": 0, "exp": "Predict–Observe–Explain (POE) surfaces and resolves student misconceptions directly."}, {"id": 50, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Which of the following is NOT a type of validity of a test?", "options": ["Content validity", "Construct validity", "Predictive validity", "Inter-scorer consistency"], "ans": 3, "exp": "Inter-scorer consistency measures reliability (agreement across evaluators), not validity."}, {"id": 51, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "Regarding the Delors Commission report to UNESCO (1996):\nI. It is titled 'Learning: The Treasure Within'.\nII. It describes four pillars: learning to know, learning to do, learning to live together, and learning to be.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements accurately describe the 1996 UNESCO Delors Commission report."}, {"id": 52, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Zeher Hardest Mock 01", "q": "The kindergarten system of education, based on play, songs and 'gifts', was started by ______.", "options": ["Maria Montessori", "Friedrich Froebel", "John Dewey", "Jean-Jacques Rousseau"], "ans": 1, "exp": "Friedrich Froebel founded the first kindergarten in 1837, emphasizing play, songs, and educational 'gifts'."}, {"id": 53, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A Class VIII teacher asks students to design a school timetable program that avoids clashes, compare their designs and justify which works best. According to revised Bloom's taxonomy, which is the highest cognitive level involved?", "options": ["Evaluating", "Creating", "Analysing", "Applying"], "ans": 1, "exp": "Designing a new program reaches the top level of revised Bloom's taxonomy: Creating (above Evaluating)."}, {"id": 54, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A student can solve linked-list problems only when the teacher gives hints, but cannot yet solve them alone. Following Vygotsky, what should the teacher do?", "options": ["Move the student to easier topics, which match his actual level", "Wait until the student is developmentally ready to learn linked lists", "Give the complete solution so the student can memorise the method", "Provide temporary support (scaffolding) and withdraw it gradually as the student gains competence"], "ans": 3, "exp": "The task is in the student's Zone of Proximal Development (ZPD); Vygotsky recommends scaffolding that is gradually faded as mastery grows."}, {"id": 55, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following best describes formative assessment in a computer science classroom?", "options": ["Short coding tasks during a unit whose results are used to change the teaching and give feedback", "A term-end practical examination used to award grades", "An entrance test used to select students for the science stream", "A standardised test used to compare schools across a district"], "ans": 0, "exp": "Formative assessment (assessment for learning) happens during instruction to provide feedback and adapt teaching."}, {"id": 56, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "According to Kohlberg, a student who says 'I will not copy in the exam because rules keep the system fair for everyone' is reasoning at which level?", "options": ["Pre-conventional level", "Conventional level", "Post-conventional level", "Pre-moral level"], "ans": 1, "exp": "Following rules to maintain social order and fairness ('law and order', Stage 4) is the Conventional level of moral reasoning."}, {"id": 57, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A class has a student with low vision. Which arrangement best follows the principles of inclusive education in a computer lab?", "options": ["Seat the student separately so the others are not disturbed", "Provide screen magnification and high-contrast settings so the student does the same tasks with classmates", "Excuse the student from practical work and award marks for theory only", "Send the student to a special school with a resource room"], "ans": 1, "exp": "Inclusive education adapts tools/environment (assistive tech like magnification and high contrast) so the learner participates fully alongside peers."}, {"id": 58, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following is the best example of constructivist teaching of the 'binary search' concept?", "options": ["Students guess a hidden number between 1 and 100 with 'higher/lower' clues, discover the halving strategy and then write the algorithm", "The teacher writes the algorithm on the board and students copy and memorise it", "Students watch a video and answer recall questions", "The teacher gives ten practice questions with the formula for the number of comparisons"], "ans": 0, "exp": "Constructivism emphasizes active discovery and reflection—students uncover the halving principle themselves before formalizing the algorithm."}, {"id": 59, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A teacher asks, 'Why would a hash table be a better choice than a sorted array for a phone directory that changes often?' This question is mainly:", "options": ["A leading question that suggests the answer", "A convergent, recall-level question", "A rhetorical question that needs no answer", "A divergent, higher-order question that asks students to compare and justify"], "ans": 3, "exp": "Asking students to compare two data structures in a dynamic scenario and justify a choice targets analysing/evaluating (divergent, higher-order thinking)."}, {"id": 60, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Under NEP 2020, which of the following is recommended for the school stage?", "options": ["A strict separation between curricular and extra-curricular activities", "Board examinations to test mainly memorised content", "Coding and computational thinking to be introduced from the middle stage", "Instruction only in English from Class 1"], "ans": 2, "exp": "NEP 2020 recommends introducing coding and computational thinking from the Middle Stage (Classes 6–8)."}, {"id": 61, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "A teacher notices that a student makes the same error in every C program: using = instead of == in conditions. What is the most suitable step?", "options": ["Ask the student to rewrite the programs ten times", "Deduct marks every time so that the student becomes careful", "Ignore it, because the compiler will find the error", "Diagnose the misconception and give targeted practice with feedback (remedial teaching)"], "ans": 3, "exp": "Repeated errors signal a misconception (assignment vs comparison); diagnostic assessment followed by targeted remedial practice and feedback resolves it."}, {"id": 62, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 16 · Real Exam", "q": "Which of the following statements about project-based learning in computer science is correct?\nI. Students work over an extended period on a real-life problem and produce an artefact.\nII. The teacher acts as a facilitator rather than the only source of knowledge.\nIII. Assessment is based only on the final product and not on the process.", "options": ["I, II and III", "I and III only", "II and III only", "I and II only"], "ans": 3, "exp": "I and II are correct. III is wrong because project-based learning assesses both the process (planning, collaboration, reflection) and the final product."}]}, {"id": 4, "category": "Pedagogy", "code": "PED Mock 04", "title": "Pedagogy & NEP 2020 — Mock 04", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 63, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What does the idiom \"to burn the midnight oil\" mean?", "options": ["To start a quarrel", "To waste money carelessly", "To lose one's temper", "To work or study late into the night"], "ans": 3, "exp": "'To burn the midnight oil' means working or studying late at night."}, {"id": 64, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "According to Jerome Bruner, a child who learns through pictures and mental images uses which mode of representation?", "options": ["Abstract", "Enactive", "Symbolic", "Iconic"], "ans": 3, "exp": "Bruner's three modes: Enactive (action), Iconic (images/pictures), Symbolic (language/symbols)."}, {"id": 65, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "David Ausubel recommended presenting a general introductory framework before a new lesson to anchor it to prior knowledge. It is called:", "options": ["An advance organiser", "A rubric", "A concept map test", "A remedial worksheet"], "ans": 0, "exp": "Ausubel's advance organiser bridges prior cognitive structure and new learning."}, {"id": 66, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "According to Albert Bandura, a learner's belief in his or her own ability to succeed at a particular task is called ______.", "options": ["Self-actualisation", "Self-esteem", "Self-concept", "Self-efficacy"], "ans": 3, "exp": "Self-efficacy is one's belief in their capability to accomplish a specific task."}, {"id": 67, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Regarding 'wait time' in classroom questioning:\nI. Giving a few seconds of wait time improves the quality of students' answers.\nII. Wait time encourages more students to participate.", "options": ["Both I and II", "Only I", "Only II", "Neither I nor II"], "ans": 0, "exp": "Waiting 3–5 seconds after asking a question produces more thoughtful answers and broader participation."}, {"id": 68, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Which of the following is NOT a tool of formative assessment?", "options": ["Short oral quizzes during the lesson", "Observation of students during group work", "A board examination at the end of the year", "Exit tickets at the end of a class"], "ans": 2, "exp": "A year-end board examination is summative assessment, not formative."}, {"id": 69, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "Which schemes were merged into Samagra Shiksha in 2018?\nI. Sarva Shiksha Abhiyan (SSA)  II. RMSA  III. Teacher Education", "options": ["II and III only", "I and II only", "I, II and III", "I and III only"], "ans": 2, "exp": "Samagra Shiksha subsumed SSA, RMSA, and Teacher Education."}, {"id": 70, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "In a multilingual classroom, a child mixes Hindi and English while answering. How should the teacher view this code-switching?", "options": ["As a serious error that must be punished", "As a natural resource that helps the child express ideas and can be used to build both languages", "As a sign that the child cannot learn English", "As a behaviour problem"], "ans": 1, "exp": "NCF 2005 and NEP 2020 treat multilingualism and code-switching as valuable classroom resources."}, {"id": 71, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 15", "q": "What is the main aim of the NIPUN Bharat Mission?", "options": ["To train teachers in foreign languages", "To provide free laptops to college students", "To ensure that every child achieves foundational literacy and numeracy by the end of Grade 3", "To build new university campuses"], "ans": 2, "exp": "NIPUN Bharat aims for universal Foundational Literacy and Numeracy (FLN) by the end of Grade 3."}, {"id": 72, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Select the correct passive voice form of the sentence: \"They are building a new school.\"", "options": ["A new school has been built by them.", "A new school is built by them.", "A new school is being built by them.", "A new school was being built by them."], "ans": 2, "exp": "Present continuous passive uses `is/are + being + past participle` → 'A new school is being built by them.'"}, {"id": 73, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "According to Piaget, the ability to arrange objects in order of size (seriation) and to group them into classes (classification) develops mainly in which stage?", "options": ["Formal operational", "Pre-operational", "Sensorimotor", "Concrete operational"], "ans": 3, "exp": "In Piaget's concrete operational stage (7–11 years), children develop conservation, reversibility, seriation, and classification."}, {"id": 74, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following statements about Vygotsky's idea of private speech is/are correct?\nI. Children talk to themselves to guide and plan their own actions.\nII. Private speech is a sign of cognitive immaturity that should be discouraged.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Vygotsky saw private speech as an essential tool for self-regulation that evolves into inner speech, not cognitive immaturity."}, {"id": 75, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following is/are features of well-written learning outcomes?\nI. They describe observable and measurable behaviour of the learner.\nII. They describe what the teacher will do during the lesson.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Learning outcomes specify observable, measurable learner achievements—not teacher activities."}, {"id": 76, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "When students monitor their own learning, set goals and reflect on how they learn, it is called assessment ______ learning.", "options": ["as", "of", "for", "after"], "ans": 0, "exp": "Assessment *as* learning focuses on learner metacognition, self-monitoring, and goal-setting."}, {"id": 77, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Match the support with the learners for whom it is mainly used:\nSupport: 1. Braille  2. Sign language  3. Ramps and wide doors  4. Simplified, step-by-step tasks\nLearners: i. Locomotor disability  ii. Visual impairment  iii. Intellectual disability  iv. Hearing impairment", "options": ["1-i, 2-iv, 3-ii, 4-iii", "1-iv, 2-ii, 3-i, 4-iii", "1-ii, 2-iv, 3-iii, 4-i", "1-ii, 2-iv, 3-i, 4-iii"], "ans": 3, "exp": "Braille → Visual impairment (1-ii), Sign language → Hearing impairment (2-iv), Ramps → Locomotor disability (3-i), Step-by-step tasks → Intellectual disability (4-iii)."}, {"id": 78, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following are receptive language skills?\nI. Listening   II. Speaking   III. Reading   IV. Writing", "options": ["I and II", "II and IV", "I and III", "III and IV"], "ans": 2, "exp": "Listening and Reading are receptive skills (receiving/understanding language); Speaking and Writing are productive skills."}, {"id": 79, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Who developed the project method of teaching?", "options": ["Helen Parkhurst", "W. H. Kilpatrick", "Maria Montessori", "H. E. Armstrong"], "ans": 1, "exp": "W. H. Kilpatrick developed the Project Method (rooted in John Dewey's philosophy). Parkhurst = Dalton Plan; Armstrong = Heuristic method."}, {"id": 80, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Which of the following is/are commonly seen in children with Attention Deficit Hyperactivity Disorder (ADHD)?\nI. Difficulty in sustaining attention on tasks\nII. Impulsivity and excessive physical activity", "options": ["Both I and II", "Only I", "Only II", "Neither I nor II"], "ans": 0, "exp": "ADHD is characterized by persistent inattention, hyperactivity, and impulsivity."}, {"id": 81, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 14", "q": "Under Section 12(1)(c) of the RTE Act, 2009, what percentage of seats in Class I (or pre-primary) of private unaided schools is reserved for children from weaker sections and disadvantaged groups?", "options": ["10%", "20%", "15%", "25%"], "ans": 3, "exp": "Section 12(1)(c) of the RTE Act, 2009 mandates at least 25% entry-level seat reservation for EWS and disadvantaged groups in private unaided schools."}, {"id": 82, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "According to Thorndike, a response followed by a satisfying consequence is strengthened. Which law is this?", "options": ["Law of contiguity", "Law of exercise", "Law of readiness", "Law of effect"], "ans": 3, "exp": "Thorndike's Law of Effect states that behaviours followed by satisfying consequences are stamped in (strengthened)."}]}, {"id": 5, "category": "Pedagogy", "code": "PED Mock 05", "title": "Pedagogy & NEP 2020 — Mock 05", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 83, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "In Skinner's operant conditioning, which reinforcement schedule produces a high, steady response rate most resistant to extinction?", "options": ["Fixed interval", "Variable ratio", "Fixed ratio", "Continuous reinforcement"], "ans": 1, "exp": "Variable ratio schedules (e.g., lottery) yield high, steady response rates and the strongest resistance to extinction."}, {"id": 84, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "A teacher notices many students make errors subtracting fractions and systematically studies her own classroom to find a solution. This is ______.", "options": ["Action research", "Fundamental research", "Historical research", "Survey research"], "ans": 0, "exp": "Action research is practitioner-led inquiry (plan → act → observe → reflect) to solve an immediate local classroom problem."}, {"id": 85, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "A student's performance is judged against a fixed standard ('can read 60 words/min') rather than classmates. This is ______ assessment.", "options": ["Peer", "Norm-referenced", "Ipsative", "Criterion-referenced"], "ans": 3, "exp": "Criterion-referenced assessment measures performance against predefined standards/learning outcomes."}, {"id": 86, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which are principles of Universal Design for Learning (UDL)?\nI. Providing multiple means of representation of content\nII. Providing multiple means of action and expression for learners", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "UDL rests on three pillars: multiple means of Engagement, Representation, and Action & Expression. Both I and II are correct."}, {"id": 87, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "The ability to hear, identify and manipulate the individual sounds in spoken words is called ______.", "options": ["Reading comprehension", "Phonemic awareness", "Vocabulary", "Handwriting fluency"], "ans": 1, "exp": "Phonemic awareness is recognizing and manipulating individual phonemes in spoken words."}, {"id": 88, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which of the following is NOT a guiding principle of NCF 2005?", "options": ["Connecting knowledge to life outside the school", "Ensuring that learning is centred on the textbook", "Shifting learning away from rote methods", "Making examinations more flexible and integrated with classroom life"], "ans": 1, "exp": "NCF 2005 explicitly advocates enriching the curriculum so it goes BEYOND textbooks, rather than centring learning on textbooks."}, {"id": 89, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "A student who comes to school hungry is unable to concentrate. According to Maslow, which need is unmet?", "options": ["Self-actualisation need", "Esteem need", "Physiological need", "Need for belonging"], "ans": 2, "exp": "Food, water, and rest are basic Physiological needs at the base of Maslow's hierarchy."}, {"id": 90, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "Which statements about gender are correct?\nI. Children begin to learn gender roles in the family from early childhood.\nII. Gender roles are the same in every culture and do not change over time.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "Gender roles are socially constructed and learned from early childhood, and they vary across cultures and historical eras. Only I."}, {"id": 91, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 13", "q": "According to Edgar Dale's Cone of Experience, which type of learning experience is the most concrete?", "options": ["Visual symbols", "Verbal symbols", "Direct, purposeful experiences", "Recordings and still pictures"], "ans": 2, "exp": "Direct, purposeful experiences sit at the base of Dale's Cone (most concrete), while verbal symbols sit at the apex (most abstract)."}, {"id": 92, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "According to Kohlberg, at which stage does a child judge an action as right or wrong mainly by whether it is punished?", "options": ["Social contract orientation", "Punishment and obedience orientation", "Good boy–good girl orientation", "Universal ethical principle orientation"], "ans": 1, "exp": "Pre-conventional Stage 1 in Kohlberg's moral development theory is Punishment and obedience orientation."}, {"id": 93, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "According to Erik Erikson, which psychosocial crisis is faced by children of about 6 to 12 years of age?", "options": ["Initiative versus guilt", "Trust versus mistrust", "Identity versus role confusion", "Industry versus inferiority"], "ans": 3, "exp": "School-age children (6–12 years) experience Erikson's 4th stage: Industry versus inferiority."}, {"id": 94, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "According to Howard Gardner, a person who understands his own feelings, strengths and motives well has high ______ intelligence.", "options": ["Intrapersonal", "Interpersonal", "Naturalistic", "Linguistic"], "ans": 0, "exp": "Intrapersonal intelligence is self-awareness; Interpersonal intelligence is understanding others."}, {"id": 95, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Which are features of a constructivist classroom?\nI. Learners build new understanding by connecting it with previous experiences.\nII. The teacher mainly transmits ready-made knowledge for memorisation.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Constructivism emphasizes active knowledge construction linked to prior experience; rote transmission is traditional/teacher-centred."}, {"id": 96, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Dyslexia is a specific learning disability that mainly affects ______.", "options": ["Motor coordination", "Writing of numbers only", "Reading", "Hearing"], "ans": 2, "exp": "Dyslexia primarily affects reading (decoding/spelling). Dysgraphia = writing; Dyscalculia = math; Dyspraxia = motor coordination."}, {"id": 97, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Which statements about portfolio assessment are correct?\nI. It is a purposeful collection of a learner's work over time.\nII. It shows the learner's progress and encourages self-reflection.", "options": ["Neither I nor II", "Only I", "Only II", "Both I and II"], "ans": 3, "exp": "Portfolios collect purposeful samples over time to track growth and foster learner self-reflection. Both I and II are correct."}, {"id": 98, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Under NEP 2020, the Foundational Stage of school education covers which age group?", "options": ["6 to 10 years", "3 to 8 years", "3 to 6 years", "8 to 11 years"], "ans": 1, "exp": "Under NEP 2020 (5+3+3+4), the Foundational Stage spans 5 years (3 yrs pre-school + Classes 1–2) for ages 3 to 8 years."}, {"id": 99, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Which statements about multilingual education are correct?\nI. Children learn concepts most easily in their home language.\nII. Using the home language in class slows down learning other languages.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "A strong foundation in the home language aids conceptual clarity AND accelerates learning additional languages. Hence Only I."}, {"id": 100, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "Which statement best expresses the idea of equity in education?", "options": ["Providing every child with the support he or she needs to reach the same goals", "Giving every child exactly the same resources regardless of need", "Admitting only meritorious children", "Teaching boys and girls in separate schools"], "ans": 0, "exp": "Equality gives everyone identical resources; Equity provides tailored support based on individual needs so every learner can succeed."}, {"id": 101, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 12", "q": "A teacher asks, 'In how many different ways can we reduce plastic waste at home?' This is an example of a ______ question.", "options": ["Recall", "Convergent", "Divergent", "Closed"], "ans": 2, "exp": "Open-ended questions inviting multiple creative answers are Divergent questions (Convergent questions have one fixed answer)."}, {"id": 102, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "A young child believes the sun follows him wherever he goes and everyone sees the world as he does. According to Piaget, this is a feature of which stage?", "options": ["Pre-operational stage", "Sensorimotor stage", "Concrete operational stage", "Formal operational stage"], "ans": 0, "exp": "Egocentrism and animism are classic characteristics of Piaget's Pre-operational stage (ages 2–7)."}]}, {"id": 6, "category": "Pedagogy", "code": "PED Mock 06", "title": "Pedagogy & NEP 2020 — Mock 06", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 103, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which statements about Vygotsky's 'Zone of Proximal Development' (ZPD) are correct?\nI. It is the gap between what a learner can do alone and with guidance.\nII. Scaffolding should be gradually withdrawn as the learner becomes competent.", "options": ["Neither I nor II", "Only I", "Only II", "Both I and II"], "ans": 3, "exp": "ZPD defines the zone of optimal learning with guidance, and temporary scaffolding is faded as independence grows. Both I and II are correct."}, {"id": 104, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "According to the revised Bloom's taxonomy (Anderson & Krathwohl, 2001), which is the highest level of the cognitive domain?", "options": ["Creating", "Evaluating", "Analysing", "Applying"], "ans": 0, "exp": "Revised Bloom's hierarchy: Remembering → Understanding → Applying → Analysing → Evaluating → Creating (highest)."}, {"id": 105, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which body has been set up under NEP 2020 as the National Assessment Centre to set norms for student assessment?", "options": ["NCTE", "PARAKH", "NIOS", "UGC"], "ans": 1, "exp": "PARAKH (Performance Assessment, Review and Analysis of Knowledge for Holistic Development) under NCERT serves as the National Assessment Centre under NEP 2020."}, {"id": 106, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Under the Rights of Persons with Disabilities Act, 2016, what percentage of seats in government and government-aided higher educational institutions is reserved for persons with benchmark disabilities?", "options": ["4%", "3%", "Not less than 5%", "10%"], "ans": 2, "exp": "Section 32 of the RPwD Act, 2016 reserves not less than 5% seats in higher education (and 4% in government jobs)."}, {"id": 107, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which are features of the whole language approach to language teaching?\nI. Language is learnt through meaningful use, in context, rather than isolated bits.\nII. Reading and writing are taught only after all grammar rules are mastered.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "The whole language approach emphasizes authentic, contextual communication rather than mastering isolated grammar rules first. Only I is correct."}, {"id": 108, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "The unstated messages a school gives through practices — such as asking only girls to decorate and only boys to carry furniture — form part of the ______.", "options": ["Spiral curriculum", "Core curriculum", "Hidden curriculum", "Null curriculum"], "ans": 2, "exp": "Hidden curriculum refers to implicit values, norms, and stereotypes transmitted through everyday school practices outside the formal syllabus."}, {"id": 109, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which of the following is an example of intrinsic motivation?", "options": ["A student completes homework to avoid punishment", "A student studies to win a prize", "A student solves extra puzzles because she enjoys the challenge", "A student reads to get praise from the teacher"], "ans": 2, "exp": "Solving puzzles for sheer enjoyment is intrinsic motivation; avoiding punishment, winning prizes, and seeking praise are extrinsic."}, {"id": 110, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "Which statements about using rubrics in assessment are correct?\nI. They make assessment criteria clear to students in advance.\nII. They reduce subjectivity in marking open-ended tasks.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Rubrics transparently define performance levels beforehand and ensure consistent, less subjective grading of open-ended work."}, {"id": 111, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 11", "q": "According to NCF 2005, which statements about art education in schools are correct?\nI. Art should be a compulsory part of the curriculum up to Class X.\nII. Art education should be used mainly to identify talented children for competitions.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "NCF 2005 recommends art education as a compulsory subject up to Class X for all learners to foster creativity and cultural awareness, not merely for competitions."}, {"id": 112, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is/are characteristics of the learner-centred approach of teaching–learning?\nI. Students construct knowledge through activities and exploration.\nII. Intrinsic motivation of the learner is emphasised.", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "In a learner-centred classroom, the teacher acts as a facilitator while students actively construct knowledge driven by curiosity and intrinsic motivation."}, {"id": 113, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Teachers often use models in place of real objects in the classroom. Which of the following is/are the reason(s)?\nI. The real object is too large.\nII. The real object is dangerous.\nIII. The real object is not available locally.", "options": ["I, II and III", "I and II", "II and III", "I and III"], "ans": 0, "exp": "Models (e.g., solar system, volcano, human heart) overcome constraints of size, safety, cost, and local unavailability."}, {"id": 114, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "'Before teaching fractions, the teacher checks whether the students can divide a whole into equal parts.' This refers to which type(s) of assessment?\nI. Diagnostic assessment\nII. Summative assessment", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "Checking prerequisite knowledge and skills before teaching a topic is Diagnostic assessment. Summative assessment evaluates achievement at the end of a unit/term."}, {"id": 115, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "While giving feedback in Assessment for Learning, which of the following point(s) should be kept in mind?\nI. Feedback should be specific and given in time.\nII. Feedback should compare the student with the classmates.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Effective formative feedback is specific, constructive, and timely. Comparing students with classmates discourages learners and does not guide improvement."}, {"id": 116, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "______ is the first skill that a child acquires while learning a language.\nI. Listening\nII. Writing", "options": ["Neither I nor II", "Only II", "Both I and II", "Only I"], "ans": 3, "exp": "Natural language acquisition follows the LSRW sequence: Listening, Speaking, Reading, Writing. Listening is acquired first."}, {"id": 117, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "How can we provide opportunities for developing reading in the classroom?\nI. Reading aloud stories and then discussing them\nII. A print-rich classroom with labels, charts and a reading corner", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both expressive read-alouds with discussion and a print-rich classroom environment foster strong reading habits."}, {"id": 118, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "To use role play as a language activity, which of the following characteristic(s) should be included?\nI. Spontaneity\nII. Rote memorisation of the script, word for word", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Role play builds real communicative competence when students speak spontaneously and naturally; word-for-word rote memorisation reduces it to recitation."}, {"id": 119, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following statement(s) is/are NOT correct?\nI. Gender roles are learned through socialisation.\nII. Gender roles are fixed and biologically determined.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Sex is biological, whereas gender is a socio-cultural construct learned through socialisation that varies across cultures and time. Thus Statement II is NOT correct."}, {"id": 120, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 10", "q": "Which of the following is/are correct about the Kasturba Gandhi Balika Vidyalaya (KGBV)?\nI. They are residential schools for girls.\nII. They are meant mainly for girls from SC, ST, OBC, minority and BPL families in educationally backward blocks.\nIII. Admission is open to both boys and girls of urban areas.", "options": ["II and III only", "Only III", "I, II and III", "I and II only"], "ans": 3, "exp": "KGBVs (now under Samagra Shiksha) are residential schools exclusively for girls from disadvantaged communities in educationally backward blocks, not for boys."}, {"id": 121, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Characteristics of a teacher-centred approach:\nI. Teacher is main source of knowledge.\nII. Students are mostly passive listeners.", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "In teacher-centred instruction, the teacher dominates while learners passively listen."}, {"id": 122, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Which combination is NOT correct?", "options": ["Tape recorder – Audio aid", "Radio – Visual aid", "Chart – Visual aid", "Film – Audio-visual aid"], "ans": 1, "exp": "Radio is an audio aid, not a visual aid."}]}, {"id": 7, "category": "Pedagogy", "code": "PED Mock 07", "title": "Pedagogy & NEP 2020 — Mock 07", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 123, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "How does self-assessment help students?\nI. Develops reflection on own learning.\nII. Makes them more responsible for own progress.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 0, "exp": "Self-assessment fosters reflection, goal-setting and ownership of learning."}, {"id": 124, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "A test is reliable when:\nI. Gives consistent results when repeated under similar conditions.\nII. Measures what it intends to measure.", "options": ["Neither I nor II", "Only II", "Both I and II", "Only I"], "ans": 3, "exp": "Reliability = consistency of scores (Only I); measuring what is intended is Validity."}, {"id": 125, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Helps children learn a language:\nI. Language-rich environment  II. Speaking without fear of correction  III. Rote memorisation of grammar rules only", "options": ["II and III", "I and II", "Only I", "I, II and III"], "ans": 1, "exp": "Exposure and fear-free speaking build language ability; rote grammar alone does not ⇒ I and II."}, {"id": 126, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Examples of a simile:\nI. She is as brave as a lion.   II. Time is money.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "'as brave as a lion' uses 'as' (Simile); 'Time is money' is a Metaphor."}, {"id": 127, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Correct combinations:\nI. Encyclopaedia – Reference book   II. Poetry – Creative literature", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 0, "exp": "Both classifications are accurate."}, {"id": 128, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Indicators of gender inequality:\nI. Low female literacy  II. Low child sex ratio  III. Low female workforce participation", "options": ["I and II", "II and III", "Only III", "I, II and III"], "ans": 3, "exp": "All three are key socio-economic indicators of gender inequality."}, {"id": 129, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 09", "q": "Features of non-formal education:\nI. Flexible time, place and pace of learning   II. Strict age limits for admission", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "Non-formal education (like NIOS) offers flexibility in time, place, pace and age (strict limits belong to formal education)."}, {"id": 130, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which of the following comes under the cognitive benefits of play?", "options": ["Play teaches sharing and turn-taking", "Play only strengthens large muscles", "Play develops problem-solving skills and imagination", "Play reduces a child's appetite"], "ans": 2, "exp": "Problem-solving, thinking and imagination are cognitive benefits (sharing = socio-emotional; muscles = physical)."}, {"id": 131, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "The Right of Children to Free and Compulsory Education (RTE) Act, 2009 came into force on ________.", "options": ["1 April 2009", "26 January 2001", "15 August 2005", "1 April 2010"], "ans": 3, "exp": "Passed in 2009, the RTE Act came into effect on 1 April 2010."}, {"id": 132, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Characteristics of an effective learning activity:\nI. Related to learners' own experiences.\nII. Meaningful and slightly challenging.", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Effective learning activities connect to learners' lives and provide achievable challenge (within ZPD)."}, {"id": 133, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Features of Activity-Based Learning (ABL) in Tamil Nadu (inspired by Rishi Valley):\nI. Children learn at their own pace through graded learning cards.\nII. All children must complete the same card at the same time.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "ABL is self-paced using a ladder of graded cards (Only I; II is false)."}, {"id": 134, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Which of the following is an example of an open-ended item?", "options": ["\"Explain how you would measure the height of a tree without climbing it.\"", "\"2 + 5 = ?\"", "\"Is a square a rectangle? (Yes/No)\"", "\"The capital of India is ______.\""], "ans": 0, "exp": "An open-ended question invites multiple valid explanations and higher-order thinking."}, {"id": 135, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Correct regarding summative assessment:\nI. Conducted at the end of a unit or term.\nII. Mainly used for grading and certification.\nIII. Primarily diagnostic and remedial.", "options": ["II and III only", "I and II only", "I, II and III", "Only III"], "ans": 1, "exp": "Summative assessment occurs at term-end for grading/certification (I and II); diagnostic/remedial is formative."}, {"id": 136, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Under the Juvenile Justice (Care and Protection of Children) Act, 2015, a 'child' means a person who has not completed ________ of age.", "options": ["14 years", "16 years", "21 years", "18 years"], "ans": 3, "exp": "The JJ Act, 2015 defines a child as any person below 18 years of age."}, {"id": 137, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 08", "q": "Actions that help remove home–school communication hurdles:\nI. Holding regular parent–teacher meetings\nII. Translating notices into home languages\nIII. Sending notices only in English", "options": ["II and III only", "Only III", "I, II and III", "I and II only"], "ans": 3, "exp": "Regular PTMs and notices in parents' home languages foster partnership (I and II only)."}, {"id": 138, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which stage of Piaget's cognitive development covers ages about 7 to 11 years?", "options": ["Concrete operational", "Pre-operational", "Sensorimotor", "Formal operational"], "ans": 0, "exp": "Piaget's stages: Sensorimotor (0–2), Pre-operational (2–7), Concrete operational (7–11), Formal operational (11+)."}, {"id": 139, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "The National Education Policy that replaced NPE 1986 was announced in the year ______.", "options": ["2020", "2019", "2016", "2022"], "ans": 0, "exp": "NEP 2020 (approved July 2020) replaced NPE 1986 and introduced the 5+3+3+4 structure."}, {"id": 140, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which is/are features of a learner-centred approach?\nI. Students learn by doing through activities.\nII. The teacher acts as a facilitator.", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Learner-centred classrooms emphasize active learning by doing with the teacher as a facilitator."}, {"id": 141, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Which approach of Assessment for Learning involves learners evaluating their own work against given criteria?", "options": ["Teacher-led assessment", "Board examination", "Peer assessment", "Learner self-assessment"], "ans": 3, "exp": "In learner self-assessment, students reflect on and evaluate their own work against criteria."}, {"id": 142, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "In which teaching approach does the textbook become the only source of knowledge while the teacher mainly transmits information?", "options": ["Constructivist approach", "Experiential approach", "Inquiry approach", "Teacher-centred approach"], "ans": 3, "exp": "The teacher-centred (textbook-centred) approach treats the textbook as the sole source and focuses on transmission/memorisation."}]}, {"id": 8, "category": "Pedagogy", "code": "PED Mock 08", "title": "Pedagogy & NEP 2020 — Mock 08", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 143, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Lev Vygotsky emphasised the role of which of the following in a child's cognitive development?", "options": ["Punishment", "Heredity alone", "Social interaction and culture", "Physical growth alone"], "ans": 2, "exp": "Vygotsky's sociocultural theory highlights social interaction, culture, ZPD and scaffolding."}, {"id": 144, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "Match levels of intellectual disability with IQ ranges:\nA. Mild  B. Moderate  C. Severe  D. Profound\n1. Below 20  2. 20–34  3. 35–49  4. 50–69", "options": ["A-1, B-2, C-3, D-4", "A-4, B-3, C-2, D-1", "A-3, B-4, C-1, D-2", "A-4, B-2, C-3, D-1"], "ans": 1, "exp": "Mild = 50–69 (4), Moderate = 35–49 (3), Severe = 20–34 (2), Profound = Below 20 (1)."}, {"id": 145, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 07", "q": "In learning resources, a ______ is a three-dimensional copy of a real object, made to a smaller or larger scale.", "options": ["chart", "diorama", "model", "flash card"], "ans": 2, "exp": "A model is a 3D scaled copy of a real object (e.g., globe, heart model)."}, {"id": 146, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "When information is needed from a small group of people through face-to-face, two-way conversation, which method of data collection is most suitable?", "options": ["Interview", "Questionnaire", "Official records", "Census"], "ans": 0, "exp": "An interview enables face-to-face, two-way interaction with follow-up questions for small groups."}, {"id": 147, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "As per NCF (2005), which statement(s) is/are NOT correct?\nI. Learning should be shifted away from rote methods.\nII. The textbook should be the only source of knowledge for students.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "NCF 2005 opposes rote learning (I is true) and treats textbooks as one of many resources, not the sole source (II is NOT correct)."}, {"id": 148, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which of the following are low-cost teaching–learning materials that can be prepared by teachers and students?\nI. Charts   II. Models made from waste material   III. Flash cards", "options": ["II and III", "I and II", "I, II and III", "I and III"], "ans": 2, "exp": "Charts, waste-material models and flash cards are all effective, inexpensive classroom TLMs."}, {"id": 149, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "When assessment is carried out continuously during the teaching–learning process in order to improve learning, it is called assessment ______ learning.", "options": ["of", "for", "as", "after"], "ans": 1, "exp": "Assessment FOR learning is formative and continuous to improve teaching and learning."}, {"id": 150, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Assessment of learning is mainly:\nI. summative\nII. carried out at the end of a unit or term", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Assessment OF learning is summative and conducted at the end of a unit, term or year for grading."}, {"id": 151, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which is/are part of the 'presentation' step of a lesson plan?\nI. Development of the lesson through teacher–pupil activities\nII. Statement of the aim", "options": ["I and II", "Only II", "Neither I nor II", "Only I"], "ans": 3, "exp": "Statement of aim belongs to Introduction/Preparation. Presentation develops new content through teacher–pupil activities (Only I)."}, {"id": 152, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which statement(s) is/are correct?\nI. The home language of the child should be used as a resource in the classroom.\nII. Children should be punished for using their home language at school.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "NCF 2005 and NEP 2020 treat multilingualism and the child's home language as a valuable classroom resource (Only I)."}, {"id": 153, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "While doing paper craft with young children, which precaution(s) need to be taken?\nI. Use scissors with rounded tips.\nII. Use non-toxic glue.", "options": ["Only I", "Both I and II", "Only II", "Neither I nor II"], "ans": 1, "exp": "Both blunt-tipped (rounded) scissors and non-toxic glue are essential safety precautions for young children."}, {"id": 154, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 06", "q": "Which statement(s) is/are correct?\nI. Gender is a social construct.\nII. Sex refers to biological differences.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 0, "exp": "Sex denotes biological differences; gender denotes socially constructed roles and expectations. Both are correct."}, {"id": 155, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Features of a good lesson plan:\nI. Clearly stated objectives\nII. Flexibility to modify the plan during teaching", "options": ["Both I and II", "Neither I nor II", "Only I", "Only II"], "ans": 0, "exp": "A good lesson plan has clear measurable objectives and remains flexible to classroom responses."}, {"id": 156, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "According to David Kolb, the experiential learning cycle begins with which stage?", "options": ["Rote memorisation", "Abstract conceptualisation", "Active experimentation", "Concrete experience"], "ans": 3, "exp": "Kolb's cycle: 1. Concrete Experience → 2. Reflective Observation → 3. Abstract Conceptualisation → 4. Active Experimentation."}, {"id": 157, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "A child's understanding that the amount of water remains the same when poured into a taller, narrower glass is called _____.", "options": ["conservation", "centration", "animism", "egocentrism"], "ans": 0, "exp": "Conservation (acquired in Piaget's Concrete Operational stage) is knowing quantity stays invariant despite shape change."}, {"id": 158, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "The Dalton Plan of teaching was introduced by _____.", "options": ["John Dewey", "H. E. Armstrong", "Helen Parkhurst", "Maria Montessori"], "ans": 2, "exp": "Helen Parkhurst introduced the Dalton Plan (1920), emphasising self-paced monthly assignments in subject labs."}, {"id": 159, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which statements are correct regarding newborn babies?\nI. Newborns can recognise their mother's voice soon after birth.\nII. Newborns have fully developed, adult-like vision.", "options": ["Both I and II", "Only II", "Only I", "Neither I nor II"], "ans": 2, "exp": "Hearing is well developed at birth (recognise mother's voice), whereas vision is the least developed sense."}, {"id": 160, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which parenting style (Baumrind) is correctly matched?", "options": ["Authoritarian — high warmth and low control", "Authoritative — high warmth and high control", "Permissive — low warmth and high control", "Neglectful — high warmth and high control"], "ans": 1, "exp": "Baumrind: Authoritative = High warmth + High control; Authoritarian = Low warmth + High control; Permissive = High warmth + Low control."}, {"id": 161, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Broca's area of the brain is mainly concerned with _____.\nI. production of speech   II. comprehension of speech", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Broca's area (left frontal lobe) controls speech production; Wernicke's area (left temporal lobe) handles comprehension."}, {"id": 162, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Who is associated with the psychosocial theory of development?\nI. Erik Erikson   II. Sigmund Freud", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "Erik Erikson proposed the 8-stage psychosocial theory; Freud proposed the 5-stage psychosexual theory."}]}, {"id": 9, "category": "Pedagogy", "code": "PED Mock 09", "title": "Pedagogy & NEP 2020 — Mock 09", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 163, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 05", "q": "Which help a teacher build strong school–community relations?\nI. Inviting parents to school functions\nII. Taking part in community awareness programmes", "options": ["Neither I nor II", "Only I", "Both I and II", "Only II"], "ans": 2, "exp": "Both inviting parents and participating in community initiatives strengthen school–community trust."}, {"id": 164, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Under Samagra Shiksha for inclusive education, which provision is correct?\nI. Aids and appliances for children with special needs\nII. Separate special schools for all children with disabilities instead of regular schools", "options": ["Neither I nor II", "Only II", "Both I and II", "Only I"], "ans": 3, "exp": "Samagra Shiksha promotes inclusion in regular schools with aids, Braille/large-print books, and resource teachers — not segregation."}, {"id": 165, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which is an example of negative reinforcement?", "options": ["Giving a star for good work", "Removing extra homework when a student completes class work on time", "Scolding a student for being late", "Detaining a student after school"], "ans": 1, "exp": "Negative reinforcement removes an unpleasant stimulus (extra homework) to strengthen/increase desired behaviour."}, {"id": 166, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which of the following is a higher form of writing?", "options": ["Copy writing", "Essay writing", "Dictation", "Tracing of letters"], "ans": 1, "exp": "Essay writing is free, independent composition where learners organise original ideas (others are controlled/early writing)."}, {"id": 167, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which statement is correct regarding Vygotsky's view of play?", "options": ["Play creates a zone of proximal development for the child.", "Play has no role in a child's development.", "Play is meant only for physical exercise.", "Children always play alone."], "ans": 0, "exp": "Vygotsky held that in make-believe play 'a child behaves beyond his average age', creating a Zone of Proximal Development (ZPD)."}, {"id": 168, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Which helps children expand their vocabulary?\nI. Reading story books\nII. Rote copying of word lists without context", "options": ["Neither I nor II", "Only II", "Both I and II", "Only I"], "ans": 3, "exp": "Meaningful context (storybooks) builds lasting vocabulary; decontextualised rote copying does not."}, {"id": 169, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "In which teaching method does the teacher perform an activity/experiment in front of the class while students observe?", "options": ["Project method", "Heuristic method", "Demonstration method", "Excursion method"], "ans": 2, "exp": "In the Demonstration method, the teacher demonstrates a process while explaining and students observe and question."}, {"id": 170, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Under the RTE Act, 2009, free and compulsory education is the right of children in the age group of _____.", "options": ["6–14 years", "3–10 years", "5–15 years", "6–18 years"], "ans": 0, "exp": "RTE Act 2009 (effective 1 April 2010, Article 21A) guarantees elementary education for ages 6–14 years."}, {"id": 171, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Parent and family involvement increases students' _____.\nI. Achievement   II. Attendance", "options": ["Only I", "Neither I nor II", "Both I and II", "Only II"], "ans": 2, "exp": "Active family involvement improves both student attendance and academic achievement."}, {"id": 172, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 04", "q": "Conservation, Reversibility, and Logical thinking about concrete objects characterise which of Piaget's stages?", "options": ["Sensorimotor stage", "Formal operational stage", "Pre-operational stage", "Concrete operational stage"], "ans": 3, "exp": "In Piaget's Concrete Operational stage (7–11 years), children master conservation, reversibility, and concrete logical reasoning."}, {"id": 173, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "_____ is the specific short-term device or trick used by a teacher to carry out a method in the classroom.", "options": ["Teaching approach", "Curriculum", "Teaching strategy", "Teaching technique"], "ans": 3, "exp": "Approach (broadest philosophy) > Method (overall plan) > Technique (immediate classroom trick)."}, {"id": 174, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Aesthetic sense in children is best developed through:", "options": ["rote learning of definitions", "experiencing and creating art, music and the beauty of nature", "frequent examinations", "speed drills"], "ans": 1, "exp": "Direct engagement in observing and creating art, music, and nature nurtures aesthetic sensibility."}, {"id": 175, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Gender stereotyping in classrooms refers to:", "options": ["assigning roles and expectations to children on the basis of their gender", "biological differences between boys and girls", "equal participation", "uniform policy"], "ans": 0, "exp": "Gender stereotyping imposes rigid gender-based expectations that restrict learners' choices."}, {"id": 176, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "According to NEP 2020, the medium of instruction until at least Class 5 should, wherever possible, be:", "options": ["English", "Hindi only", "Sanskrit", "the home language / mother tongue / local language"], "ans": 3, "exp": "NEP 2020 recommends home language / mother tongue / local language till at least Grade 5 (preferably Grade 8)."}, {"id": 177, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Which best describes a 'discipline' compared to a school 'subject'?", "options": ["A chapter in a textbook", "A period in the timetable", "A field of systematic inquiry with its own methods and body of knowledge", "A classroom rule"], "ans": 2, "exp": "A discipline is an organised field of systematic inquiry; a school subject is a pedagogical adaptation of it."}, {"id": 178, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "In which step of the Herbartian lesson plan does the teacher test previous knowledge and state the aim?", "options": ["Presentation", "Preparation", "Generalisation", "Application"], "ans": 1, "exp": "Preparation links prior knowledge and announces the lesson aim before Presentation."}, {"id": 179, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "According to Piaget, a child develops object permanence during the _____ stage.", "options": ["Pre-operational", "Sensorimotor", "Concrete operational", "Formal operational"], "ans": 1, "exp": "Object permanence develops during the Sensorimotor stage (0–2 years)."}, {"id": 180, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "How many types of disabilities are recognised under the Rights of Persons with Disabilities (RPwD) Act, 2016?", "options": ["7", "14", "21", "25"], "ans": 2, "exp": "RPwD Act 2016 expanded recognised disabilities from 7 to 21."}, {"id": 181, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "Remedial teaching mainly follows which type of assessment?", "options": ["Placement assessment", "Summative assessment", "Diagnostic assessment", "Norm-referenced assessment"], "ans": 2, "exp": "Diagnostic assessment identifies specific learning gaps so remedial teaching can target them."}, {"id": 182, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 03", "q": "When designing a science curriculum to connect each new topic with earlier classes, which principle is emphasised most?", "options": ["Principle of recency", "Principle of economy", "Principle of continuity and integration", "Principle of rigidity"], "ans": 2, "exp": "Continuity (spiral progression) and integration connect prior learning, new topics, and real life."}]}, {"id": 10, "category": "Pedagogy", "code": "PED Mock 10", "title": "Pedagogy & NEP 2020 — Mock 10", "subtitle": "Bloom's Taxonomy, Piaget, Vygotsky, Erikson, Kohlberg, Assessment, Inclusive Ed & NEP 2020", "durationSec": 540, "timeLabel": "9-Min", "questions": [{"id": 183, "num": 1, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Giving beginners a step-by-step worksheet, average learners a partly guided task, and advanced learners an open-ended project on the same topic is:", "options": ["Differentiated instruction", "Uniform instruction", "Programmed instruction", "Rote learning"], "ans": 0, "exp": "Differentiated instruction (Carol Ann Tomlinson) tailors content, process, and product to students' readiness and learning profiles."}, {"id": 184, "num": 2, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "An open online course joinable by thousands of learners at once (such as on SWAYAM) is called a:", "options": ["LAN course", "Bridge course", "MOOC", "Correspondence course"], "ans": 2, "exp": "MOOC = Massive Open Online Course (e.g., SWAYAM, NPTEL, Coursera, edX)."}, {"id": 185, "num": 3, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Placing 'Computer' in the centre of a page and drawing branches to 'Hardware', 'Software', 'Input devices' with sub-branches is called:", "options": ["Dictation", "Mind mapping", "Programmed learning", "Rote memorisation"], "ans": 1, "exp": "Mind mapping (Tony Buzan) visually organises concepts radiating from a central idea using branches and keywords."}, {"id": 186, "num": 4, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "A student practising typing improves quickly, then shows no progress for weeks despite practice, before improving again. The flat stage is called a:", "options": ["Ceiling effect", "Peak", "Dip of forgetting", "Plateau"], "ans": 3, "exp": "A learning plateau is a temporary flat stage in a learning curve caused by fatigue, low motivation, or needing a new strategy."}, {"id": 187, "num": 5, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "A student who learnt loops in Scratch finds it easier to learn loops in Python. This is:", "options": ["Positive transfer of learning", "Retroactive inhibition", "Negative transfer of learning", "Zero transfer of learning"], "ans": 0, "exp": "Positive transfer occurs when prior learning facilitates acquiring a new related skill."}, {"id": 188, "num": 6, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Dividing a long programming lesson into 10–15 minute segments followed by quick activities is supported by which cognitive psychology principle?", "options": ["Students learn only by listening", "Longer lectures always improve memory", "Students have a limited attention span and working-memory capacity, so information is better learnt in small chunks", "Activities waste class time"], "ans": 2, "exp": "Working memory is limited (Miller's 7±2); chunking content into short active segments reduces cognitive load and boosts retention."}, {"id": 189, "num": 7, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Screen-reading software used by a visually impaired student in a computer class is an example of:", "options": ["Assistive technology", "Firmware", "Spreadsheet software", "Malware"], "ans": 0, "exp": "Assistive technology (NVDA, JAWS, magnifiers, Braille displays) enables inclusive education under RPwD Act 2016 and NEP 2020."}, {"id": 190, "num": 8, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "An online platform like Moodle or Google Classroom for posting assignments, submissions, grading, and feedback is called a:", "options": ["Operating system", "Learning Management System (LMS)", "Database Management System", "Search engine"], "ans": 1, "exp": "A Learning Management System (LMS) manages courses, assignments, assessments, and progress online."}, {"id": 191, "num": 9, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Under NEP 2020, the three-month play-based school preparation module for children entering Grade 1 is called:", "options": ["Vidya Pravesh", "NISHTHA", "PM SHRI", "PARAKH"], "ans": 0, "exp": "Vidya Pravesh = 3-month Grade 1 play-based module. (NISHTHA = teacher training; PM SHRI = model schools; PARAKH = assessment centre.)"}, {"id": 192, "num": 10, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 02", "q": "Presenting a real situation (a shop losing sales records) and asking students to analyse it and propose a database solution is the:", "options": ["Drill method", "Lecture method", "Case study method", "Dictation method"], "ans": 2, "exp": "The Case Study method develops analytical thinking and decision-making by applying theory to realistic scenarios."}, {"id": 193, "num": 11, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A computer science teacher combines knowledge of programming concepts, how to teach them, and classroom technology. This framework is called:", "options": ["Bloom's taxonomy", "ADDIE", "SAMR", "TPACK"], "ans": 3, "exp": "TPACK (Mishra & Koehler) = Technological Pedagogical Content Knowledge — the intersection of Technology, Pedagogy, and Content."}, {"id": 194, "num": 12, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "The instructional design model ADDIE consists of five phases in which correct order?", "options": ["Analysis, Design, Development, Implementation, Evaluation", "Analysis, Development, Design, Implementation, Evaluation", "Assessment, Design, Delivery, Instruction, Evaluation", "Aim, Design, Discussion, Instruction, Examination"], "ans": 0, "exp": "ADDIE stands for Analysis → Design → Development → Implementation → Evaluation."}, {"id": 195, "num": 13, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "According to Robert Gagné's nine events of instruction, what should a teacher do FIRST in a lesson?", "options": ["Gain the attention of the learners", "Provide feedback", "Present the content", "Assess performance"], "ans": 0, "exp": "Gagné's 1st event is 'Gain attention' (followed by informing objectives, stimulating prior recall, presenting content, guidance, practice, feedback, assessment, retention/transfer)."}, {"id": 196, "num": 14, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "After solving a programming problem, a student reflects: 'Which strategy did I use, where did I get stuck, and how will I approach the next problem?' This is:", "options": ["Metacognition", "Rote learning", "Classical conditioning", "Programmed instruction"], "ans": 0, "exp": "Metacognition (John Flavell) is 'thinking about one's own thinking' — planning, monitoring, and evaluating one's learning strategies."}, {"id": 197, "num": 15, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Awarding points, badges, and a class leaderboard when students complete coding challenges is known as:", "options": ["Programmed learning", "Team teaching", "Mastery learning", "Gamification"], "ans": 3, "exp": "Gamification applies game elements (points, badges, leaderboards) in non-game educational settings to boost motivation and engagement."}, {"id": 198, "num": 16, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A student who mastered Python loops helps a struggling classmate under teacher guidance. This strategy is:", "options": ["Programmed instruction", "Lecture method", "Norm-referenced testing", "Peer tutoring"], "ans": 3, "exp": "Peer tutoring pairs a stronger student with a classmate — helping the learner while reinforcing the tutor's mastery (protégé effect)."}, {"id": 199, "num": 17, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "Teaching the idea of an algorithm by having students sort number cards using written steps without any computer is known as:", "options": ["Blended learning", "CS Unplugged", "Computer-assisted instruction", "Drill and practice"], "ans": 1, "exp": "CS Unplugged teaches core CS concepts (algorithms, binary, sorting, error detection) via hands-on games and activities without computers."}, {"id": 200, "num": 18, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A student submits a program copied from a website without citing the source. As a teacher, this should be treated mainly as:", "options": ["Peer tutoring", "Cyber terrorism", "Plagiarism, and the student should be taught to cite sources and write his own code", "Creativity, because the program works"], "ans": 2, "exp": "Presenting someone else's code as one's own without credit is plagiarism. Teachers should educate students on academic integrity, proper attribution, and original work."}, {"id": 201, "num": 19, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "A student reports that classmates are posting insulting messages about him in an online group. What is the teacher's most appropriate FIRST step?", "options": ["Ban the student from using the Internet", "Listen to the student, keep a record (screenshots) of the messages, and report it to school authorities per the cyberbullying policy", "Ignore it because it happens outside the classroom", "Ask the student to reply with insulting messages"], "ans": 1, "exp": "In cyberbullying cases, support the student, preserve evidence (screenshots), and escalate via the school's cyberbullying policy (authorities, parents, counsellor)."}, {"id": 202, "num": 20, "topic": "Pedagogy & Education Policy", "exam": "DSSSB TGT CS · Ramban Mock 01", "q": "According to Hermann Ebbinghaus's forgetting curve, which practice best helps students retain programming syntax long-term?", "options": ["Studying everything once the night before the exam", "Avoiding revision so memory is not overloaded", "Learning only by listening to lectures", "Reviewing the material at increasing intervals (spaced repetition)"], "ans": 3, "exp": "Spaced repetition (reviewing after 1 day, a few days, a week, etc.) interrupts Ebbinghaus's forgetting curve and consolidates knowledge into long-term memory."}]}]};
+
+    const STORAGE_ANS = "pedagogy_dsssb_answers_v1";
+    const STORAGE_SUB = "pedagogy_dsssb_submitted_v1";
+    const STORAGE_THEME = "pedagogy_dsssb_theme_v1";
+
+    function safeGet(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+    function safeSet(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    let answers = safeGet(STORAGE_ANS, {});
+    let submittedMocks = safeGet(STORAGE_SUB, {});
+    let activeCategory = "Pedagogy";
+    let activeMockId = DATA.mocks[0].id;
+    let quizMode = "instant";
+    let activeFilter = "all";
+
+    const timerState = {};
+    DATA.mocks.forEach((m) => {
+      timerState[m.id] = { remaining: m.durationSec, running: false };
+    });
+    let tickInterval = null;
+
+    function getActiveMock() {
+      return DATA.mocks.find((m) => m.id === activeMockId);
+    }
+
+    function getCategoryMocks(catKey) {
+      return DATA.mocks.filter((m) => m.category === catKey);
+    }
+
+    function formatTime(sec) {
+      const s = Math.max(0, sec);
+      const mm = String(Math.floor(s / 60)).padStart(2, "0");
+      const ss = String(s % 60).padStart(2, "0");
+      return `${mm}:${ss}`;
+    }
+
+    function isRevealed(mockId, qId) {
+      if (quizMode === "instant") return answers[qId] !== undefined;
+      return Boolean(submittedMocks[mockId]);
+    }
+
+    function computeMockStats(mock) {
+      let attempted = 0, correct = 0, wrong = 0;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      mock.questions.forEach((q) => {
+        if (answers[q.id] !== undefined) {
+          attempted++;
+          if (showTruth) {
+            if (answers[q.id] === q.ans) correct++;
+            else wrong++;
+          }
+        }
+      });
+      const marks = showTruth ? (correct * 1 - wrong * 0.25) : 0;
+      const acc = showTruth && attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+      return { attempted, correct, wrong, marks, acc, showTruth, total: mock.questions.length };
+    }
+
+    function computeOverallStats() {
+      let done = 0, correct = 0, wrong = 0, total = 0;
+      DATA.mocks.forEach((m) => {
+        const showTruth = quizMode === "instant" || Boolean(submittedMocks[m.id]);
+        m.questions.forEach((q) => {
+          total++;
+          if (answers[q.id] !== undefined) {
+            done++;
+            if (showTruth) {
+              if (answers[q.id] === q.ans) correct++;
+              else wrong++;
+            }
+          }
+        });
+      });
+      return { done, total, marks: (correct - wrong * 0.25).toFixed(2) };
+    }
+
+    function stopInterval() {
+      if (tickInterval) { clearInterval(tickInterval); tickInterval = null; }
+    }
+
+    function pauseAllTimers() {
+      Object.keys(timerState).forEach((k) => { timerState[k].running = false; });
+      stopInterval();
+    }
+
+    function startTimerForActive() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      if (st.remaining <= 0) st.remaining = mock.durationSec;
+      pauseAllTimers();
+      st.running = true;
+      updateTimerUI();
+      tickInterval = setInterval(() => {
+        const cur = timerState[activeMockId];
+        if (!cur.running) { stopInterval(); return; }
+        cur.remaining = Math.max(0, cur.remaining - 1);
+        updateTimerUI();
+        if (cur.remaining === 0) {
+          cur.running = false;
+          stopInterval();
+          showScorecardModal("⏱ Time's Up!");
+        }
+      }, 1000);
+    }
+
+    function toggleTimer() {
+      const st = timerState[activeMockId];
+      if (st.running) {
+        st.running = false;
+        stopInterval();
+        updateTimerUI();
+      } else {
+        startTimerForActive();
+      }
+    }
+
+    function resetTimer() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      st.running = false;
+      st.remaining = mock.durationSec;
+      stopInterval();
+      updateTimerUI();
+    }
+
+    function updateTimerUI() {
+      const mock = getActiveMock();
+      const st = timerState[activeMockId];
+      const formatted = formatTime(st.remaining);
+      document.getElementById("heroTimerText").textContent = formatted;
+      document.getElementById("miniTimerText").textContent = formatted;
+      document.getElementById("timerLabel").textContent = `${mock.timeLabel.toUpperCase()} TIMER`;
+      document.getElementById("timerToggleBtn").textContent = st.running ? "Pause" : (st.remaining < mock.durationSec && st.remaining > 0 ? "Resume" : "Start");
+      document.getElementById("timerStatusBadge").textContent = st.remaining === 0 ? "TIME UP" : (st.running ? "LIVE" : (st.remaining < mock.durationSec ? "PAUSED" : "READY"));
+
+      const pct = Math.max(0, (st.remaining / mock.durationSec) * 100);
+      const bar = document.getElementById("timerProgressBar");
+      const miniPill = document.getElementById("miniTimerPill");
+      bar.style.width = `${pct}%`;
+
+      miniPill.classList.remove("timer-urgent", "bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300", "bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      bar.classList.remove("bg-emerald-300", "bg-amber-300", "bg-rose-400");
+
+      if (st.remaining <= 60) {
+        bar.classList.add("bg-rose-400");
+        miniPill.classList.add("bg-rose-100", "dark:bg-rose-950/60", "text-rose-700", "dark:text-rose-300", "border-rose-300");
+        if (st.running) miniPill.classList.add("timer-urgent");
+      } else if (st.remaining <= 150) {
+        bar.classList.add("bg-amber-300");
+        miniPill.classList.add("bg-amber-100", "dark:bg-amber-950/60", "text-amber-700", "dark:text-amber-300", "border-amber-300");
+      } else {
+        bar.classList.add("bg-emerald-300");
+      }
+    }
+
+    function openModal(title, bodyHtml, buttons) {
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalBody").innerHTML = bodyHtml;
+      const actions = document.getElementById("modalActions");
+      actions.innerHTML = "";
+      buttons.forEach((b) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = b.label;
+        btn.className = b.cls;
+        btn.addEventListener("click", () => {
+          closeModal();
+          if (b.onClick) b.onClick();
+        });
+        actions.appendChild(btn);
+      });
+      document.getElementById("modalBackdrop").classList.remove("hidden");
+    }
+
+    function closeModal() {
+      document.getElementById("modalBackdrop").classList.add("hidden");
+    }
+
+    function showScorecardModal(titlePrefix) {
+      const mock = getActiveMock();
+      submittedMocks[mock.id] = true;
+      safeSet(STORAGE_SUB, submittedMocks);
+      const st = computeMockStats(mock);
+      renderAll();
+      openModal(
+        `${titlePrefix} — ${mock.code} Scorecard`,
+        `
+          <div class="grid grid-cols-2 gap-2.5 text-center">
+            <div class="rounded-xl bg-indigo-50 dark:bg-indigo-500/15 p-3">
+              <div class="text-xl font-black text-indigo-700 dark:text-indigo-300">${st.marks.toFixed(2)} / ${st.total}</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">NET MARKS</div>
+            </div>
+            <div class="rounded-xl bg-emerald-50 dark:bg-emerald-500/15 p-3">
+              <div class="text-xl font-black text-emerald-700 dark:text-emerald-300">${st.acc}%</div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">ACCURACY</div>
+            </div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Correct: <span class="text-emerald-600 dark:text-emerald-400">${st.correct}</span></div>
+            <div class="rounded-xl bg-slate-100 dark:bg-slate-800 p-2.5 text-xs font-bold">Wrong: <span class="text-rose-600 dark:text-rose-400">${st.wrong}</span> &bull; Left: ${st.total - st.attempted}</div>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">All answers and explanations for ${escapeHtml(mock.code)} are now unlocked below.</p>
+        `,
+        [
+          {
+            label: "Review Wrong Only",
+            cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer",
+            onClick: () => { activeFilter = "wrong"; renderAll(); }
+          },
+          {
+            label: "View All Solutions",
+            cls: "px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold cursor-pointer"
+          }
+        ]
+      );
+    }
+
+    function renderCategoryTabs() {
+      const wrap = document.getElementById("categoryTabs");
+      wrap.innerHTML = DATA.categories.map((c) => {
+        const active = c.key === activeCategory;
+        const catMocks = getCategoryMocks(c.key);
+        const done = catMocks.reduce((acc, m) => acc + m.questions.filter((q) => answers[q.id] !== undefined).length, 0);
+        const cls = active
+          ? "bg-slate-900 dark:bg-indigo-600 text-white border-slate-900 dark:border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-indigo-400";
+        const badgeCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300";
+        return `
+          <button type="button" data-cat="${escapeHtml(c.key)}"
+            class="cat-tab shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-extrabold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(c.label)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md tabular-nums ${badgeCls}">${c.mocks} Mocks &bull; ${done}/${c.count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderMockTabs() {
+      const wrap = document.getElementById("mockTabs");
+      const catMocks = getCategoryMocks(activeCategory);
+      wrap.innerHTML = catMocks.map((m) => {
+        const active = m.id === activeMockId;
+        const done = m.questions.filter((q) => answers[q.id] !== undefined).length;
+        const cls = active
+          ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+          : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700";
+        const pillCls = active ? "bg-white/20 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400";
+        return `
+          <button type="button" data-mock-id="${m.id}"
+            class="mock-tab shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition cursor-pointer ${cls}">
+            <span>${escapeHtml(m.code)}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums ${pillCls}">${done}/${m.questions.length}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderHeroAndStats() {
+      const mock = getActiveMock();
+      const st = computeMockStats(mock);
+      const ov = computeOverallStats();
+
+      document.getElementById("heroBadge").textContent = `${mock.category} Dedicated Mock`;
+      document.getElementById("heroQCount").textContent = `${mock.questions.length} Questions · +1.00 / −0.25`;
+      document.getElementById("heroTitle").textContent = mock.title;
+      document.getElementById("heroSub").textContent = mock.subtitle;
+
+      document.getElementById("statAttempted").textContent = `${st.attempted}/${st.total}`;
+      document.getElementById("statMarks").textContent = st.showTruth ? st.marks.toFixed(2) : "—";
+      document.getElementById("statAccuracy").textContent = st.showTruth ? `${st.acc}%` : "—";
+      document.getElementById("overallScorePill").textContent = `${ov.done}/${ov.total} Done • ${ov.marks} Marks`;
+
+      const instBtn = document.getElementById("modeInstantBtn");
+      const examBtn = document.getElementById("modeExamBtn");
+      const subBtn = document.getElementById("submitExamBtn");
+
+      if (quizMode === "instant") {
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        subBtn.classList.add("hidden");
+      } else {
+        examBtn.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer";
+        instBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer";
+        if (!submittedMocks[mock.id]) subBtn.classList.remove("hidden");
+        else subBtn.classList.add("hidden");
+      }
+
+      document.querySelectorAll("#filterGroup .flt-btn").forEach((btn) => {
+        const active = btn.dataset.filter === activeFilter;
+        btn.className = active
+          ? "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 cursor-pointer"
+          : "flt-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+
+      document.getElementById("prevMockBtn").disabled = activeMockId <= 1;
+      document.getElementById("nextMockBtn").disabled = activeMockId >= DATA.mocks.length;
+      updateTimerUI();
+    }
+
+    function renderPalette() {
+      const mock = getActiveMock();
+      const wrap = document.getElementById("questionPalette");
+      document.getElementById("paletteTitle").textContent = `Question Palette (Jump to Q1–Q${mock.questions.length})`;
+      const showTruth = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+      wrap.innerHTML = mock.questions.map((q) => {
+        const picked = answers[q.id];
+        let cls = "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+        if (picked !== undefined) {
+          if (!showTruth) cls = "bg-indigo-600 text-white border-indigo-600";
+          else if (picked === q.ans) cls = "bg-emerald-600 text-white border-emerald-600";
+          else cls = "bg-rose-600 text-white border-rose-600";
+        }
+        return `
+          <button type="button" data-jump="qcard-${q.id}"
+            class="pal-btn w-8 h-7 rounded-lg border text-[11px] font-bold tabular-nums hover:opacity-85 cursor-pointer ${cls}">
+            ${q.num}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderQuestions() {
+      const mock = getActiveMock();
+      const list = document.getElementById("questionsList");
+      const showTruthGlobal = quizMode === "instant" || Boolean(submittedMocks[mock.id]);
+
+      const filtered = mock.questions.filter((q) => {
+        const picked = answers[q.id];
+        if (activeFilter === "unanswered") return picked === undefined;
+        if (activeFilter === "wrong") {
+          return showTruthGlobal && picked !== undefined && picked !== q.ans;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 text-center space-y-2">
+            <p class="text-sm font-bold text-slate-700 dark:text-slate-200">No questions match the current filter.</p>
+            <button type="button" id="clearFilterBtn" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold cursor-pointer">Show All Questions</button>
+          </div>
+        `;
+        const cf = document.getElementById("clearFilterBtn");
+        if (cf) cf.addEventListener("click", () => { activeFilter = "all"; renderAll(); });
+        return;
+      }
+
+      const letters = ["A", "B", "C", "D"];
+      list.innerHTML = filtered.map((q) => {
+        const picked = answers[q.id];
+        const revealed = isRevealed(mock.id, q.id);
+
+        const optsHtml = q.options.map((opt, idx) => {
+          let btnCls = "border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-800 dark:text-slate-100";
+          let badgeCls = "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700";
+          let mark = "";
+
+          if (revealed) {
+            if (idx === q.ans) {
+              btnCls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200";
+              badgeCls = "bg-emerald-600 text-white border-emerald-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-emerald-600 dark:text-emerald-400">✓ Correct</span>';
+            } else if (picked === idx) {
+              btnCls = "border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200";
+              badgeCls = "bg-rose-600 text-white border-rose-600";
+              mark = '<span class="ml-auto text-xs font-extrabold text-rose-600 dark:text-rose-400">✗ Your Pick</span>';
+            } else {
+              btnCls = "border-slate-200/70 dark:border-slate-800/70 bg-white dark:bg-slate-900/40 text-slate-500 dark:text-slate-400 opacity-75";
+            }
+          } else if (picked === idx) {
+            btnCls = "border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200";
+            badgeCls = "bg-indigo-600 text-white border-indigo-600";
+            mark = '<span class="ml-auto text-xs font-bold text-indigo-600 dark:text-indigo-400">Selected</span>';
+          }
+
+          return `
+            <button type="button" data-qid="${q.id}" data-opt="${idx}"
+              class="opt-btn w-full text-left flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm font-medium transition cursor-pointer ${btnCls}">
+              <span class="w-6 h-6 rounded-lg border text-xs font-extrabold flex items-center justify-center shrink-0 ${badgeCls}">${letters[idx]}</span>
+              <span class="flex-1 leading-snug font-mono sm:font-sans">${escapeHtml(opt)}</span>
+              ${mark}
+            </button>
+          `;
+        }).join("");
+
+        const expHtml = revealed && q.exp ? `
+          <div class="mt-3 rounded-xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 p-3.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+            <span class="font-extrabold text-indigo-700 dark:text-indigo-300">Explanation: </span>${escapeHtml(q.exp)}
+          </div>
+        ` : "";
+
+        const qBodyHtml = `<p class="text-sm sm:text-base font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line mb-3.5">${escapeHtml(q.q)}</p>`;
+
+        return `
+          <article id="qcard-${q.id}" class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs scroll-mt-40">
+            <div class="flex flex-wrap items-center gap-2 mb-2.5">
+              <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white">Q${q.num}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${escapeHtml(mock.category)}</span>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border text-sky-800 dark:text-sky-300 bg-sky-100 dark:bg-sky-900/40 border-sky-200 dark:border-sky-800">📘 ${escapeHtml(q.exam)}</span>
+            </div>
+            ${qBodyHtml}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${optsHtml}
+            </div>
+            ${expHtml}
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderAll() {
+      renderCategoryTabs();
+      renderMockTabs();
+      renderHeroAndStats();
+      renderPalette();
+      renderQuestions();
+    }
+
+    document.getElementById("categoryTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat-tab");
+      if (!btn) return;
+      const nextCat = btn.dataset.cat;
+      if (nextCat === activeCategory) return;
+      pauseAllTimers();
+      activeCategory = nextCat;
+      const firstMock = getCategoryMocks(activeCategory)[0];
+      if (firstMock) activeMockId = firstMock.id;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("mockTabs").addEventListener("click", (e) => {
+      const btn = e.target.closest(".mock-tab");
+      if (!btn) return;
+      const nextId = Number(btn.dataset.mockId);
+      if (nextId === activeMockId) return;
+      pauseAllTimers();
+      activeMockId = nextId;
+      activeFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("questionsList").addEventListener("click", (e) => {
+      const btn = e.target.closest(".opt-btn");
+      if (!btn) return;
+      const qId = Number(btn.dataset.qid);
+      const optIdx = Number(btn.dataset.opt);
+      const mock = getActiveMock();
+
+      const st = timerState[activeMockId];
+      if (!st.running && st.remaining === mock.durationSec) {
+        startTimerForActive();
+      }
+
+      if (quizMode === "instant") {
+        if (answers[qId] !== undefined) return;
+        answers[qId] = optIdx;
+      } else {
+        if (submittedMocks[mock.id]) return;
+        answers[qId] = optIdx;
+      }
+      safeSet(STORAGE_ANS, answers);
+      renderAll();
+    });
+
+    document.getElementById("questionPalette").addEventListener("click", (e) => {
+      const btn = e.target.closest(".pal-btn");
+      if (!btn) return;
+      const target = document.getElementById(btn.dataset.jump);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        activeFilter = "all";
+        renderAll();
+        setTimeout(() => {
+          const el = document.getElementById(btn.dataset.jump);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 50);
+      }
+    });
+
+    document.getElementById("filterGroup").addEventListener("click", (e) => {
+      const btn = e.target.closest(".flt-btn");
+      if (!btn) return;
+      activeFilter = btn.dataset.filter;
+      renderAll();
+    });
+
+    document.getElementById("modeInstantBtn").addEventListener("click", () => { quizMode = "instant"; renderAll(); });
+    document.getElementById("modeExamBtn").addEventListener("click", () => { quizMode = "exam"; renderAll(); });
+    document.getElementById("submitExamBtn").addEventListener("click", () => { pauseAllTimers(); showScorecardModal("Mock Submitted"); });
+    document.getElementById("timerToggleBtn").addEventListener("click", toggleTimer);
+    document.getElementById("timerResetBtn").addEventListener("click", resetTimer);
+
+    document.getElementById("resetMockBtn").addEventListener("click", () => {
+      const mock = getActiveMock();
+      openModal(
+        `Reset ${mock.code}?`,
+        `<p>This will clear all saved answers and reset the timer for <strong>${escapeHtml(mock.code)}</strong>.</p>`,
+        [
+          { label: "Cancel", cls: "px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer" },
+          {
+            label: "Reset Mock",
+            cls: "px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold cursor-pointer",
+            onClick: () => {
+              mock.questions.forEach((q) => { delete answers[q.id]; });
+              delete submittedMocks[mock.id];
+              safeSet(STORAGE_ANS, answers);
+              safeSet(STORAGE_SUB, submittedMocks);
+              resetTimer();
+              activeFilter = "all";
+              renderAll();
+            }
+          }
+        ]
+      );
+    });
+
+    document.getElementById("prevMockBtn").addEventListener("click", () => {
+      if (activeMockId > 1) {
+        pauseAllTimers();
+        activeMockId--;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("nextMockBtn").addEventListener("click", () => {
+      if (activeMockId < DATA.mocks.length) {
+        pauseAllTimers();
+        activeMockId++;
+        activeCategory = getActiveMock().category;
+        activeFilter = "all";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    document.getElementById("modalCloseX").addEventListener("click", closeModal);
+    document.getElementById("modalBackdrop").addEventListener("click", (e) => { if (e.target.id === "modalBackdrop") closeModal(); });
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      document.documentElement.classList.toggle("dark", isDark);
+      document.getElementById("themeIcon").textContent = isDark ? "☀️" : "🌙";
+    }
+    applyTheme(safeGet(STORAGE_THEME, "light"));
+    document.getElementById("themeToggleBtn").addEventListener("click", () => {
+      const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+      safeSet(STORAGE_THEME, next);
+      applyTheme(next);
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>
