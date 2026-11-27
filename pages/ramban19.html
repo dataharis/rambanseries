@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ramban 19 (Real Exam Level) — Bilingual Concept Clarity &amp; Instant Quiz | TGT CS DSSSB by HARIS SAIFI</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Noto Sans Devanagari', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Devanagari', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    pre.code-block {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col antialiased">
+
+  <!-- Sticky Header -->
+  <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center font-extrabold text-sm shadow-sm shrink-0">
+          R19
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-extrabold tracking-tight truncate">
+            RAMBAN 19 &bull; TGT CS DSSSB
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+            Real Exam Level &bull; Bilingual Notes (EN + हिंदी) &amp; PYQ Tags &bull; by <span class="font-bold text-indigo-600 dark:text-indigo-400">HARIS SAIFI</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <div id="overallScorePill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-bold">
+          0 / 200 Done
+        </div>
+        <button
+          id="themeToggleBtn"
+          type="button"
+          aria-label="Toggle dark mode"
+          class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center cursor-pointer"
+        >
+          <svg id="sunIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+          </svg>
+          <svg id="moonIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Part Selector Strip (10 Parts) -->
+    <div class="border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/60">
+      <div class="max-w-5xl mx-auto px-4 py-2">
+        <div id="partNav" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5" role="tablist" aria-label="Select Ramban 19 Part">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-5 sm:py-7">
+
+    <!-- Active Part Banner + Live Part Score -->
+    <section class="rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-700 text-white p-5 shadow-md mb-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
+            <span id="partGroupBadge" class="px-2.5 py-0.5 rounded-full bg-white/15 text-[11px] font-semibold uppercase tracking-wider">Part A · General</span>
+            <span id="partRangeBadge" class="px-2.5 py-0.5 rounded-full bg-black/20 text-[11px] font-semibold">Q1 – Q20</span>
+          </div>
+          <h2 id="partTitleHeading" class="text-xl sm:text-2xl font-extrabold tracking-tight">Part 1 · Reasoning</h2>
+          <p class="text-xs sm:text-sm text-indigo-100 mt-1">
+            Review high-yield Concept Clarity notes first, then test yourself with instant answers &amp; explanations (+1.00 / &minus;0.25).
+          </p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-white/15 backdrop-blur-sm rounded-xl p-3 border border-white/15 text-center sm:min-w-[240px]">
+          <div>
+            <div id="partDoneVal" class="text-base sm:text-lg font-extrabold">0/20</div>
+            <div class="text-[10px] uppercase tracking-wider text-indigo-100">Attempted</div>
+          </div>
+          <div>
+            <div id="partMarksVal" class="text-base sm:text-lg font-extrabold">0.00</div>
+            <div class="text-[10px] uppercase tracking-wider text-indigo-100">Marks</div>
+          </div>
+          <div>
+            <div id="partAccVal" class="text-base sm:text-lg font-extrabold">0%</div>
+            <div class="text-[10px] uppercase tracking-wider text-indigo-100">Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mode Switcher & Quiz Filter Bar -->
+    <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+      <div class="inline-flex p-1 rounded-xl bg-slate-200/70 dark:bg-slate-800/90 self-start" role="tablist" aria-label="View Mode">
+        <button id="modeConceptBtn" type="button" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all cursor-pointer">
+          Concept Clarity
+        </button>
+        <button id="modeQuizBtn" type="button" class="px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all cursor-pointer">
+          Instant Quiz (20 Qs)
+        </button>
+      </div>
+
+      <div id="quizControls" class="flex flex-wrap items-center gap-1.5">
+        <button type="button" data-qfilter="all" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer">All</button>
+        <button type="button" data-qfilter="unanswered" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer">Unanswered</button>
+        <button type="button" data-qfilter="wrong" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer">Wrong Only</button>
+        <button id="resetPartBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-colors cursor-pointer">
+          Reset Part
+        </button>
+      </div>
+    </section>
+
+    <!-- Concept Clarity Panel -->
+    <section id="conceptPanel" class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5">
+        <span class="text-xs font-bold text-slate-600 dark:text-slate-300">Concept Notes Language / नोट्स की भाषा:</span>
+        <div id="noteLangGroup" class="inline-flex items-center gap-1" role="group" aria-label="Concept notes language">
+          <button type="button" data-nlang="both" class="nlang-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer">Both (EN + हिंदी)</button>
+          <button type="button" data-nlang="en" class="nlang-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">English</button>
+          <button type="button" data-nlang="hi" class="nlang-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">हिंदी</button>
+        </div>
+      </div>
+      <div id="conceptGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="pt-2 flex justify-center">
+        <button id="startPartQuizBtn" type="button" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm transition-colors cursor-pointer">
+          <span>Start Instant Quiz for this Part (20 Qs)</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Instant Quiz Panel -->
+    <section id="quizPanel" class="hidden space-y-4">
+      <div id="questionsContainer" class="space-y-4">
+        <!-- Populated by JS -->
+      </div>
+
+      <div id="emptyQuizFilter" class="hidden text-center py-10 px-4 rounded-2xl bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-700">
+        <p class="text-sm font-bold text-slate-800 dark:text-slate-200">No questions match this filter.</p>
+        <button id="clearQFilterBtn" type="button" class="mt-3 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700 cursor-pointer">
+          Show All 20 Questions
+        </button>
+      </div>
+    </section>
+
+    <!-- Previous / Next Part Footer Navigation -->
+    <nav class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3" aria-label="Part pagination">
+      <button id="prevPartBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+        &larr; Previous Part
+      </button>
+      <span id="partFooterCounter" class="text-xs font-semibold text-slate-500 dark:text-slate-400">Part 1 of 10</span>
+      <button id="nextPartBtn" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+        Next Part &rarr;
+      </button>
+    </nav>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60">
+    <div class="max-w-5xl mx-auto px-4 py-4 text-center text-xs text-slate-500 dark:text-slate-400">
+      <strong class="text-slate-700 dark:text-slate-300">Ramban 19 (Mock 19 · Real Exam Level)</strong> &bull; DSSSB TGT Computer Science by <span class="font-bold text-indigo-600 dark:text-indigo-400">HARIS SAIFI</span> &bull; 10 Parts &bull; 200 Instant-Answer MCQs
+    </div>
+  </footer>
+
+  <!-- Reset Part Modal -->
+  <div id="resetModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-sm w-full p-5 shadow-2xl">
+      <h3 id="resetModalTitle" class="text-base font-bold">Reset This Part?</h3>
+      <p class="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
+        This will clear your selected answers for the current 20-question part so you can re-attempt it fresh.
+      </p>
+      <div class="mt-5 flex items-center justify-end gap-2">
+        <button id="cancelResetBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Cancel</button>
+        <button id="confirmResetBtn" type="button" class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 cursor-pointer">Yes, Reset Part</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DATA = {"sections": [{"id": 1, "code": "Part 1", "group": "Part A · General", "title": "Reasoning", "range": "Q1 – Q20", "concepts": [{"title": "Series, Digit Ops, BODMAS & Analogies", "title_hi": "श्रृंखला, अंक संक्रिया, BODMAS और सादृश्यता", "points": [{"en": "Check constant-table differences (`+9, +18, +27, +36, +45` → `153`; `+8, +16, +24, +32, +40` → `830`). For `n → n² − 1`: `17² − 1 = 288`. Cluster analogy `+4` wraps past Z (`EZS → IDW`, `KFY → OJC`).", "hi": "क्रमागत अंतर जाँचें: 9 का पहाड़ा (`153`) और 8 का पहाड़ा (`830`)। संख्या सादृश्यता `n² − 1` (`288`)। अक्षर-समूह `+4` में Z के बाद चक्र घूमता है।"}, {"en": "Rewrite full equations after swapping signs/letters and strictly evaluate `÷` and `×` before `+` and `−`.", "hi": "चिह्न या अक्षर बदलने के बाद पूरा समीकरण लिखें और हमेशा पहले `÷` व `×`, फिर `+` व `−` हल करें।"}]}, {"title": "Linear Seating, Floors, Boxes & Direction", "title_hi": "पंक्ति, तल, बक्से और दिशा-दूरी", "points": [{"en": "Fix absolute anchors first (`Only 2 left of R ⇒ R=3`, `Only K above R ⇒ K=1, R=2`, `Only J below L ⇒ L=6, J=7`). In floor puzzles, test `P=1` vs `P=5` immediately against `R ≠ 2`.", "hi": "पहले निश्चित संकेत रखें (`R के बाएँ 2 ⇒ R=3`, `R के ऊपर केवल K ⇒ K=1, R=2`)। तल पहेली में `R ≠ 2` से `P=1, R=4` तुरंत तय होता है।"}, {"en": "Direction net displacement: N–S `10 − 25 + 15 = 0`; E–W `14 − 28 = −14` (14 km West of A → drive `14 km East`).", "hi": "दिशा-दूरी में उत्तर–दक्षिण (`0`) और पूर्व–पश्चिम (`−14`) अलग जोड़ें → A से 14 km पश्चिम में होने पर `14 km पूर्व` जाना होगा।"}]}, {"title": "Syllogism, Blood Relations, Alphabet & Data Sufficiency", "title_hi": "न्याय निगमन, रक्त संबंध, वर्णमाला व डेटा पर्याप्तता", "points": [{"en": "`All clocks are fans` + `Some fans are TVs` gives NO link between clocks & TVs, and makes `No fan is a clock` false. In Data Sufficiency, check if the two top candidates (`Q` and `Z`) are ever compared—if not, both together are NOT sufficient.", "hi": "दो कथनों में शीर्ष उम्मीदवारों (`Q` और `Z`) की तुलना न हो तो दोनों कथन मिलकर भी पर्याप्त नहीं होते।"}]}], "questions": [{"id": 1, "topic": "Number Series", "exam": "DSSSB IT Assistant Grade A · 07 Nov 2026 · 9:00 AM", "q": "What should come in place of '?' in the given series?\n18  27  45  72  108  ?", "options": ["153", "151", "162", "157"], "ans": 0, "exp": "Differences are multiples of 9: +9, +18, +27, +36 → next +45. 108 + 45 = 153."}, {"id": 2, "topic": "Number Series", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "What should come in place of the '?' in the given series?\n710  718  734  758  790  ?", "options": ["830", "828", "820", "824"], "ans": 0, "exp": "Differences are multiples of 8: +8, +16, +24, +32 → next +40. 790 + 40 = 830."}, {"id": 3, "topic": "Number Series", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 1:00 PM", "q": "Five three-digit numbers: 821  837  869  241  249.\nWhat will be the resultant if the third digit of the highest number is added to the second digit of the lowest number?", "options": ["11", "10", "12", "13"], "ans": 3, "exp": "Highest = 869 (3rd digit = 9); Lowest = 241 (2nd digit = 4). 9 + 4 = 13."}, {"id": 4, "topic": "Mathematical Operations", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "What will come in place of '?' if '+' and '−' are interchanged and '×' and '÷' are interchanged?\n18 ÷ 7 + 84 × 4 − 41 = ?", "options": ["146", "133", "139", "126"], "ans": 0, "exp": "18 × 7 − 84 ÷ 4 + 41 = 126 − 21 + 41 = 146."}, {"id": 5, "topic": "Mathematical Operations", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 9:00 AM", "q": "If 'A' stands for '+', 'B' stands for '−', 'C' stands for '×', and 'D' stands for '÷', evaluate:\n31 B 4 C 6 A 48 D 8 = ?", "options": ["17", "11", "13", "15"], "ans": 2, "exp": "31 − 4 × 6 + 48 ÷ 8 = 31 − 24 + 6 = 13."}, {"id": 6, "topic": "Seating Arrangement", "exam": "DSSSB IT Assistant Grade A · 07 Nov 2026 · 9:00 AM", "q": "P, Q, R, S, X, Y and Z sit in a straight line facing north. Only two sit to the left of R. Only three sit between R and Y. Only one sits between Y and Z. Q sits immediately left of S. X is not an immediate neighbour of Y. How many people sit to the right of P?", "options": ["Two / दो", "Three / तीन", "Four / चार", "One / एक"], "ans": 3, "exp": "Row 1–7: Q(1), S(2), R(3), X(4), Z(5), P(6), Y(7). Only Y sits to the right of P → One."}, {"id": 7, "topic": "Puzzle", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 5:00 PM", "q": "M, N, O, P, Q and R live on floors 1 (lowest) to 6 (topmost). P lives on an odd floor but not 3. Only two live between P and R. R does not live on floor 2. M lives below R. Only Q lives between R and N. O lives below M. Who lives on the topmost floor?", "options": ["Q", "N", "O", "R"], "ans": 1, "exp": "Floors 1–6: P(1), O(2), M(3), R(4), Q(5), N(6). Topmost floor = N."}, {"id": 8, "topic": "Ranking & Order", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 1:00 PM", "q": "Seven boxes I, J, K, L, Q, R and S are stacked. Only K is above R. Only S is between R and I. Only J is below L. How many boxes are kept between Q and R?", "options": ["Four / चार", "Two / दो", "One / एक", "Three / तीन"], "ans": 1, "exp": "Top(1) to Bottom(7): K(1), R(2), S(3), I(4), Q(5), L(6), J(7). Between Q(5) and R(2) are S and I → Two."}, {"id": 9, "topic": "Letter-Symbol Sequence", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "q": "Refer to the series (Left to Right):\n@ E % V W © X $ & © R € $ L © E € X © * I %\nHow many letters are immediately preceded by a letter and immediately followed by a symbol?", "options": ["Two / दो", "Three / तीन", "None / एक भी नहीं", "One / एक"], "ans": 3, "exp": "Pattern Letter–LETTER–Symbol occurs only at V-W-© → One."}, {"id": 10, "topic": "Alphabet Test", "exam": "DSSSB IT Assistant Grade A · 10 Nov 2026 · 9:00 AM", "q": "Words: COY  TAB  AGE  ANT. Each vowel is changed to the 2nd letter preceding it, and each consonant to the next letter. In how many resulting clusters will NO vowel appear?", "options": ["One / एक", "Three / तीन", "Two / दो", "Four / चार"], "ans": 2, "exp": "COY→DMZ (no vowel), TAB→UYC (U), AGE→YHC (no vowel), ANT→YOU (O,U). Count = Two."}, {"id": 11, "topic": "Analogy", "exam": "DSSSB IT Assistant Grade A · 07 Nov 2026 · 1:00 PM", "q": "11 is related to 120 following a certain logic. Following the same logic, 16 is related to 255. To which of the following is 17 related?", "options": ["289", "288", "286", "290"], "ans": 1, "exp": "Rule: n² − 1 (11²−1=120, 16²−1=255). So 17² − 1 = 289 − 1 = 288."}, {"id": 12, "topic": "Analogy", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 5:00 PM", "q": "Which letter-clusters should replace # and %?\n# : IDW :: KFY : %", "options": ["# = EZS, % = YJC", "# = EZS, % = OJC", "# = EFS, % = OJC", "# = EZS, % = OJJ"], "ans": 1, "exp": "Each letter shifts +4: EZS → IDW and KFY → OJC."}, {"id": 13, "topic": "Coding–Decoding", "exam": "DSSSB IT Assistant Grade A · 16 Nov 2026 · 5:00 PM", "q": "'she is beautiful' = 'dy ph mt', 'roses are beautiful' = 'lp ph st', 'she has roses' = 'st bq dy'. What is the code for 'roses'?", "options": ["Ph", "st", "dy", "bq"], "ans": 1, "exp": "'roses' is common to sentences 2 and 3; the common code is 'st'."}, {"id": 14, "topic": "Syllogism", "exam": "DSSSB IT Assistant Grade A · 18 Nov 2026 · 9:00 AM", "q": "Statements: All clocks are fans. Some fans are televisions.\nConclusion (I): All clocks are televisions.\nConclusion (II): No fan is a clock.", "options": ["Only conclusion (II) follows", "Neither conclusion (I) nor (II) follows", "Both conclusions (I) and (II) follow", "Only conclusion (I) follows"], "ans": 1, "exp": "Clocks and TVs have no definite link, and 'All clocks are fans' implies 'Some fans are clocks', refuting II → Neither follows."}, {"id": 15, "topic": "Blood Relations", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "q": "Rakesh is the father of Pooja. Pooja is the wife of Nitin. Nitin is the son of Suresh. Suresh is the father of Kavita. How is Rakesh related to Kavita?", "options": ["Brother's wife's mother / भाई की पत्नी की माता", "Brother's wife's brother / भाई की पत्नी का भाई", "Brother's wife's sister / भाई की पत्नी की बहन", "Brother's wife's father / भाई की पत्नी के पिता"], "ans": 3, "exp": "Nitin is Kavita's brother, Pooja is Nitin's wife, and Rakesh is Pooja's father → Brother's wife's father."}, {"id": 16, "topic": "Blood Relations", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "Harish is the son of Dinesh. Dinesh is the father of Chetan. Chetan is the brother of Riya. Riya is the mother of Aman. How is Harish related to Aman?", "options": ["Mother's father / माता के पिता", "Mother's brother / माता का भाई", "Mother's sister / माता की बहन", "Brother's father / भाई के पिता"], "ans": 1, "exp": "Harish, Chetan, and Riya are siblings; Riya is Aman's mother → Harish is Aman's mother's brother."}, {"id": 17, "topic": "Direction & Distance", "exam": "DSSSB IT Assistant Grade A · 11 Nov 2026 · 1:00 PM", "q": "Kedar starts from Point A and drives 10 km North, turns right (14 km), turns right (25 km), turns right (28 km), turns right (15 km) and stops at Point P. How far and in which direction should he drive to reach A again?", "options": ["13 km west / 13 km पश्चिम", "14 km east / 14 km पूर्व", "11 km north / 11 km उत्तर", "12 km south / 12 km दक्षिण"], "ans": 1, "exp": "Net N–S = 10 − 25 + 15 = 0; Net E–W = 14 − 28 = −14 (14 km West of A). Drive 14 km east."}, {"id": 18, "topic": "Mathematical Operations", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "If 'A' = '÷', 'B' = '×', 'C' = '+' and 'D' = '−', evaluate:\n26 B 4 D 37 A 37 C 34 = ?", "options": ["137", "135", "139", "138"], "ans": 0, "exp": "26 × 4 − 37 ÷ 37 + 34 = 104 − 1 + 34 = 137."}, {"id": 19, "topic": "Alphabet Test", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "How many letters' positions will remain unchanged if each letter in MELOIDS is arranged in English alphabetical order?", "options": ["Four / चार", "Three / तीन", "One / एक", "Two / दो"], "ans": 3, "exp": "MELOIDS vs DEILMOS: E (2nd) and S (7th) stay in the same positions → Two."}, {"id": 20, "topic": "Data Sufficiency", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "Among 5 sticks D, Q, G, I and Z of different heights, which stick is the tallest?\n(I) D is shorter than Q but taller than G.\n(II) G is taller than I but shorter than Z.", "options": ["Both statements I and II together are NOT sufficient", "Both statements I and II together are sufficient", "Statement I alone is sufficient", "Statement II alone is sufficient"], "ans": 0, "exp": "Together we know Q > D > G > I and Z > G, but Q vs Z is unknown, so both together are NOT sufficient."}]}, {"id": 2, "code": "Part 2", "group": "Part A · General", "title": "General Awareness", "range": "Q21 – Q40", "concepts": [{"title": "2026 Current Affairs: Awards, CWG, MedTech & Defence", "title_hi": "2026 समसामयिकी: पुरस्कार, CWG, चिकित्सा व रक्षा", "points": [{"en": "Justice Dipak Misra: Kalinga Ratna Award 2026; Rishikanta Singh: CWG 2026 men's 60 kg weightlifting silver & snatch record; Dr. Sudhir Srivastava: world's longest robotic cardiac telesurgery (Guyana–Indore, SSI Mantra).", "hi": "न्यायमूर्ति दीपक मिश्रा: कलिंग रत्न 2026; ऋषिकांत सिंह: CWG 2026 60 kg भारोत्तोलन रजत; डॉ. सुधीर श्रीवास्तव: सबसे लंबी रोबोटिक कार्डियक टेलीसर्जरी।"}, {"en": "DRDO: 3 consecutive BMD & NASM-MR tests (June 2026); Tamil Nadu 'Singappen Special Task Force': women's safety & preventive policing; National Technology Day (11 May 2026): Vigyan Tech 2026.", "hi": "DRDO: BMD व NASM-MR परीक्षण (जून 2026); तमिलनाडु 'सिंगापेन' टास्क फोर्स: महिला सुरक्षा; राष्ट्रीय प्रौद्योगिकी दिवस 2026: विज्ञान टेक 2026।"}]}, {"title": "Polity, History, Science, Geography & Culture", "title_hi": "राजव्यवस्था, इतिहास, विज्ञान, भूगोल और संस्कृति", "points": [{"en": "Art. 167 = Duties of CM; Doctrine of Basic Structure (Kesavananda Bharati, 1973); Gram Sabha = direct democracy. Mahabalipuram = Shore Temple, Pancha Rathas, Descent of Ganges; Mangal Pandey (34th BNI); Princely states signed Instrument of Accession.", "hi": "अनु. 167 = मुख्यमंत्री के कर्तव्य; मूल संरचना सिद्धांत (1973); ग्राम सभा = प्रत्यक्ष लोकतंत्र। महाबलीपुरम = शोर मंदिर व पंच रथ; मंगल पांडे (34वीं नेटिव इन्फेंट्री); इंस्ट्रूमेंट ऑफ एक्सेशन।"}, {"en": "Refractive index = dimensionless; Law of Definite Proportions (Proust); Aravalli highest peak = Guru Shikhar; Equatorial low-pressure = Doldrums; RBI repos = LAF; HDI health = Life expectancy at birth; Pt. Birju Maharaj = Kathak; Lingaraja Temple = Kalinga style.", "hi": "अपवर्तनांक विमाहीन है; स्थिर अनुपात नियम (प्राउस्ट); अरावली सर्वोच्च शिखर = गुरु शिखर; भूमध्यरेखीय निम्न दाब = डोलड्रम्स; LAF = रेपो; बिरजू महाराज = कथक; लिंगराज मंदिर = कलिंग शैली।"}]}], "questions": [{"id": 21, "topic": "Current Affairs", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "Which former Chief Justice of India (CJI) was conferred the Kalinga Ratna Award by Sarala Sahitya Sansad in Cuttack in 2026?", "options": ["Sanjiv Khanna / संजीव खन्ना", "Justice Dipak Misra / न्यायमूर्ति दीपक मिश्रा", "Justice Y.V. Chandrachud / न्यायमूर्ति वाई.वी. चंद्रचूड़", "Kamal Narain Singh / कमल नारायण सिंह"], "ans": 1, "exp": "Former CJI Justice Dipak Misra received the Kalinga Ratna Award 2026 on 8 September 2026."}, {"id": 22, "topic": "Current Affairs", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "q": "At the 2026 Commonwealth Games, which Indian weightlifter won silver in the men's 60 kg category while setting a Commonwealth Games snatch record?", "options": ["Rishikanta Singh / ऋषिकांत सिंह", "Muthupandi Raja / मुथुपंडी राजा", "Valluri Ajay Babu / वल्लूरी अजय बाबू", "Lovepreet Singh / लवप्रीत सिंह"], "ans": 0, "exp": "Rishikanta Singh Chanambam (Manipur) won silver at Glasgow CWG 2026 with a 121 kg Games-record snatch."}, {"id": 23, "topic": "Current Affairs", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "In June 2026, which Indian-origin cardiac surgeon set a world record by performing the world's longest-distance robotic cardiac telesurgery between Guyana and India?", "options": ["Dr. Devi Shetty / डॉ. देवी शेट्टी", "Dr. Naresh Trehan / डॉ. नरेश त्रेहन", "Dr. Ashok Seth / डॉ. अशोक सेठ", "Dr. Sudhir Srivastava / डॉ. सुधीर श्रीवास्तव"], "ans": 3, "exp": "Dr. Sudhir Srivastava performed the ~20,000 km Guyana–Indore robotic cardiac telesurgery using the Made-in-India SSI Mantra robot."}, {"id": 24, "topic": "Current Affairs", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 1:00 PM", "q": "Which Indian defence organisation conducted three consecutive flight tests in June 2026 to demonstrate ballistic missile defence and medium-range anti-ship capabilities?", "options": ["National Aerospace Laboratories", "Indian Space Research Organisation", "Defence Research and Development Organisation", "Bharat Electronics Limited"], "ans": 2, "exp": "DRDO conducted three consecutive tests on 10–11 June 2026 covering multi-layered BMD and maiden NASM-MR flights."}, {"id": 25, "topic": "Current Affairs", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 9:00 AM", "q": "The 'Singappen Special Task Force' launched in 2026 by the Tamil Nadu government is mainly aimed at:", "options": ["Strengthening women's safety and preventive policing / महिलाओं की सुरक्षा और निवारक पुलिसिंग को सुदृढ़ करना", "Providing scholarships for girl students and healthcare services", "Improving maternal healthcare services and women's safety", "Expanding Hospital Infrastructure and Maternal Healthcare"], "ans": 0, "exp": "Tamil Nadu's Singappen ('lioness') Special Task Force focuses on strengthening women's safety and preventive policing."}, {"id": 26, "topic": "Current Affairs", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 5:00 PM", "q": "On National Technology Day (May 11, 2026), 14 scientific ministries organized which landmark national showcase at BRIC-NII, New Delhi?", "options": ["Bio-Bharat 2026 / बायो-भारत 2026", "Vigyan Tech 2026 / विज्ञान टेक 2026", "MedTech Sangam 2026 / मेडटेक संगम 2026", "Bharat Innovate 2026 / भारत इनोवेट 2026"], "ans": 1, "exp": "Vigyan Tech 2026 brought 14 science & technology ministries together at BRIC-NII, New Delhi on 11 May 2026."}, {"id": 27, "topic": "Indian Polity", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "Article 167 of the Indian Constitution deals with which of the following provisions?", "options": ["Duties of the Chief Minister / मुख्यमंत्री के कर्तव्य", "Powers of the Chief Justice of High Court", "Functions of the Governor", "Powers of the Speaker"], "ans": 0, "exp": "Article 167 specifies the duties of the Chief Minister regarding furnishing information to the Governor."}, {"id": 28, "topic": "Indian Polity", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "Which of the following doctrines forms the foundation of judicial review in India by limiting Parliament's power while preserving the Constitution's essential framework?", "options": ["Separation of Powers / शक्तियों का पृथक्करण", "Rule of Law / विधि का शासन", "Doctrine of Basic Structure / मूल संरचना का सिद्धांत", "Parliamentary Sovereignty / संसदीय संप्रभुता"], "ans": 2, "exp": "The Doctrine of Basic Structure (Kesavananda Bharati, 1973) prevents Parliament from destroying the Constitution's core features."}, {"id": 29, "topic": "Indian Polity", "exam": "DSSSB IT Assistant Grade A · 07 Nov 2026 · 9:00 AM", "q": "Which of the following units of the Panchayati Raj system is regarded as the symbol of direct democracy in rural India?", "options": ["Gram Sabha / ग्राम सभा", "Zila Parishad / जिला परिषद", "Gram Panchayat / ग्राम पंचायत", "Panchayat Samiti / पंचायत समिति"], "ans": 0, "exp": "Gram Sabha (Article 243A), comprising all registered adult voters of a village, embodies direct democracy."}, {"id": 30, "topic": "History", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "Which monument complex contains the Shore Temple, the Pancha Rathas and the Descent of the Ganges?", "options": ["Khajuraho Group of Monuments", "Great Living Chola Temples", "Group of Monuments at Pattadakal", "Group of Monuments at Mahabalipuram"], "ans": 3, "exp": "All three Pallava-era monuments are part of the Group of Monuments at Mahabalipuram (Tamil Nadu)."}, {"id": 31, "topic": "History", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 5:00 PM", "q": "Who among the following fired at the Sergeant Major of his regiment, leading to his execution and the disbandment of the 34th Native Infantry?", "options": ["Bahadur Shah Zafar / बहादुर शाह जफ़र", "Khan Bahadur / खान बहादुर", "Nana Saheb / नाना साहेब", "Mangal Pandey / मंगल पांडे"], "ans": 3, "exp": "Sepoy Mangal Pandey of the 34th Bengal Native Infantry sparked the 1857 revolt at Barrackpore on 29 March 1857."}, {"id": 32, "topic": "History", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "Which document was signed by the rulers of most princely states to formally join the Indian Union before 15 August 1947?", "options": ["Government of India Act", "Cabinet Mission Plan", "Indian Independence Act", "Instrument of Accession"], "ans": 3, "exp": "Princely states formally acceded to the Indian Union by signing the Instrument of Accession."}, {"id": 33, "topic": "General Science", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "Which of the following physical quantities is dimensionless?", "options": ["Surface tension / पृष्ठ तनाव", "Electric flux / विद्युत फ्लक्स", "Refractive index / अपवर्तनांक", "Coefficient of viscosity / श्यानता गुणांक"], "ans": 2, "exp": "Refractive index is a ratio of two speeds (c/v), so it has no unit and no dimension."}, {"id": 34, "topic": "General Science", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "Which law states that a given compound always contains exactly the same proportion of elements by weight?", "options": ["Law of Definite Proportions / स्थिर अनुपात का नियम", "Law of Reciprocal Proportions", "Law of Multiple Proportions", "Law of Conservation of Mass"], "ans": 0, "exp": "Joseph Proust's Law of Definite (Constant) Proportions states a pure compound always has the same fixed mass ratio of elements."}, {"id": 35, "topic": "Geography", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 1:00 PM", "q": "The highest peak of the Aravalli Range is located in:", "options": ["Toranmal, Satpuras", "Guru Shikhar, Mount Abu / गुरु शिखर, माउंट आबू", "Kalumar Peak, Vindhyas", "Dhupgarh, Mahadeo Hills"], "ans": 1, "exp": "Guru Shikhar (1,722 m) near Mount Abu, Rajasthan is the highest peak of the Aravalli Range."}, {"id": 36, "topic": "Geography", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "q": "Which pressure belt is also known as the 'doldrums'?", "options": ["Polar high-pressure belt", "Sub-polar low-pressure belt", "Equatorial low-pressure belt / भूमध्यरेखीय निम्न-दाब बेल्ट", "Sub-tropical high-pressure belt"], "ans": 2, "exp": "The Equatorial low-pressure belt (5°N–5°S) is known as the Doldrums due to calm horizontal winds."}, {"id": 37, "topic": "Economics", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 9:00 AM", "q": "Which monetary policy instrument enables banks to borrow funds through repurchase agreements (repos) to manage day-to-day liquidity mismatches?", "options": ["Standing Deposit Facility", "Liquidity Adjustment Facility", "Market Stabilisation Scheme", "Marginal Standing Facility"], "ans": 1, "exp": "The RBI's Liquidity Adjustment Facility (LAF) uses repo and reverse repo/SDF for daily liquidity management."}, {"id": 38, "topic": "Economics", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "Which indicator is used by UNDP to measure the health dimension in the Human Development Index (HDI)?", "options": ["Life expectancy at birth / जन्म के समय जीवन प्रत्याशा", "Infant mortality rate", "Maternal mortality ratio", "Crude birth rate"], "ans": 0, "exp": "UNDP measures the HDI health dimension using Life expectancy at birth."}, {"id": 39, "topic": "Static GK & Art and Culture", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 5:00 PM", "q": "Pandit Birju Maharaj was a legendary exponent and maestro of which classical dance form?", "options": ["Sattriya / सत्रिया", "Kathakali / कथकली", "Manipuri / मणिपुरी", "Kathak / कथक"], "ans": 3, "exp": "Pandit Birju Maharaj (Lucknow gharana) was a legendary maestro of Kathak."}, {"id": 40, "topic": "Static GK & Art and Culture", "exam": "DSSSB IT Assistant Grade A · 16 Nov 2026 · 5:00 PM", "q": "Which among the following temples is associated with the Kalinga style of architecture?", "options": ["Virupaksha Temple", "Lingaraja Temple / लिंगराज मंदिर", "Kandariya Mahadeva Temple", "Brihadisvara Temple"], "ans": 1, "exp": "Lingaraja Temple in Bhubaneswar (Odisha) is an iconic example of Kalinga architecture."}]}, {"id": 3, "code": "Part 3", "group": "Part A · General", "title": "Numerical Ability", "range": "Q41 – Q60", "concepts": [{"title": "Percentage, Profit-Loss, Indices & LCM Remainders", "title_hi": "प्रतिशत, लाभ-हानि, घातांक और LCM शेषफल", "points": [{"en": "Successive increases: `15% & 20% = +38%` (`3,03,600`). Constant `divisor − remainder = 6` ⇒ `LCM(20,25,35,40) − 6 = 1400 − 6 = 1394`.", "hi": "क्रमिक वृद्धि `15% व 20% = 38%` (`3,03,600`)। समान अंतर `भाजक − शेष = 6` होने पर संख्या = `LCM − 6 = 1394`।"}, {"en": "Unify reciprocal bases in indices: `(a/b)^(−n) = (b/a)^n` (`9m+6 = −12 ⇒ m = −2`). Weighted mixture: `(5×25 + 15×45)/20 = 40%`.", "hi": "घातांक समीकरण में आधार समान करें (`9m+6 = −12 ⇒ m = −2`)। भारित मिश्रण = `40%`।"}]}, {"title": "Circular Track, Trains & 2D/3D Mensuration", "title_hi": "वृत्ताकार ट्रैक, ट्रेन और 2D/3D क्षेत्रमिति", "points": [{"en": "Same direction on circular track: relative speed = `7 − 4 = 3 m/s`, 1st meet = `900/3 = 300 s`, 3rd meet = `900 s`. Running track perimeter = `2×35 + π×14 = 114 m`.", "hi": "एक ही दिशा में सापेक्ष चाल `3 m/s`, प्रत्येक मिलन `300 s`, तीसरी बार `900 s`। ट्रैक परिमाप = `70 + 44 = 114 m`।"}, {"en": "Sphere `V/SA = r/3 = 7 ⇒ r = 21 cm ⇒ V = 38,808 cm³`. Frustum TSA = `π[l(R+r) + R² + r²] = 440 cm²`. Sphere melted to wire: `(4/3)π(6³) = π(0.2)²L ⇒ L = 72 m`.", "hi": "गोले में `V/SA = r/3 = 7 ⇒ r = 21 ⇒ V = 38,808 cm³`। छिन्नक TSA = `440 cm²`। तार की लंबाई = `72 m`।"}]}], "questions": [{"id": 41, "topic": "Percentage", "exam": "DSSSB IT Assistant Grade A · 11 Nov 2026 · 1:00 PM", "q": "The population of a village was 2,20,000. It increased by 15% in the first year and by 20% in the second year. What was its population after two years?", "options": ["3,05,700", "3,09,700", "3,03,600", "3,06,400"], "ans": 2, "exp": "2,20,000 × 1.15 × 1.20 = 3,03,600."}, {"id": 42, "topic": "Percentage", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 5:00 PM", "q": "350 components from Plant X had a 2% defect rate, while 150 components from Plant Y had a 4% defect rate. What was the overall defect rate across all 500 components?", "options": ["2.6%", "2.28%", "2.4%", "3.26%"], "ans": 0, "exp": "Defects = 7 + 6 = 13 out of 500 → (13/500) × 100 = 2.6%."}, {"id": 43, "topic": "Profit & Loss", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 1:00 PM", "q": "The ratio of cost prices of X and Y is 7 : 9. A man earns 38% profit on X and loses 14% on Y. What is his overall gain or loss percentage?", "options": ["Loss, 8.75% / हानि, 8.75%", "Gain, 8.75% / लाभ, 8.75%", "Gain, 8.25% / लाभ, 8.25%", "Loss, 10.25% / हानि, 10.25%"], "ans": 1, "exp": "CP 700 & 900 (total 1600). Net = +266 − 126 = +140 → (140/1600)×100 = 8.75% Gain."}, {"id": 44, "topic": "Discount", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 9:00 AM", "q": "A dining table listed at ₹62,500 is sold to a retailer after successive discounts of 12% and 7%. The retailer wants 40% profit after allowing a 45% discount on a new list price. What should the new list price be?", "options": ["₹1,30,068", "₹1,30,200", "₹1,30,166", "₹1,30,343"], "ans": 1, "exp": "Retailer CP = 62,500 × 0.88 × 0.93 = ₹51,150; SP = 51,150 × 1.4 = ₹71,610; New List = 71,610 / 0.55 = ₹1,30,200."}, {"id": 45, "topic": "Simplification", "exam": "DSSSB IT Assistant Grade A · 07 Nov 2026 · 9:00 AM", "q": "Simplify: (3⁴ × 3²) / 3³ ÷ 9", "options": ["27", "9", "81", "3"], "ans": 3, "exp": "3⁶ / 3³ = 3³ = 27; 27 ÷ 9 = 3."}, {"id": 46, "topic": "Simplification", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "Find m satisfying (29/4)³ × (4/29)² × (29/4)¹¹ = (4/29)^(9m + 6)", "options": ["2", "−4", "−2", "4"], "ans": 2, "exp": "LHS = (29/4)^(3 − 2 + 11) = (29/4)¹² = (4/29)^(−12) ⇒ 9m + 6 = −12 ⇒ m = −2."}, {"id": 47, "topic": "Number System & LCM–HCF", "exam": "DSSSB IT Assistant Grade A · 10 Nov 2026 · 1:00 PM", "q": "Find the least number which when divided by 20, 25, 35 and 40 leaves remainders 14, 19, 29 and 34, respectively.", "options": ["1374", "1284", "1264", "1394"], "ans": 3, "exp": "Common difference = 6. LCM(20, 25, 35, 40) = 1400 → 1400 − 6 = 1394."}, {"id": 48, "topic": "Ratio & Proportion", "exam": "DSSSB IT Assistant Grade A · 11 Nov 2026 · 1:00 PM", "q": "C and D have monthly incomes in ratio 7 : 4, expenditures in ratio 3 : 2, and savings ₹14,000 and ₹8,000 respectively. Find the difference in their monthly incomes.", "options": ["₹7600", "₹6500", "₹6000", "₹4800"], "ans": 2, "exp": "7x−3y=14000, 4x−2y=8000 ⇒ y=2x−4000 ⇒ x=2000. Difference = 3x = ₹6,000."}, {"id": 49, "topic": "Average", "exam": "DSSSB IT Assistant Grade A · 10 Nov 2026 · 9:00 AM", "q": "The average age of 15 students is 15 years. Two students aged 17 and 13 join the class. Find the new average age.", "options": ["18 years / 18 वर्ष", "17 years / 17 वर्ष", "15 years / 15 वर्ष", "16 years / 16 वर्ष"], "ans": 2, "exp": "Average of two newcomers = (17+13)/2 = 15, equal to existing class average → stays 15 years."}, {"id": 50, "topic": "Mixture & Alligation", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "A chemist mixes 5 litres of a 25% solution and 15 litres of a 45% solution. What is the concentration of the final mixture?", "options": ["42.5%", "45%", "35%", "40%"], "ans": 3, "exp": "(5×25 + 15×45) / (5 + 15) = (125 + 675)/20 = 800/20 = 40%."}, {"id": 51, "topic": "Simple Interest", "exam": "DSSSB IT Assistant Grade A · 11 Nov 2026 · 1:00 PM", "q": "At what rate of interest per annum will ₹2,500 earn ₹750 as simple interest in 5 years?", "options": ["5%", "6%", "8%", "9%"], "ans": 1, "exp": "R = (750 × 100) / (2500 × 5) = 6%."}, {"id": 52, "topic": "Time & Work", "exam": "DSSSB IT Assistant Grade A · 11 Nov 2026 · 1:00 PM", "q": "X can complete a work in 10 days and Y in 15 days. Working on alternate days with X starting first, how many days are needed?", "options": ["14 days / 14 दिन", "11 days / 11 दिन", "12 days / 12 दिन", "13 days / 13 दिन"], "ans": 2, "exp": "Total = 30 units (X=3, Y=2). 2-day cycle = 5 units → 6 cycles = 12 days."}, {"id": 53, "topic": "Pipe & Cistern", "exam": "DSSSB IT Assistant Grade A · 16 Nov 2026 · 5:00 PM", "q": "Taps A, B, and C fill a cistern in 10, 15, and 20 hours respectively. All three open together, and C is closed after 4 hours. Total time to fill the cistern:", "options": ["5.4", "4.8", "4.4", "5.2"], "ans": 1, "exp": "Tank = 60 units (A=6, B=4, C=3). First 4 h = 52 units. Remaining 8 units by A+B (10/h) = 0.8 h → 4.8 hours."}, {"id": 54, "topic": "Time, Speed & Distance", "exam": "DSSSB IT Assistant Grade A · 10 Nov 2026 · 5:00 PM", "q": "Two cyclists start together on a 900 m circular track in the same direction at 7 m/s and 4 m/s. Time taken to meet for the third time:", "options": ["880 seconds", "820 seconds", "840 seconds", "900 seconds"], "ans": 3, "exp": "Relative speed = 3 m/s → 1 meeting = 900/3 = 300 s → 3rd meeting = 3 × 300 = 900 seconds."}, {"id": 55, "topic": "Train", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 9:00 AM", "q": "A 150-m long train crosses a pole in 10 s and crosses a stationary train in 15 s. What is the length of the other train?", "options": ["80 m", "75 m", "125 m", "100 m"], "ans": 1, "exp": "Speed = 15 m/s. Distance in 15 s = 225 m → other train = 225 − 150 = 75 m."}, {"id": 56, "topic": "Mensuration 2D", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "q": "A running track consists of a 35 m × 14 m rectangle with a semicircle attached to each of the two 14 m sides. Find its total perimeter (π = 22/7).", "options": ["100 m", "114 m", "70 m", "84 m"], "ans": 1, "exp": "2 straight sides (70 m) + full circle of diameter 14 m (22/7 × 14 = 44 m) = 114 m."}, {"id": 57, "topic": "Mensuration 3D", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "If the volume of a sphere divided by its surface area is 7 cm, the volume of the sphere is (π = 22/7):", "options": ["38,806 cm³", "38,803 cm³", "38,808 cm³", "38,801 cm³"], "ans": 2, "exp": "r/3 = 7 ⇒ r = 21 cm. V = (4/3) × (22/7) × 21³ = 38,808 cm³."}, {"id": 58, "topic": "Mensuration 3D", "exam": "DSSSB IT Assistant Grade A · 11 Nov 2026 · 5:00 PM", "q": "Find the total surface area of a frustum of a cone with radii 8 cm and 4 cm and slant height 5 cm (π = 22/7).", "options": ["440 cm²", "759.2 cm²", "754.5 cm²", "758.5 cm²"], "ans": 0, "exp": "TSA = (22/7)[5(8+4) + 64 + 16] = (22/7) × 140 = 440 cm²."}, {"id": 59, "topic": "Mensuration 3D", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "A solid metallic sphere of radius 6 cm is melted and drawn into a cylindrical wire of radius 0.2 cm. Find the length of the wire in meters.", "options": ["60 meters", "54 meters", "84 meters", "72 meters"], "ans": 3, "exp": "(4/3)π(216) = π(0.04)L ⇒ 288 = 0.04 L ⇒ L = 7,200 cm = 72 meters."}, {"id": 60, "topic": "Data Interpretation", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 9:00 AM", "svg": "DI_Q60", "q": "Next year, Factory P increases by 20%, Q decreases by 10%, R increases by 25%, and S decreases by 20%. What is the net percentage change in total annual production?", "options": ["1% increase / 1% वृद्धि", "1% decrease / 1% कमी", "2% decrease / 2% कमी", "2% increase / 2% वृद्धि"], "ans": 1, "exp": "Changes: P +200, Q −100, R +250, S −400 → Net = −50 on 5,000 = 1% decrease."}]}, {"id": 4, "code": "Part 4", "group": "Part A · General", "title": "English", "range": "Q61 – Q80", "concepts": [{"title": "Cloze Test, High-Yield Vocab & Grammar Rules", "title_hi": "क्लोज़ टेस्ट, शब्दावली और व्याकरण नियम", "points": [{"en": "Vocab: `ubiquitous` (found everywhere), `caustic = bitter`, `superfluity ↔ austerity`, `capricious ↔ consistent`, `claque` (hired to applaud), `Recipient` (spelling).", "hi": "शब्दावली: `ubiquitous` (सर्वव्यापी), `caustic = bitter`, `superfluity ↔ austerity`, `capricious ↔ consistent`, `claque` (ताली बजाने हेतु नियुक्त समूह)।"}, {"en": "Grammar: `essential for`, `capable of managing`, `latter` (second of two) vs `later` (time), `Alas` (sorrow), Narration (`am → was`, `today → that day`), Simple Present timetable (`departs`).", "hi": "व्याकरण: `essential for`, `capable of managing`, दो में दूसरा = `latter`, दुःख हेतु `Alas`, अप्रत्यक्ष कथन में `today → that day`।"}]}], "questions": [{"id": 61, "topic": "Cloze Test", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "passage": "ENG_CLOZE_19", "q": "Select the most appropriate option to fill in blank 1.", "options": ["sporadic", "provisional", "ubiquitous", "negligent"], "ans": 2, "exp": "Found throughout all marine environments = ubiquitous."}, {"id": 62, "topic": "Cloze Test", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "passage": "ENG_CLOZE_19", "q": "Select the most appropriate option to fill in blank 2.", "options": ["promotion", "abnormality", "significance", "discrepancy"], "ans": 2, "exp": "'The ecological significance of such exposure' = importance/impact."}, {"id": 63, "topic": "Cloze Test", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "passage": "ENG_CLOZE_19", "q": "Select the most appropriate option to fill in blank 3.", "options": ["controlled", "interrupted", "disputed", "reported"], "ans": 3, "exp": "'Researchers have reported that some particles can transport chemical pollutants...'"}, {"id": 64, "topic": "Cloze Test", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "passage": "ENG_CLOZE_19", "q": "Select the most appropriate option to fill in blank 4.", "options": ["difficult", "soluble", "temporary", "conspicuous"], "ans": 0, "exp": "Microplastics are extremely 'difficult' to remove once dispersed."}, {"id": 65, "topic": "Cloze Test", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "passage": "ENG_CLOZE_19", "q": "Select the most appropriate option to fill in blank 5.", "options": ["throughout", "beneath", "upon", "for"], "ans": 3, "exp": "The adjective 'essential' takes the preposition 'for' ('essential for protecting')."}, {"id": 66, "topic": "Vocabulary", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 1:00 PM", "q": "Choose the synonym for the highlighted word:\nHer remarks were CAUSTIC, leaving the audience silent.", "options": ["bitter", "tedious", "ambiguous", "euphoric"], "ans": 0, "exp": "Caustic = biting, sharply critical, bitter."}, {"id": 67, "topic": "Vocabulary", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "Identify the antonym of the bold word:\nThe modern monastery was built with intentional SUPERFLUITY, featuring bare stone walls and minimal decoration.", "options": ["extremity", "excessive", "insobriety", "austerity"], "ans": 3, "exp": "Superfluity (excess) ↔ austerity (plainness, simplicity)."}, {"id": 68, "topic": "Vocabulary", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 5:00 PM", "q": "Substitute the underlined segment:\nThe PR team orchestrated the hiring of A GROUP OF PEOPLE TO APPLAUD in the audience.", "options": ["fugitive", "caucus", "claque", "clique"], "ans": 2, "exp": "A group of people hired to applaud = claque."}, {"id": 69, "topic": "Vocabulary", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 5:00 PM", "q": "Substitute with the most appropriate proverb:\nMr. Rajat funded the project; HE SHOULD DECIDE HOW IT PROCEEDS.", "options": ["he that would have eggs must endure the cackling of hens", "beggars cannot be choosers", "he who pays the piper calls the tune", "every cloud has a silver lining"], "ans": 2, "exp": "'He who pays the piper calls the tune' = the funder has the right to decide."}, {"id": 70, "topic": "Vocabulary", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "Replace the underlined segment with the most appropriate proverb:\n...showing that SOMEONE WHO HAS ONCE BEEN HARMED TENDS TO FEAR A SIMILAR RISK AGAIN.", "options": ["a burnt child dreads fire", "once bitten, twice shy", "forewarned is forearmed", "look before you leap"], "ans": 1, "exp": "'Once bitten, twice shy' expresses heightened caution after a bad experience."}, {"id": 71, "topic": "Vocabulary", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 1:00 PM", "q": "Select the correct spelling to rectify 'recepient':", "options": ["Recipient", "Racipient", "Recipeint", "Recipiant"], "ans": 0, "exp": "Correct spelling: Recipient."}, {"id": 72, "topic": "Fill in the Blanks", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "q": "Choose the correct future perfect continuous conversion of: 'I read this book.'", "options": ["I will have been reading this book.", "I will read this book.", "I will have read this book.", "I will be reading this book."], "ans": 0, "exp": "Future Perfect Continuous = will have been + V-ing."}, {"id": 73, "topic": "Fill in the Blanks", "exam": "DSSSB IT Assistant Grade A · 07 Nov 2026 · 1:00 PM", "q": "Convert into simple present tense: 'The train will depart from the station at 6 p.m.'", "options": ["The train has departed from the station at 6 p.m.", "The train is departing from the station at 6 p.m.", "The train depart from the station at 6 p.m.", "The train departs from the station at 6 p.m."], "ans": 3, "exp": "3rd person singular simple present = 'The train departs...'."}, {"id": 74, "topic": "Fill in the Blanks", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 5:00 PM", "q": "Choose the antonym of 'capricious' to complete the sentence:\n'What the industry needs right now is a far more ________ administrative approach that provides long-term stability.'", "options": ["meticulous", "lenient", "consistent", "stringent"], "ans": 2, "exp": "Capricious (unpredictable, erratic) ↔ consistent."}, {"id": 75, "topic": "Error Detection", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 9:00 AM", "q": "Correct the highlighted part:\nHe was a person CAPABLE IN MANAGING large, diverse teams effectively.", "options": ["capable for managing", "capable about managing", "capable of managing", "capable to managing"], "ans": 2, "exp": "'Capable' always takes 'of' + gerund → 'capable of managing'."}, {"id": 76, "topic": "Error Detection", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 1:00 PM", "q": "Correct the adjective in: 'Keats and Byron are romantic poets, but my professor prefers the later.'", "options": ["last", "older", "elder", "latter"], "ans": 3, "exp": "The second of two mentioned items is 'the latter' ('later' refers to time)."}, {"id": 77, "topic": "Sentence Improvement", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 5:00 PM", "q": "Replace the underlined interjection:\nWOW, the experiment has failed again despite multiple revisions.", "options": ["Alas", "Yikes", "Eh", "Hurray"], "ans": 0, "exp": "'Alas' expresses sorrow or regret."}, {"id": 78, "topic": "Sentence Rearrangement", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 5:00 PM", "q": "Part A is fixed. Arrange B, C, D, E:\nThe volunteers carefully checked every donation (A) / before placing it on the display shelves (B) / to ensure that each item was clean (C) / and suitable for younger readers (D) / which had arrived from local families (E)", "options": ["B-C-D-E", "E-C-B-D", "E-C-D-B", "E-D-C-B"], "ans": 2, "exp": "A → E (which had arrived...) → C (to ensure... clean) → D (and suitable...) → B (before placing...) → E-C-D-B."}, {"id": 79, "topic": "Sentence Rearrangement", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 1:00 PM", "q": "Rearrange P, Q, R, S:\nP. once comprehensive sales data became available\nQ. that reshaped investment strategies across the sector\nR. was eventually recognised as a structural shift in consumer demand\nS. what appeared to be a short-term market correction", "options": ["SRQP", "SPQR", "SQPR", "QRPS"], "ans": 0, "exp": "S (subject clause) → R (verb) → Q (relative clause) → P (time clause) → SRQP."}, {"id": 80, "topic": "Direct & Indirect Speech", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 1:00 PM", "q": "Direct: Arjun said, \"I am happy today.\"\nIndirect: Arjun said that ...............", "options": ["he has been happy that day.", "he is happy that day.", "he was happy today.", "he was happy that day."], "ans": 3, "exp": "Past reporting verb shifts `I → he`, `am → was`, `today → that day`."}]}, {"id": 5, "code": "Part 5", "group": "Part A · General", "title": "Hindi", "range": "Q81 – Q100", "concepts": [{"title": "अंगदान गद्यांश, वर्तनी-अशुद्धि और शब्दावली", "title_hi": "वर्तनी नियम, एक-शब्द, मुहावरे, लोकोक्ति और कारक", "points": [{"en": "Spellings: `ड़/ढ़` never start a word (`ढाल`, not ढ़ाल); `ऊपर` (दीर्घ ऊ). `रूक्ष ↔ मृदु`; `अन्तर्यामी` (अंतःकरण जानने वाला); `अवध्य` (जिसे मारना उचित न हो); `सामान्य` ≠ `सामान/सामग्री`.", "hi": "शब्द के आरंभ में `ढ़` नहीं आता (`ढाल` शुद्ध है); `ऊपर` शुद्ध है। `रूक्ष ↔ मृदु`; `अन्तर्यामी`; `अवध्य`।"}, {"en": "Idioms/Proverbs: `आठ पहर चौसठ घड़ी` = हर समय; `हाथ सुमरिनी, बगल कतरनी` = दोहरा/कपटी व्यवहार। कारक: 'लोगों ने चोर को मारा' (कर्म कारक 'को'); वचन: 'एक प्रतिनिधि ने समर्थन किया'।", "hi": "`आठ पहर चौसठ घड़ी` = दिन-रात; `हाथ सुमरिनी, बगल कतरनी` = ऊपर से भक्त, भीतर से कपटी। कर्म कारक 'को' ('चोर को मारा')।"}]}], "questions": [{"id": 81, "topic": "अपठित गद्यांश", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "passage": "HIN_RC_19", "q": "गद्यांश के अनुसार अंगदान का कौन-सा पक्ष वास्तविक जीवन में अधिक महत्वपूर्ण है?", "options": ["अंगदान से जीवन बचाना संभव है", "अंगदान से मृत्यु रुकती है", "अंगदान आर्थिक लाभ देता है", "अंगदान केवल धार्मिक कार्य है"], "ans": 0, "exp": "एक व्यक्ति के अंग अनेक लोगों को नई ज़िंदगी दे सकते हैं → जीवन बचाना संभव है।"}, {"id": 82, "topic": "अपठित गद्यांश", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "passage": "HIN_RC_19", "q": "वास्तविक जीवन में अंगदान के प्रति जागरूकता कम होने का कारण क्या है?", "options": ["अंगदान की अहमियत न समझना", "अंगदान पर रोक लगाना", "सभी जागरूक हैं", "अंगदान अवैध है"], "ans": 0, "exp": "लोग अंगदान की अहमियत नहीं समझते, इसलिए जागरूकता अपेक्षाकृत कम है।"}, {"id": 83, "topic": "अपठित गद्यांश", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "passage": "HIN_RC_19", "q": "वास्तविक जीवन में अंगदान से कौन-सी भावना प्रकट होती है?", "options": ["मानवीय संवेदना", "लाभ की इच्छा", "व्यक्तिगत स्वार्थ", "अपवाद भाव"], "ans": 0, "exp": "गद्यांश: 'यह न केवल मानवीय संवेदना का प्रतीक है, बल्कि सबसे बड़ा पुण्य कार्य भी है।'"}, {"id": 84, "topic": "अपठित गद्यांश", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "passage": "HIN_RC_19", "q": "गद्यांश के संदर्भ में अंगदान का सामाजिक महत्व क्या है?", "options": ["सामाजिक कलह बढ़ाना", "केवल व्यक्तिगत कार्य", "जीवन रक्षा और खुशियाँ लौटाना", "समाज को कमजोर करना"], "ans": 2, "exp": "अंगदान से एक व्यक्ति कई घरों में खुशियाँ लौटाकर जीवन रक्षा करता है।"}, {"id": 85, "topic": "अपठित गद्यांश", "exam": "DSSSB IT Assistant Grade A · 09 Nov 2026 · 5:00 PM", "passage": "HIN_RC_19", "q": "अंगदान को बढ़ावा देने के लिए वास्तविक जीवन में क्या जरूरी है?", "options": ["जागरूकता", "राजनीतिक समर्थन", "वैज्ञानिक विकास", "आर्थिक लाभ"], "ans": 0, "exp": "मुख्य बाधा जागरूकता की कमी है, अतः बढ़ावा देने के लिए जागरूकता जरूरी है।"}, {"id": 86, "topic": "अशुद्धि शोधन", "exam": "DSSSB IT Assistant Grade A · 16 Nov 2026 · 1:00 PM", "q": "वाक्य के किस भाग में अशुद्धि है?\nढ़ाल के नीचे एक झोपड़ी है", "options": ["के नीचे", "एक झोपड़ी", "ढ़ाल", "है"], "ans": 2, "exp": "'ढ़' शब्द के आरंभ में नहीं आता; शुद्ध शब्द 'ढाल' है।"}, {"id": 87, "topic": "अशुद्धि शोधन", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "वाक्य के किस भाग में त्रुटि है?\nउसने गाँधी जी के उपर कविता लिखी है।", "options": ["गाँधी जी", "उसने", "के उपर", "कविता लिखी है।"], "ans": 2, "exp": "शुद्ध शब्द 'ऊपर' है ('उपर' अशुद्ध है; यहाँ 'गाँधी जी पर' भी उपयुक्त है)।"}, {"id": 88, "topic": "अशुद्धि शोधन", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 1:00 PM", "q": "निम्नलिखित में से कौन-सा वाक्य शुद्ध है?", "options": ["मुझे कपड़े पहनने हैं।", "मैंने करा हुआ है।", "मैंने कपड़े पहनने हैं।", "सूर्य पूर्व पर उगता है।"], "ans": 0, "exp": "केवल 'मुझे कपड़े पहनने हैं।' व्याकरणिक रूप से शुद्ध है।"}, {"id": 89, "topic": "रिक्त स्थान", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "वाक्य में प्रयुक्त बेमेल शब्द चुनें—\nगंभीर आर्थिक संकट के इस दौर में अनावश्यक खर्चे कम करना और अपव्यय को बढ़ावा देने में ही समझदारी है।", "options": ["अनावश्यक", "आर्थिक", "अपव्यय", "संकट"], "ans": 2, "exp": "संकट में 'अपव्यय' को बढ़ावा देना नहीं, बल्कि बचत को बढ़ावा देना समझदारी है — अतः 'अपव्यय' बेमेल है।"}, {"id": 90, "topic": "रिक्त स्थान", "exam": "DSSSB IT Assistant Grade A · 10 Nov 2026 · 9:00 AM", "q": "अतिथि ने भोजन करने की ................... व्यक्त की।", "options": ["आकांक्षा", "इच्छा", "उत्कंठा", "कामना"], "ans": 1, "exp": "साधारण चाह व्यक्त करने हेतु 'इच्छा' उपयुक्त शब्द है।"}, {"id": 91, "topic": "पर्यायवाची शब्द", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 1:00 PM", "q": "'हर्ष' शब्द के स्थान पर किस शब्द का प्रयोग नहीं किया जा सकता है?", "options": ["आकांक्षा", "आह्लाद", "आनंद", "आमोद"], "ans": 0, "exp": "आह्लाद, आनंद और आमोद 'हर्ष' के पर्यायवाची हैं; 'आकांक्षा' का अर्थ इच्छा है।"}, {"id": 92, "topic": "विलोम शब्द", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 9:00 AM", "q": "'रूक्ष' का विलोम चुनकर रिक्त स्थान भरें: 'यह बालक अत्यंत ------ भाषी है।'", "options": ["तीव्र", "वक्र", "मृदु", "कटु"], "ans": 2, "exp": "रूक्ष (कठोर) का विलोम 'मृदु' (कोमल) है → 'मृदुभाषी'।"}, {"id": 93, "topic": "अनेक शब्दों के लिए एक शब्द", "exam": "DSSSB ASO · 23 Sep 2026 · 1:00 PM", "q": "'जो सबके अंतःकरण की बात जानने वाला हो' वाक्यांश के लिए उचित शब्द है –", "options": ["अकाट्य", "दूरदर्शी", "अविनाशी", "अन्तर्यामी"], "ans": 3, "exp": "जो सबके मन/अंतःकरण की बात जानता हो = अन्तर्यामी।"}, {"id": 94, "topic": "अनेक शब्दों के लिए एक शब्द", "exam": "DSSSB ASO · 23 Sep 2026 · 5:00 PM", "q": "'जिसे मारना उचित न हो' उपर्युक्त वाक्यांश के लिए एक सार्थक शब्द चुनें –", "options": ["अभेद्य", "अवध्य", "अवर्ण्य", "अल्पज्ञ"], "ans": 1, "exp": "जिसे मारना उचित न हो (वध के अयोग्य) = अवध्य।"}, {"id": 95, "topic": "एकार्थी / शब्द-युग्म", "exam": "DSSSB IT Assistant Grade A · 16 Nov 2026 · 1:00 PM", "q": "किस वाक्य में 'सामान्य' शब्द का सही प्रयोग नहीं हुआ है?", "options": ["लेखक ने सामान्य जीवन की समस्याओं को कहानी में उभारा है।", "किसी निर्णय पर पहुँचने से पहले सामान्य जुटाना आवश्यक है।", "शिक्षक ने कठिन अवधारणा को सामान्य शब्दों में समझाया।", "छुट्टी के बाद विद्यालय में कामकाज सामान्य हो गया।"], "ans": 1, "exp": "(b) में 'सामान्य' की जगह 'सामग्री/तथ्य' होना चाहिए था।"}, {"id": 96, "topic": "मुहावरे", "exam": "DSSSB IT Assistant Grade A · 18 Nov 2026 · 9:00 AM", "q": "'हर दिन हर समय' के लिए उपयुक्त मुहावरा चुनें:", "options": ["आड़े आना", "आठ वार नौ त्यौहार", "आसन डोलना", "आठ पहर चौसठ घड़ी"], "ans": 3, "exp": "'आठ पहर चौसठ घड़ी' का अर्थ है हर समय, दिन-रात।"}, {"id": 97, "topic": "लोकोक्तियाँ / कहावतें", "exam": "DSSSB IT Assistant Grade A · 04 Nov 2026 · 5:00 PM", "q": "सामने से विनम्रता और धार्मिकता दिखाना, पर पीछे नुकसान की योजना बनाना — सही लोकोक्ति चुनें:", "options": ["अंधों में काना राजा", "हाथ सुमरिनी, बगल कतरनी", "खोदा पहाड़ निकली चुहिया", "जिसकी लाठी उसकी भैंस"], "ans": 1, "exp": "'हाथ सुमरिनी, बगल कतरनी' = ऊपर से भक्त, भीतर से कपटी।"}, {"id": 98, "topic": "कारक और परसर्ग", "exam": "DSSSB IT Assistant Grade A · 06 Nov 2026 · 5:00 PM", "q": "कारक की दृष्टि से अशुद्ध वाक्य चुनिए-", "options": ["मैंने उसे पढ़ाया।", "वह खा चुका।", "लोगों ने चोर से मारा।", "बड़ों को आदर दो।"], "ans": 2, "exp": "शुद्ध रूप कर्म कारक 'को' के साथ होगा: 'लोगों ने चोर को मारा।'"}, {"id": 99, "topic": "वचन", "exam": "DSSSB IT Assistant Grade A · 07 Nov 2026 · 9:00 AM", "q": "वचन की त्रुटि सुधारकर शुद्ध वाक्य चुनें: 'सभा में उपस्थित एक प्रतिनिधियों ने प्रस्ताव का समर्थन किया।'", "options": ["सभा में उपस्थित एक प्रतिनिधि ने प्रस्ताव का समर्थन किये।", "सभा में उपस्थित अनेक प्रतिनिधि ने प्रस्ताव का समर्थन किया।", "सभा में उपस्थित एक प्रतिनिधियों ने प्रस्ताव का समर्थन किये।", "सभा में उपस्थित एक प्रतिनिधि ने प्रस्ताव का समर्थन किया।"], "ans": 3, "exp": "'एक प्रतिनिधि ने प्रस्ताव का समर्थन किया।' पूर्णतः शुद्ध है।"}, {"id": 100, "topic": "विशेषण / शब्द-भेद", "exam": "DSSSB IT Assistant Grade A · 05 Nov 2026 · 1:00 PM", "q": "प्रश्नवाचक सर्वनाम के प्रयोग की दृष्टि से शुद्ध वाक्य चुनिए:", "options": ["किसने इन पुस्तकों में से तुम्हें सबसे अधिक उपयोगी लगी?", "किसे को इस योजना का लाभ सबसे पहले मिलेगा?", "कौन-सा विद्यार्थियों ने इस प्रतियोगिता में प्रथम स्थान प्राप्त किया?", "कौन इस विषय पर अपना विचार प्रस्तुत करेगा?"], "ans": 3, "exp": "'कौन इस विषय पर अपना विचार प्रस्तुत करेगा?' शुद्ध है।"}]}, {"id": 6, "code": "Part 6", "group": "Part B · Computer Science", "title": "CS 1 · OS, Networks, DBMS & Digital", "range": "Q101 – Q120", "concepts": [{"title": "OS, TLB, Networks & Error Control", "title_hi": "OS, TLB, नेटवर्किंग और त्रुटि नियंत्रण", "points": [{"en": "Turnaround = `CT − AT`; Unsafe ≠ necessarily deadlocked; Segmentation suffers external fragmentation; Rotational latency waits for sector; TLB speeds logical→physical translation.", "hi": "टर्नअराउंड = `CT − AT`; असुरक्षित अवस्था हमेशा डेडलॉक नहीं होती; सेगमेंटेशन में बाहरी विखंडन होता है; TLB एड्रेस अनुवाद तेज़ करता है।"}, {"en": "Class A mask = `255.0.0.0`; Parity detects 1-bit errors, Hamming corrects 1-bit errors; Manchester worst-case baud = `2 × bit rate` (`20 Mbaud`); `172.32.1.1` is PUBLIC (private stops at `172.31.255.255`).", "hi": "क्लास A मास्क `255.0.0.0`; हैमिंग कोड 1-बिट त्रुटि सुधारता है; मैनचेस्टर में अधिकतम बॉड दर = `2 × बिट दर` (`20 Mbaud`); `172.32.1.1` पब्लिक IP है।"}]}, {"title": "DBMS, Digital Electronics & C Functions", "title_hi": "DBMS, डिजिटल इलेक्ट्रॉनिक्स और C फ़ंक्शंस", "points": [{"en": "SQL order: `WHERE → GROUP BY → HAVING`. `FULL OUTER JOIN` keeps duplicates (`2+1+2 = 5`). ACID Durability = crash survival; Timestamp ordering uses NO locks (deadlock-free).", "hi": "SQL क्रम: `WHERE → GROUP BY → HAVING`। टाइमस्टैम्प ऑर्डरिंग में लॉक नहीं होते (डेडलॉक-मुक्त)।"}, {"en": "Absorption `A + AB = A`; NOR SR flip-flop `S=1, R=1` is invalid (`S=0, R=0` = hold); 2's comp of `0110` = `1010`; Encoder `2ⁿ→n`, Decoder `n→2ⁿ`. Standard C forbids nested function definitions.", "hi": "अवशोषण नियम `A + AB = A`; NOR SR में `S=1, R=1` अवैध है; `0110` का 2's कॉम्प्लिमेंट = `1010`; मानक C में नेस्टेड फ़ंक्शन परिभाषा अनुमत नहीं है।"}]}], "questions": [{"id": 101, "topic": "Operating Systems", "q": "In CPU scheduling, the turnaround time of a process is equal to ______.", "options": ["completion time − arrival time", "completion time − burst time", "waiting time − arrival time", "burst time − arrival time"], "ans": 0, "exp": "Turnaround time = Completion time − Arrival time."}, {"id": 102, "topic": "Operating Systems", "q": "Which of the following statement(s) is/are correct regarding safe and unsafe states?\nI. Every unsafe state is a deadlock state.\nII. A system is in a safe state if there is at least one sequence in which all processes can finish with the available resources.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I is false (an unsafe state may or may not lead to deadlock). II is true."}, {"id": 103, "topic": "Operating Systems", "q": "Which of the following statement(s) is/are correct regarding segmentation?\nI. In segmentation, a program is divided into logical units of different sizes, such as code, data and stack.\nII. Segmentation is free from external fragmentation.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I is true; II is false because variable-sized segments cause external fragmentation."}, {"id": 104, "topic": "Operating Systems", "q": "The time for the required sector of a disk to rotate under the read/write head is called ______.", "options": ["rotational latency", "seek time", "transfer time", "settling time"], "ans": 0, "exp": "Rotational latency is the time waiting for the target sector to rotate beneath the R/W head."}, {"id": 105, "topic": "Computer Organisation & Fundamentals", "q": "What is the main advantage of using a TLB in a paging system?", "options": ["It increases the size of main memory", "It reduces the time needed to translate logical addresses into physical addresses", "It removes the need for a page table", "It prevents page faults completely"], "ans": 1, "exp": "TLB caches recent page-table entries to speed up logical-to-physical address translation."}, {"id": 106, "topic": "Computer Networks & Internet", "q": "The default subnet mask of a Class A network is ______.", "options": ["255.255.255.0", "255.255.0.0", "255.0.0.0", "255.255.255.255"], "ans": 2, "exp": "Class A default subnet mask is 255.0.0.0 (/8)."}, {"id": 107, "topic": "Computer Networks & Internet", "q": "Which of the following statement(s) is/are correct regarding error control?\nI. A simple parity check can detect any single-bit error.\nII. A simple parity check can correct a single-bit error.\nIII. The Hamming code can correct a single-bit error.", "options": ["I and II only", "II and III only", "I and III only", "I, II and III"], "ans": 2, "exp": "I and III are true; simple parity cannot locate/correct errors (II false)."}, {"id": 108, "topic": "Computer Networks & Internet", "q": "Which of the following statement(s) is/are correct regarding sliding-window protocols?\nI. In Go-Back-N, when a frame is lost, the sender resends that frame and all the frames sent after it.\nII. In Selective Repeat, only the lost or damaged frame is resent.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements are correct."}, {"id": 109, "topic": "Computer Networks & Internet", "q": "Data is sent at 10 Mbps using Manchester encoding. What is the baud rate (signal changes per second) in the worst case?", "options": ["20 Mbaud", "10 Mbaud", "5 Mbaud", "40 Mbaud"], "ans": 0, "exp": "Manchester encoding requires up to 2 signal transitions per bit → 2 × 10 Mbps = 20 Mbaud."}, {"id": 110, "topic": "Computer Networks & Internet", "q": "The data rate of a digital communication link is measured in ______.", "options": ["baud", "hertz", "bits per second", "decibels"], "ans": 2, "exp": "Data rate (bit rate) is measured in bits per second (bps, Kbps, Mbps, Gbps)."}, {"id": 111, "topic": "Computer Networks & Internet", "q": "Which of the following IPv4 addresses is NOT a private address?", "options": ["10.255.0.1", "172.20.4.4", "192.168.200.5", "172.32.1.1"], "ans": 3, "exp": "Private 172.x range ends at 172.31.255.255, so 172.32.1.1 is a public IP."}, {"id": 112, "topic": "DBMS & SQL", "q": "Orders(cust, amt) has rows (A,100), (A,300), (B,200), (B,50), (C,500), (A,50). What does this query return?\nSELECT cust, SUM(amt) FROM Orders WHERE amt > 60 GROUP BY cust HAVING COUNT(*) >= 2;", "options": ["(A, 400), (B, 250)", "(A, 450)", "(A, 400)", "(A, 450), (B, 250)"], "ans": 2, "exp": "WHERE removes (B,50) and (A,50). Remaining groups: A={100,300}, B={200}, C={500}. HAVING COUNT(*)>=2 keeps only (A, 400)."}, {"id": 113, "topic": "DBMS & SQL", "q": "R(A) has values 1, 2, 3 and S(A) has values 2, 3, 4, 4. How many rows does `R FULL OUTER JOIN S ON R.A = S.A` produce?", "options": ["5", "4", "6", "7"], "ans": 0, "exp": "Matches: (2,2), (3,3); Left unmatched: (1,NULL); Right unmatched: (NULL,4), (NULL,4) → 5 rows."}, {"id": 114, "topic": "DBMS & SQL", "q": "Which of the following statement(s) is/are correct regarding the ACID properties?\nI. Atomicity ensures that the changes of a committed transaction survive a system crash.\nII. Isolation ensures that concurrently running transactions do not interfere with each other.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I describes Durability, not Atomicity. II is true."}, {"id": 115, "topic": "DBMS & SQL", "q": "Which of the following statement(s) is/are correct regarding timestamp-ordering concurrency control?\nI. Each transaction is given a unique timestamp when it starts.\nII. The timestamp-ordering protocol uses locks and can therefore lead to deadlock.", "options": ["Only II", "Only I", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I is true; II is false because timestamp ordering uses no locks and is deadlock-free."}, {"id": 116, "topic": "Digital Electronics & Number Systems", "q": "By the absorption law, the Boolean expression A + AB simplifies to ______.", "options": ["AB", "A + B", "A", "B"], "ans": 2, "exp": "A + AB = A(1 + B) = A."}, {"id": 117, "topic": "Digital Electronics & Number Systems", "q": "Which of the following statement(s) is/are correct regarding an SR flip-flop built with NOR gates?\nI. S = 0, R = 0 resets the output to 0.\nII. S = 1, R = 1 is the invalid (forbidden) input condition.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I is false (S=0, R=0 holds state). II is true."}, {"id": 118, "topic": "Digital Electronics & Number Systems", "q": "The 2's complement of the binary number 0110 is ______.", "options": ["1010", "1001", "1011", "0111"], "ans": 0, "exp": "1's complement of 0110 is 1001; adding 1 gives 1010."}, {"id": 119, "topic": "Digital Electronics & Number Systems", "q": "Which of the following statement(s) is/are correct?\nI. An encoder converts 2ⁿ input lines into an n-bit binary code.\nII. A decoder converts an n-bit binary code into one of 2ⁿ output lines.", "options": ["Only I", "Only II", "Neither I nor II", "Both I and II"], "ans": 3, "exp": "Both statements are correct."}, {"id": 120, "topic": "C, C++ & Programming Basics", "q": "Which of the following is NOT true about functions in C?", "options": ["A function can return at most one value through the return statement", "A function can call itself", "A function can be defined inside the body of another function in standard C", "A function prototype tells the compiler the return type and the types of the parameters"], "ans": 2, "exp": "Standard C does not allow nested function definitions inside another function."}]}, {"id": 7, "code": "Part 7", "group": "Part B · Computer Science", "title": "CS 2 · C/C++, Java OOP & DSA", "range": "Q121 – Q140", "concepts": [{"title": "C/C++ Recursion, References, Virtual & Mutable", "title_hi": "C/C++ रिकर्शन, रेफरेंस, वर्चुअल और म्यूटेबल", "points": [{"en": "C++ references must be initialized at declaration; non-virtual `p->f()` uses static pointer type (`Af`), virtual `p->g()` uses dynamic object type (`Bg`); `catch(...)` catches any exception; `mutable` allows modification inside `const` methods.", "hi": "C++ में नॉन-वर्चुअल कॉल पॉइंटर टाइप (`Af`) और वर्चुअल कॉल ऑब्जेक्ट टाइप (`Bg`) पर बाइंड होता है। `mutable` सदस्य `const` फ़ंक्शन में भी बदला जा सकता है।"}]}, {"title": "Java Core & DSA Formulas", "title_hi": "जावा कोर और DSA के प्रमुख सूत्र", "points": [{"en": "Java: `super()` must be first line; `substring(3, 7)` excludes index 7 (`LO W|1|4`); `char` = 16-bit Unicode; `s.length()` for String (`arr.length` for array); array reassignment (`a = new int[]{4,5}`) does not move `b` (`9 2 3`).", "hi": "जावा में `substring(3,7)` में इंडेक्स 7 शामिल नहीं; `String` हेतु `s.length()`; `a` को नया ऐरे देने से `b` का संदर्भ नहीं बदलता (`9 2 3`)।"}, {"en": "Binary tree leaves `n₀ = n₂ + 1` (`20 − 1 = 19`). Complete graph `K₅` edges = `n(n−1)/2 = 10`. Deleting tail of singly linked list is `O(n)`. 1-indexed binary heap children of `i`: `2i` and `2i + 1`.", "hi": "बाइनरी ट्री में `n₀ = n₂ + 1 ⇒ n₂ = 19`। `K₅` में किनारे = `10`। सिंगली लिंक्ड लिस्ट का अंतिम नोड हटाना `O(n)`। 1-इंडेक्स्ड हीप के चाइल्ड = `2i, 2i+1`।"}]}], "questions": [{"id": 121, "topic": "C, C++ & Programming Basics", "q": "What is the output of:\nvoid p(int n) { if (n == 0) return; printf(\"%d \", n); p(n - 1); }\nint main() { p(3); return 0; }", "options": ["1 2 3", "3 2 1", "3 2 1 0", "0 1 2 3"], "ans": 1, "exp": "Prints before recursive call: 3, then 2, then 1 → `3 2 1`."}, {"id": 122, "topic": "C, C++ & Programming Basics", "q": "Which of the following statement(s) is/are correct regarding loops in C?\nI. continue skips the rest of the current iteration and goes on with the next iteration.\nII. break skips only the current iteration and continues the loop.", "options": ["Only II", "Both I and II", "Only I", "Neither I nor II"], "ans": 2, "exp": "I is true; II is false because `break` terminates the entire loop."}, {"id": 123, "topic": "C, C++ & Programming Basics", "q": "Which of the following is NOT a unary operator in C?", "options": ["++", "sizeof", "!", "?:"], "ans": 3, "exp": "`?:` is the ternary conditional operator (3 operands)."}, {"id": 124, "topic": "C, C++ & Programming Basics", "q": "Which of the following statement(s) is/are correct regarding reference variables in C++?\nI. A reference can be declared without being initialised and bound to a variable later.\nII. A reference is another name (alias) for an existing variable.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I is false (references must be initialized at declaration). II is true."}, {"id": 125, "topic": "C, C++ & Programming Basics", "q": "Class A has non-virtual `f()` printing \"Af\" and `virtual g()` printing \"Ag\". Derived class B defines `f()` (\"Bf\") and `g()` (\"Bg\"). With `A* p = new B; p->f(); p->g();`, what is printed?", "options": ["BfBg", "AfBg", "AfAg", "BfAg"], "ans": 1, "exp": "Non-virtual `f()` binds statically to A* (`Af`); virtual `g()` binds dynamically to B (`Bg`) → `AfBg`."}, {"id": 126, "topic": "C, C++ & Programming Basics", "q": "Which of the following statement(s) is/are correct regarding exception handling in C++?\nI. An exception is raised using the throw keyword.\nII. catch(...) can catch an exception of any type.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements are correct."}, {"id": 127, "topic": "Java & OOP", "q": "Which of the following statement(s) is/are correct regarding the super keyword in Java?\nI. super() is used to call the constructor of the parent class.\nII. A call to super() can be written anywhere in the body of a constructor.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 0, "exp": "I is true; II is false because `super()` must be the very first statement in a constructor."}, {"id": 128, "topic": "Java & OOP", "q": "What is the output of:\nString s = \"Hello World\".substring(3, 7).toUpperCase();\nSystem.out.println(s + \"|\" + s.indexOf('O') + \"|\" + s.length());", "options": ["LO W|1|4", "LO W|1|5", "LO WO|1|5", "LLO |2|4"], "ans": 0, "exp": "Indices 3..6 = \"lo W\" → \"LO W\"; indexOf('O') = 1; length = 4 → `LO W|1|4`."}, {"id": 129, "topic": "Java & OOP", "q": "In Java, the data type ______ is 16 bits in size and stores Unicode characters.", "options": ["byte", "short", "char", "int"], "ans": 2, "exp": "Java `char` is 16-bit unsigned Unicode (0 to 65,535)."}, {"id": 130, "topic": "Java & OOP", "q": "Which of the following statement(s) is/are correct regarding Java?\nI. break terminates the innermost loop immediately.\nII. A labelled break (break outer;) can be used to exit an outer loop from inside an inner loop.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 2, "exp": "Both statements are correct."}, {"id": 131, "topic": "Java & OOP", "q": "What is the output of:\nint[] a = {1, 2, 3}; int[] b = a; b[0] = 9; a = new int[]{4, 5};\nSystem.out.println(b[0] + \" \" + a.length + \" \" + b.length);", "options": ["1 2 3", "4 2 2", "9 2 3", "9 3 3"], "ans": 2, "exp": "`b` still points to `{9, 2, 3}` (length 3) while `a` points to `{4, 5}` (length 2) → `9 2 3`."}, {"id": 132, "topic": "Java & OOP", "q": "The number of characters in a Java String s is returned by ______.", "options": ["s.size()", "s.count()", "s.length", "s.length()"], "ans": 3, "exp": "Java Strings use the `s.length()` method."}, {"id": 133, "topic": "C, C++ & Programming Basics", "q": "In C++, the keyword ______ allows a data member of a class to be modified even inside a const member function.", "options": ["const", "mutable", "volatile", "static"], "ans": 1, "exp": "`mutable` permits modifying a class member inside a `const` member function."}, {"id": 134, "topic": "Data Structures & Algorithms", "q": "What is the value of the prefix expression: * + 5 3 − 9 / 8 4 ?", "options": ["16", "40", "56", "72"], "ans": 2, "exp": "/ 8 4 = 2; − 9 2 = 7; + 5 3 = 8; * 8 7 = 56."}, {"id": 135, "topic": "Data Structures & Algorithms", "q": "A binary tree has 20 leaf nodes. How many nodes have exactly two children?", "options": ["20", "19", "21", "10"], "ans": 1, "exp": "In any binary tree, n₀ = n₂ + 1 ⇒ n₂ = 20 − 1 = 19."}, {"id": 136, "topic": "Data Structures & Algorithms", "q": "______ sort repeatedly finds the minimum element of the unsorted part and swaps it into its correct position at the beginning.", "options": ["Insertion", "Bubble", "Selection", "Quick"], "ans": 2, "exp": "Selection sort repeatedly selects the minimum from the unsorted subarray and swaps it to the front."}, {"id": 137, "topic": "Data Structures & Algorithms", "q": "Which of the following statement(s) is/are correct regarding collision resolution in hashing?\nI. In separate chaining, a colliding key is stored in the next empty slot of the table.\nII. Linear probing stores all the keys that hash to the same index in a linked list at that index.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 3, "exp": "The two descriptions are swapped, so neither statement is correct."}, {"id": 138, "topic": "Data Structures & Algorithms", "q": "How many edges does a complete undirected graph with 5 vertices (K₅) have?", "options": ["5", "10", "20", "25"], "ans": 1, "exp": "n(n − 1)/2 = 5 × 4 / 2 = 10 edges."}, {"id": 139, "topic": "Data Structures & Algorithms", "q": "A singly linked list keeps pointers to both its first and last nodes. Which operation still takes O(n) time?", "options": ["Inserting at the front", "Deleting the last node", "Inserting at the end", "Deleting the first node"], "ans": 1, "exp": "Deleting the last node requires finding the second-last node by traversing from head → O(n)."}, {"id": 140, "topic": "Data Structures & Algorithms", "q": "In a binary heap stored in an array with the root at index 1, the children of the node at index i are at indices ______.", "options": ["2i and 2i + 1", "2i − 1 and 2i", "i + 1 and i + 2", "2i + 1 and 2i + 2"], "ans": 0, "exp": "With 1-based indexing, left child = 2i and right child = 2i + 1."}]}, {"id": 8, "code": "Part 8", "group": "Part B · Computer Science", "title": "CS 3 · Web, SE, Graphics & Math", "range": "Q141 – Q160", "concepts": [{"title": "Web Tech, Compilers, Python & SE Quality", "title_hi": "वेब टेक, कम्पाइलर, पायथन और SE गुणवत्ता", "points": [{"en": "File upload requires `method=\"post\" enctype=\"multipart/form-data\"`; `position: absolute` aligns to nearest non-static ancestor; `HttpOnly` blocks JS `document.cookie` (XSS defense); JS `+` left-to-right: `1+\"2\"+3=\"123\"`, `1+2+\"3\"=\"33\"`, `\"5\"-2+1=4`.", "hi": "फ़ाइल अपलोड हेतु `POST` + `multipart/form-data`; `HttpOnly` कुकी को JS से बचाता है; `position: absolute` निकटतम नॉन-स्टैटिक पूर्वज के सापेक्ष होता है।"}, {"en": "Lexical analysis produces tokens; >1 parse tree = ambiguous grammar; Python `b = a` aliases the same list; Greedy picks locally best step. Verification = 'building the product right?'; ISO/IEC 9126 excludes Profitability; OLAP city→state = Roll-up.", "hi": "लेक्सिकल एनालिसिस टोकन बनाता है; पायथन `b = a` समान लिस्ट को संदर्भित करता है; वेरिफिकेशन = 'उत्पाद सही बना रहे हैं?'; OLAP शहर→राज्य = रोल-अप।"}]}, {"title": "Graphics, IT Act Sec 43 & Discrete Math", "title_hi": "ग्राफिक्स, IT अधिनियम धारा 43 और गणित", "points": [{"en": "Reflection in `y = x` swaps `(x, y) → (y, x)` (`(−2, 3)`); Rasterisation is scan conversion (not a 2D geometric transform); IT Act Sec `43` = civil compensation for unauthorized access/virus.", "hi": "`y = x` में परावर्तन `(x, y) → (y, x)`; धारा `43` अनधिकृत एक्सेस/वायरस पर सिविल मुआवज़ा देती है।"}, {"en": "Binomial `n=10, p=0.4`: Mean `np = 4`, Variance `npq = 2.4`; `(Aᵀ)ᵀ = A`; `d/dx(x³) = 3x²`; `2⁵ − 5² = 7`; Pigeonhole for ≥3 in same month = `12×2 + 1 = 25`.", "hi": "द्विपद वितरण माध्य `np=4`, प्रसरण `npq=2.4`; पिजनहोल सिद्धांत: एक ही महीने में ≥3 छात्र हेतु न्यूनतम `12×2 + 1 = 25`।"}]}], "questions": [{"id": 141, "topic": "Web Technologies", "q": "A form must let users upload a photograph file. Which form attributes are required?", "options": ["method=\"get\" enctype=\"text/plain\"", "method=\"get\" enctype=\"multipart/form-data\"", "method=\"post\" enctype=\"application/x-www-form-urlencoded\"", "method=\"post\" enctype=\"multipart/form-data\""], "ans": 3, "exp": "File uploads require `method=\"post\"` and `enctype=\"multipart/form-data\"`."}, {"id": 142, "topic": "Web Technologies", "q": "An element has the CSS rule `position: absolute; top: 0; left: 0;`. Relative to what is it positioned?", "options": ["Its parent element, always", "Its nearest ancestor whose position is not static", "The browser window (viewport), always", "Its own normal position in the page flow"], "ans": 1, "exp": "An absolutely positioned element is placed relative to its nearest positioned (non-static) ancestor."}, {"id": 143, "topic": "Web Technologies", "q": "What does `console.log(1 + \"2\" + 3, 1 + 2 + \"3\", \"5\" - 2 + 1);` print?", "options": ["123 123 4", "6 33 4", "123 33 4", "123 33 \"321\""], "ans": 2, "exp": "1+\"2\"+3 = \"123\"; 1+2+\"3\" = \"33\"; \"5\"-2+1 = 4 → `123 33 4`."}, {"id": 144, "topic": "Web Technologies", "q": "Which of the following is NOT a valid way to declare a variable in JavaScript?", "options": ["var x = 5;", "let x = 5;", "const x = 5;", "int x = 5;"], "ans": 3, "exp": "JavaScript uses `var`, `let`, or `const`; `int x = 5;` is a SyntaxError."}, {"id": 145, "topic": "Web Technologies", "q": "Which cookie attribute prevents client-side JavaScript (`document.cookie`) from reading the cookie, reducing XSS damage?", "options": ["SameSite", "Secure", "HttpOnly", "Domain"], "ans": 2, "exp": "`HttpOnly` makes cookies inaccessible to client-side JavaScript."}, {"id": 146, "topic": "C, C++ & Programming Basics", "q": "The ______ phase of a compiler reads the source program character by character and groups the characters into tokens.", "options": ["lexical analysis", "syntax analysis", "semantic analysis", "code generation"], "ans": 0, "exp": "Lexical analysis (scanning) converts source characters into tokens."}, {"id": 147, "topic": "C, C++ & Programming Basics", "q": "A grammar that produces more than one parse tree for the same string is called a(n) ______ grammar.", "options": ["regular", "context-sensitive", "unambiguous", "ambiguous"], "ans": 3, "exp": "A grammar with multiple parse trees for the same string is ambiguous."}, {"id": 148, "topic": "Python", "q": "What will be the output of:\na = [1, 2, 3]\nb = a\nb.append(4)\nprint(a)", "options": ["[1, 2, 3]", "[1, 2, 3, 4]", "[4]", "Error"], "ans": 1, "exp": "`b = a` copies the list reference, so appending to `b` mutates `a` as well → `[1, 2, 3, 4]`."}, {"id": 149, "topic": "Data Structures & Algorithms", "q": "The ______ method makes the choice that looks best at each step, without reconsidering the earlier choices.", "options": ["greedy", "dynamic programming", "backtracking", "branch and bound"], "ans": 0, "exp": "The greedy method makes locally optimal choices without backtracking."}, {"id": 150, "topic": "Software Engineering", "q": "\"Are we building the product right?\" is the question answered by:", "options": ["Certification", "Validation", "Verification", "Acceptance"], "ans": 2, "exp": "Verification = 'Are we building the product right?'; Validation = 'Are we building the right product?'."}, {"id": 151, "topic": "Software Engineering", "q": "Which of the following is NOT one of the six quality characteristics of the ISO/IEC 9126 model?", "options": ["Profitability", "Reliability", "Maintainability", "Portability"], "ans": 0, "exp": "ISO/IEC 9126 lists Functionality, Reliability, Usability, Efficiency, Maintainability, and Portability—not Profitability."}, {"id": 152, "topic": "DBMS & SQL", "q": "A sales manager looks at a report of sales by city and then moves to a report of total sales by state. Which OLAP operation is this?", "options": ["Drill-down", "Roll-up", "Slice", "Pivot"], "ans": 1, "exp": "Moving up a concept hierarchy (city → state) to summarize data is Roll-up."}, {"id": 153, "topic": "AI, Graphics & Emerging Tech", "q": "The point (3, −2) is reflected in the line y = x. What are its new coordinates?", "options": ["(−2, 3)", "(2, −3)", "(−3, 2)", "(3, 2)"], "ans": 0, "exp": "Reflection across y = x swaps x and y: (3, −2) → (−2, 3)."}, {"id": 154, "topic": "AI, Graphics & Emerging Tech", "q": "Which of the following is NOT a basic 2D geometric transformation?", "options": ["Translation", "Rotation", "Scaling", "Rasterisation"], "ans": 3, "exp": "Rasterisation converts vector shapes into pixels; it is not a geometric transformation."}, {"id": 155, "topic": "Cyber Security & E-Commerce", "q": "Under the IT Act, 2000, which section provides for compensation (civil liability) for unauthorised computer access, data downloading, or introducing a virus?", "options": ["Section 72", "Section 66", "Section 65", "Section 43"], "ans": 3, "exp": "Section 43 provides civil liability/compensation for unauthorized access, damage, or virus introduction."}, {"id": 156, "topic": "Mathematics", "q": "A random variable X follows a binomial distribution with n = 10 and p = 0.4. What are its mean and variance?", "options": ["Mean 4, variance 4", "Mean 4, variance 2.4", "Mean 6, variance 2.4", "Mean 4, variance 1.55"], "ans": 1, "exp": "Mean = np = 4; Variance = npq = 10 × 0.4 × 0.6 = 2.4."}, {"id": 157, "topic": "Mathematics", "q": "If A is a square matrix, then (Aᵀ)ᵀ is equal to:", "options": ["A", "Aᵀ", "A⁻¹", "2A"], "ans": 0, "exp": "Taking the transpose twice returns the original matrix A."}, {"id": 158, "topic": "Mathematics", "q": "What is the derivative of x³ with respect to x?", "options": ["3x²", "x²", "3x", "x⁴/4"], "ans": 0, "exp": "By power rule, d/dx(x³) = 3x²."}, {"id": 159, "topic": "Mathematics", "q": "What is the value of 2⁵ − 5²?", "options": ["7", "0", "−7", "57"], "ans": 0, "exp": "32 − 25 = 7."}, {"id": 160, "topic": "Mathematics", "q": "What is the minimum number of students in a class that guarantees at least 3 of them were born in the same month?", "options": ["36", "24", "37", "25"], "ans": 3, "exp": "By Pigeonhole Principle: 12 × 2 + 1 = 25 students."}]}, {"id": 9, "code": "Part 9", "group": "Part B · Computer Science", "title": "CS 4 · Commerce, Physics, COA & Digital", "range": "Q161 – Q180", "concepts": [{"title": "Commerce, Physics & Management", "title_hi": "वाणिज्य, भौतिकी और प्रबंधन", "points": [{"en": "Chromatic number `χ(K₃) = 3`. Overhauling a second-hand machine before first use = Capital expenditure; Receivables turnover = `6` ⇒ Avg collection = `360/6 = 60 days`; Credit multiplier `1/CRR = 10` ⇒ `₹10,000`.", "hi": "पुरानी मशीन को उपयोग से पहले ओवरहॉल करना पूँजीगत व्यय है; औसत संग्रहण अवधि = `60 दिन`; साख गुणक `1/0.10 = 10` ⇒ `₹10,000`।"}, {"en": "Wheatstone balance `P/Q = R/S ⇒ S = 30 Ω`; Sound travels fastest in solids (`Steel`); Photon energy `E = hf = 3.3 × 10⁻¹⁹ J`; Pattachitra = Odisha; Shannon–Weaver `noise` = distortion; `Controlling` compares actual vs planned.", "hi": "व्हीटस्टोन संतुलन `S = 30 Ω`; ध्वनि ठोस (`स्टील`) में सबसे तेज़ चलती है; `E = hf = 3.3 × 10⁻¹⁹ J`; नियंत्रण (Controlling) वास्तविक व मानक की तुलना करता है।"}]}, {"title": "COA & Digital Systems", "title_hi": "COA और डिजिटल सिस्टम", "points": [{"en": "Direct mapping = 1 specific line; Fully associative = any line. Control hazard = branch instructions. `(121)ₓ = (x+1)² = 49 ⇒ x = 6`. Excess-3 is self-complementing. Daisy chain gives highest priority to electrically closest device; Cache blocks exploit Spatial locality; Stack machine = zero-address; Linker resolves external references across object modules.", "hi": "`(121)ₓ = (x+1)² = 49 ⇒ x = 6`। Excess-3 स्व-पूरक कोड है। कैश ब्लॉक स्थानिक स्थानीयता (Spatial locality) का लाभ उठाता है; स्टैक मशीन = ज़ीरो-एड्रेस; लिंकर ऑब्जेक्ट मॉड्यूल जोड़ता है।"}]}], "questions": [{"id": 161, "topic": "Mathematics", "q": "What is the minimum number of colours needed to colour the vertices of a triangle (complete graph K₃) so that no two adjacent vertices have the same colour?", "options": ["1", "2", "3", "4"], "ans": 2, "exp": "Chromatic number of K₃ is 3."}, {"id": 162, "topic": "Commerce, Management & Economics", "q": "Furniture costing ₹5,000 bought for office use was wrongly debited to Purchases A/c. What is the rectifying entry?", "options": ["Furniture A/c Dr. ₹5,000 To Cash A/c ₹5,000", "Purchases A/c Dr. ₹5,000 To Furniture A/c ₹5,000", "Furniture A/c Dr. ₹5,000 To Purchases A/c ₹5,000", "Furniture A/c Dr. ₹5,000 To Suspense A/c ₹5,000"], "ans": 2, "exp": "Debit Furniture A/c (correct asset) and credit Purchases A/c (reverse wrong debit)."}, {"id": 163, "topic": "Commerce, Management & Economics", "q": "A second-hand machine is purchased, and ₹20,000 is spent immediately on overhauling it before it is put to use. How is the ₹20,000 treated?", "options": ["Revenue expenditure, charged to Profit and Loss A/c", "Capital loss", "Deferred revenue expenditure", "Capital expenditure, added to the cost of the machine"], "ans": 3, "exp": "Overhaul required before putting a second-hand asset to first use is Capital expenditure."}, {"id": 164, "topic": "Commerce, Management & Economics", "q": "A firm's credit sales are ₹3,60,000 and average trade receivables are ₹60,000. Taking a 360-day year, what is the average collection period?", "options": ["60 days", "6 days", "30 days", "72 days"], "ans": 0, "exp": "Turnover = 3,60,000 / 60,000 = 6 times; Average collection period = 360 / 6 = 60 days."}, {"id": 165, "topic": "Commerce, Management & Economics", "q": "A partner's capital on 1 April is ₹1,00,000, with ₹20,000 added on 1 October. Interest on capital is 6% p.a. Total interest for the year ending 31 March:", "options": ["₹6,000", "₹7,200", "₹6,600", "₹6,300"], "ans": 2, "exp": "1,00,000 × 6% = 6,000; 20,000 × 6% × (6/12) = 600 → Total = ₹6,600."}, {"id": 166, "topic": "Commerce, Management & Economics", "q": "If CRR is 10% with no cash leakages, what is the maximum total deposits created from an initial deposit of ₹1,000?", "options": ["₹10,000", "₹9,000", "₹1,100", "₹100"], "ans": 0, "exp": "Money multiplier = 1/0.10 = 10 → Total deposits = 1,000 × 10 = ₹10,000."}, {"id": 167, "topic": "Physics & General Science", "q": "A Wheatstone bridge has P = 10 Ω, Q = 20 Ω and R = 15 Ω. For what value of S is the bridge balanced?", "options": ["25 Ω", "7.5 Ω", "40 Ω", "30 Ω"], "ans": 3, "exp": "P/Q = R/S ⇒ 10/20 = 15/S ⇒ S = 30 Ω."}, {"id": 168, "topic": "Physics & General Science", "q": "In which of the following media does sound travel fastest?", "options": ["Air", "Water", "Steel", "Vacuum"], "ans": 2, "exp": "Sound travels fastest in solids (Steel ~5,000 m/s), slower in liquids and gases, and not at all in vacuum."}, {"id": 169, "topic": "Physics & General Science", "q": "What is the energy of a photon of frequency 5 × 10¹⁴ Hz? (h = 6.6 × 10⁻³⁴ J s)", "options": ["6.6 × 10⁻²⁰ J", "3.3 × 10⁻¹⁹ J", "3.3 × 10⁻¹⁸ J", "1.3 × 10⁻⁴⁸ J"], "ans": 1, "exp": "E = hf = 6.6×10⁻³⁴ × 5×10¹⁴ = 3.3 × 10⁻¹⁹ J."}, {"id": 170, "topic": "General Knowledge & Arts", "q": "Pattachitra, a traditional cloth-based scroll painting often depicting Lord Jagannath, is mainly associated with which state?", "options": ["Odisha", "Punjab", "Assam", "Madhya Pradesh"], "ans": 0, "exp": "Pattachitra is a traditional cloth scroll painting from Odisha."}, {"id": 171, "topic": "Computer Organisation & Fundamentals", "q": "Which of the following statement(s) is/are correct regarding cache mapping?\nI. In direct mapping, a block of main memory can be placed in any line of the cache.\nII. In fully associative mapping, each block of main memory can be placed in only one particular line of the cache.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 3, "exp": "The two descriptions are reversed, so neither statement is correct."}, {"id": 172, "topic": "Computer Organisation & Fundamentals", "q": "Which of the following statement(s) is/are correct regarding pipeline hazards?\nI. A structural hazard occurs when an instruction needs the result of a previous instruction that has not yet completed.\nII. A control hazard is caused by branch instructions, when the address of the next instruction is not yet known.", "options": ["Only I", "Only II", "Both I and II", "Neither I nor II"], "ans": 1, "exp": "I describes a data hazard (not structural). II is true."}, {"id": 173, "topic": "Digital Electronics & Number Systems", "q": "For which base x is (121)ₓ = (49)₁₀?", "options": ["5", "7", "8", "6"], "ans": 3, "exp": "x² + 2x + 1 = (x + 1)² = 49 ⇒ x + 1 = 7 ⇒ x = 6."}, {"id": 174, "topic": "Digital Electronics & Number Systems", "q": "Which of the following codes is self-complementing (code for 9 − d is obtained by inverting every bit of d)?", "options": ["Excess-3", "BCD (8421)", "Gray code", "ASCII"], "ans": 0, "exp": "Excess-3 is a self-complementing code."}, {"id": 175, "topic": "Computer Organisation & Fundamentals", "q": "In a daisy-chained interrupt system, which device has the highest priority?", "options": ["All devices have equal priority", "The device farthest from the CPU", "The device with the lowest vector address", "The device electrically closest to the CPU in the chain"], "ans": 3, "exp": "In daisy chaining, the device electrically closest to the CPU receives the interrupt acknowledge first and has highest priority."}, {"id": 176, "topic": "Computer Organisation & Fundamentals", "q": "Caches load a whole block of neighbouring words from memory on a miss rather than only the requested word. Which property does this exploit?", "options": ["Thrashing", "Temporal locality", "Sequential consistency", "Spatial locality"], "ans": 3, "exp": "Spatial locality predicts that addresses near a recently accessed address will be accessed soon."}, {"id": 177, "topic": "Computer Organisation & Fundamentals", "q": "A computer that uses a stack to hold operands, so that instructions like ADD need no address fields, is called a:", "options": ["one-address machine", "zero-address machine", "two-address machine", "three-address machine"], "ans": 1, "exp": "Stack-based architectures are zero-address machines."}, {"id": 178, "topic": "Computer Organisation & Fundamentals", "q": "Which system program combines several object modules into one executable and resolves external references between them?", "options": ["Compiler", "Loader", "Assembler", "Linker"], "ans": 3, "exp": "The Linker links object files/libraries and resolves external symbol references."}, {"id": 179, "topic": "Commerce, Management & Economics", "q": "In the Shannon–Weaver model of communication, what does 'noise' refer to?", "options": ["Only loud sounds in the environment", "The medium through which the message travels", "The receiver's reply to the sender", "Any interference that distorts the message between sender and receiver"], "ans": 3, "exp": "Noise is any interference distorting the signal/message between sender and receiver."}, {"id": 180, "topic": "Commerce, Management & Economics", "q": "Which function of management compares actual performance with planned standards and takes corrective action?", "options": ["Planning", "Organising", "Staffing", "Controlling"], "ans": 3, "exp": "Controlling measures actual performance against standards and corrects deviations."}]}, {"id": 10, "code": "Part 10", "group": "Part B · Computer Science", "title": "CS 5 · OS, Networks, COA & Pedagogy", "range": "Q181 – Q200", "concepts": [{"title": "OS, DHCP, Mesh, DBMS, Shift Register & CPU Time", "title_hi": "OS, DHCP, मेश, DBMS, शिफ्ट रजिस्टर व CPU समय", "points": [{"en": "Repo rate = RBI short-term lending to commercial banks; SPOOLING queues slow-device jobs on disk; UNIX launches new programs via `fork()` then `exec()`. DHCP order = `DORA` (Discover, Offer, Request, Acknowledge). Full mesh of 8 devices = `28 cables, 7 ports each`.", "hi": "रेपो दर = RBI द्वारा बैंकों को अल्पकालिक ऋण; DHCP क्रम = `DORA`; 8 उपकरणों की फुल मेश = `28 केबल, 7 पोर्ट प्रत्येक`।"}, {"en": "Caesar shift +3: `CAT → FDW`. M:N ER relationship needs `3` tables; at most `1` clustered index per table. 4-bit shift-left (`1011` with input `0`) × 2 = `1100`. Utility = Disk defragmenter; ROM boot = BIOS (with POST); CPU time = `(4×10⁹ × 1.5)/(2×10⁹) = 3 s`.", "hi": "M:N संबंध हेतु न्यूनतम `3` टेबल; एक टेबल में अधिकतम `1` क्लस्टर्ड इंडेक्स; CPU समय = `3 सेकंड`।"}]}, {"title": "Pedagogy: MKO, Insight, Krathwohl, Item Analysis, NEP & RTE", "title_hi": "शिक्षणशास्त्र: MKO, अंतर्दृष्टि, क्रैथवोहल, NEP 2020 और RTE", "points": [{"en": "Vygotsky peer helper = `MKO`; sudden recursion breakthrough = Köhler's `Insight learning`; consistent ethical character = Krathwohl's `Characterisation by a value`; 3–5 s pause = `Wait time`.", "hi": "वाइगोत्स्की सहपाठी मार्गदर्शक = `MKO`; अचानक समाधान सूझना = कोहलर का `अंतर्दृष्टि अधिगम`; 3–5 सेकंड का विराम = `Wait time`।"}, {"en": "Discrimination index `D = (RU − RL)/n = (16 − 6)/20 = 0.50`. NEP 2020 mother tongue = at least Grade 5, preferably Grade 8+. RTE Act 2009 Sec 12(1)(c) = `25%` seats for EWS/DG. `CC BY-SA` = credit author + share adaptations under same licence.", "hi": "विभेदन सूचकांक `D = (16−6)/20 = 0.50`। NEP 2020 मातृभाषा = कक्षा 5 (प्राथमिकता कक्षा 8+)। RTE अधिनियम = `25%` सीटें। `CC BY-SA` = श्रेय दें व समान लाइसेंस में साझा करें।"}]}], "questions": [{"id": 181, "topic": "Commerce, Management & Economics", "q": "In India, the repo rate is the rate at which ______.", "options": ["commercial banks lend to the public", "the RBI lends short-term funds to commercial banks against government securities", "commercial banks keep deposits with the RBI", "the government borrows from the public"], "ans": 1, "exp": "Repo rate is the rate at which the RBI lends short-term funds to commercial banks against government securities."}, {"id": 182, "topic": "Operating Systems", "q": "What is the main purpose of spooling in an operating system?", "options": ["To swap whole processes between memory and disk", "To let a slow device such as a printer be shared by holding jobs on disk until the device is free", "To cache disk blocks in main memory", "To schedule processes on the CPU"], "ans": 1, "exp": "SPOOLing queues output jobs on disk so slow peripherals like printers can be shared efficiently."}, {"id": 183, "topic": "Operating Systems", "q": "In UNIX, which pair of system calls is normally used to start a different program in a new process?", "options": ["open() followed by read()", "exec() followed by fork() in the child", "wait() followed by exit()", "fork() followed by exec() in the child"], "ans": 3, "exp": "A parent calls `fork()` to spawn a child, and the child calls `exec()` to load the new program."}, {"id": 184, "topic": "Computer Networks & Internet", "q": "In what order are the four DHCP messages exchanged when a client first obtains an address?", "options": ["Offer, Discover, Request, Acknowledge", "Request, Offer, Discover, Acknowledge", "Discover, Request, Offer, Acknowledge", "Discover, Offer, Request, Acknowledge"], "ans": 3, "exp": "DHCP follows the DORA sequence: Discover → Offer → Request → Acknowledge."}, {"id": 185, "topic": "Computer Networks & Internet", "q": "8 devices are connected in a full mesh topology. How many cables are needed, and how many ports does each device need?", "options": ["28 cables; 7 ports each", "56 cables; 7 ports each", "28 cables; 8 ports each", "64 cables; 8 ports each"], "ans": 0, "exp": "Cables = n(n−1)/2 = 28; ports per device = n − 1 = 7."}, {"id": 186, "topic": "Cyber Security & E-Commerce", "q": "Using the Caesar cipher with a shift of 3, what is the encrypted form of the word CAT?", "options": ["FDW", "DBU", "ZXQ", "FAT"], "ans": 0, "exp": "C+3=F, A+3=D, T+3=W → FDW."}, {"id": 187, "topic": "DBMS & SQL", "q": "An ER diagram has two entity sets, Student and Course, and a many-to-many relationship Enrols with attribute grade. What is the minimum number of tables needed?", "options": ["1", "2", "4", "3"], "ans": 3, "exp": "Two strong entities (Student, Course) + one junction table for the M:N relationship (Enrols) = 3 tables."}, {"id": 188, "topic": "DBMS & SQL", "q": "How many clustered indexes can a single table have?", "options": ["One for every column", "Exactly two", "At most one", "Any number"], "ans": 2, "exp": "A clustered index dictates physical row order, so a table can have at most one clustered index."}, {"id": 189, "topic": "Computer Organisation & Fundamentals", "q": "A 4-bit shift-left register holds 1011. The serial input is 0. What does the register hold after 2 clock pulses?", "options": ["0010", "1100", "1110", "0110"], "ans": 1, "exp": "Pulse 1: 1011 → 0110; Pulse 2: 0110 → 1100."}, {"id": 190, "topic": "Computer Organisation & Fundamentals", "q": "Which of the following is a utility program?", "options": ["Disk defragmenter", "Word processor", "Web browser", "Library management application"], "ans": 0, "exp": "Disk defragmenter is a system utility; the others are application software."}, {"id": 191, "topic": "Computer Organisation & Fundamentals", "q": "When a computer is switched on, which program stored in ROM runs first to test the hardware and start loading the operating system?", "options": ["The OS kernel", "BIOS (with POST)", "The device manager", "The command interpreter (shell)"], "ans": 1, "exp": "BIOS firmware in ROM executes POST and invokes the bootloader."}, {"id": 192, "topic": "Computer Organisation & Fundamentals", "q": "A program of 4 × 10⁹ instructions runs on a 2 GHz processor with an average CPI of 1.5. What is its execution time?", "options": ["1.33 s", "2 s", "3 s", "12 s"], "ans": 2, "exp": "CPU time = (4×10⁹ × 1.5) / (2×10⁹) = 3 s."}, {"id": 193, "topic": "Pedagogy & Education Policy", "q": "In a computer lab, a student who understands loops helps a classmate debug by giving hints instead of answers. According to Vygotsky, the helper is acting as:", "options": ["A source of negative reinforcement", "A passive observer", "A More Knowledgeable Other (MKO)", "An advance organiser"], "ans": 2, "exp": "In Vygotsky's theory, a More Knowledgeable Other (MKO) provides scaffolding within the learner's ZPD."}, {"id": 194, "topic": "Pedagogy & Education Policy", "q": "A student stuck on a recursion problem suddenly sees how it breaks into smaller self-copies and solves it at once. This learning is best explained by:", "options": ["Classical conditioning (Pavlov)", "Trial and error (Thorndike)", "Insight learning (Köhler)", "Operant conditioning (Skinner)"], "ans": 2, "exp": "Sudden holistic restructuring of a problem is Wolfgang Köhler's Insight learning."}, {"id": 195, "topic": "Pedagogy & Education Policy", "q": "A student never copies code, always credits sources, and follows ethics consistently as part of who he is. In Krathwohl's affective domain, this is:", "options": ["Characterisation by a value", "Valuing", "Responding", "Organisation"], "ans": 0, "exp": "When a value consistently guides behaviour as part of one's character, it is the highest level: Characterisation by a value."}, {"id": 196, "topic": "Pedagogy & Education Policy", "q": "After asking a question, a teacher deliberately pauses 3 to 5 seconds before calling on anyone, improving answer quality. This technique is called:", "options": ["Redirecting", "Probing", "Prompting", "Wait time"], "ans": 3, "exp": "Pausing 3–5 seconds after a question is Mary Budd Rowe's Wait time technique."}, {"id": 197, "topic": "Pedagogy & Education Policy", "q": "In an item analysis, 20 students are in the upper group (16 correct) and 20 in the lower group (6 correct). What is the discrimination index?", "options": ["0.50", "0.55", "0.25", "1.10"], "ans": 0, "exp": "D = (RU − RL) / n = (16 − 6) / 20 = 0.50."}, {"id": 198, "topic": "Pedagogy & Education Policy", "q": "According to NEP 2020, the medium of instruction should, wherever possible, be the home language or mother tongue at least until:", "options": ["Grade 5, preferably till Grade 8 and beyond", "Grade 2", "Grade 10", "Grade 12"], "ans": 0, "exp": "NEP 2020 recommends mother tongue/home language at least until Grade 5, and preferably till Grade 8 and beyond."}, {"id": 199, "topic": "Pedagogy & Education Policy", "q": "Under the RTE Act, 2009, what share of entry-level seats must private unaided schools reserve for children from weaker sections and disadvantaged groups?", "options": ["10%", "15%", "20%", "25%"], "ans": 3, "exp": "Section 12(1)(c) of the RTE Act, 2009 mandates 25% reservation at the entry level."}, {"id": 200, "topic": "Pedagogy & Education Policy", "q": "A teacher wants to use, adapt and share an online tutorial released under Creative Commons CC BY-SA. What must she do?", "options": ["Only give credit to the author", "Give credit to the author and share any adapted version under the same licence", "Use it only for non-commercial purposes", "Use it without changing it"], "ans": 1, "exp": "BY = Attribution (credit author); SA = ShareAlike (release adaptations under the same licence)."}]}], "passages": {"ENG_CLOZE_19": {"title": "Cloze Test Passage (Q61 – Q65)", "text": "Prolonged exposure to sunlight, waves, and mechanical abrasion can transform larger objects into microscopic particles known as microplastics. These particles are now (1) _______ throughout marine environments, from coastal waters to remote oceanic regions. Marine organisms may ingest them accidentally, potentially introducing contaminants into food webs. The ecological (2) _______ of such exposure remains an active area of scientific investigation. Researchers have (3) _______ that some particles can transport chemical pollutants across considerable distances. Because microplastics are extremely (4) _______ to remove once dispersed, reducing plastic leakage is essential (5) _______ protecting aquatic ecosystems."}, "HIN_RC_19": {"title": "अपठित गद्यांश (Q81 – Q85)", "text": "अंगदान वह महान कार्य है जो मनुष्य को मृत्यु के बाद भी अमर बना देता है। आज विज्ञान ने इतनी प्रगति कर ली है कि एक व्यक्ति के द्वारा दिए गए अंग अनेक लोगों को नई जिंदगी दे सकते हैं। फिर भी हमारे देश में अंगदान को लेकर जागरूकता अपेक्षाकृत कम है। कई लोग वर्षों तक किसी उपयुक्त अंग की प्रतीक्षा में रहते हैं और समय पर अंग न मिलने से असमय मृत्यु का शिकार हो जाते हैं।\n\nअंगदान दो प्रकार से किया जा सकता है—पहला, जीवित रहते हुए किसी अंग का अंश दान करना, और दूसरा, मृत्यु के पश्चात शरीर के अंगों को दान में देना। यदि सड़क दुर्घटना में किसी व्यक्ति की मृत्यु हो जाए और उसके परिवारजन अंगदान का निर्णय लें, तो उसके अंग लगभग तीस लोगों को जीवनदान दे सकते हैं। इस प्रकार एक व्यक्ति अपने अंगों के माध्यम से कई घरों में खुशियाँ लौटा सकता है। हमें यह समझना चाहिए कि मृत्यु के बाद शरीर नष्ट हो जाता है, परंतु अंगदान से वही शरीर किसी और का जीवन बचा सकता है। यह न केवल मानवीय संवेदना का प्रतीक है, बल्कि सबसे बड़ा पुण्य कार्य भी है। अंगदान ही सच्चे अर्थों में महादान है।"}}};
+    const STORAGE_KEY = "ramban19_mock19_answers_v1";
+    const THEME_KEY = "ramban19_theme_v1";
+
+    let activePartId = 1;
+    let activeMode = "concept"; // "concept" | "quiz"
+    let activeQFilter = "all";  // "all" | "unanswered" | "wrong"
+    let noteLang = "both";      // "both" | "en" | "hi"
+    let answers = {};           // { [questionId]: selectedOptionIndex }
+
+    function safeGet(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, val); } catch (e) {}
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function loadAnswers() {
+      const raw = safeGet(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") answers = parsed;
+      } catch (e) {
+        answers = {};
+      }
+    }
+
+    function saveAnswers() {
+      safeSet(STORAGE_KEY, JSON.stringify(answers));
+    }
+
+    function setTheme(theme) {
+      const isDark = theme === "dark";
+      document.documentElement.classList.toggle("dark", isDark);
+      document.getElementById("sunIcon").classList.toggle("hidden", !isDark);
+      document.getElementById("moonIcon").classList.toggle("hidden", isDark);
+      safeSet(THEME_KEY, theme);
+    }
+
+    function getActiveSection() {
+      return DATA.sections.find((s) => s.id === activePartId) || DATA.sections[0];
+    }
+
+    function getSectionStats(sec) {
+      let attempted = 0, correct = 0, wrong = 0;
+      sec.questions.forEach((q) => {
+        if (answers[q.id] !== undefined) {
+          attempted++;
+          if (answers[q.id] === q.ans) correct++;
+          else wrong++;
+        }
+      });
+      const marks = correct - wrong * 0.25;
+      const acc = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+      return { attempted, correct, wrong, marks, acc };
+    }
+
+    function getOverallStats() {
+      let attempted = 0, correct = 0, wrong = 0;
+      DATA.sections.forEach((sec) => {
+        const st = getSectionStats(sec);
+        attempted += st.attempted;
+        correct += st.correct;
+        wrong += st.wrong;
+      });
+      return { attempted, correct, wrong, marks: correct - wrong * 0.25 };
+    }
+
+    function renderPartNav() {
+      const nav = document.getElementById("partNav");
+      nav.innerHTML = DATA.sections.map((sec) => {
+        const isActive = sec.id === activePartId;
+        const st = getSectionStats(sec);
+        const cls = isActive
+          ? "bg-indigo-600 text-white shadow-sm border-indigo-600"
+          : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-400";
+        const badgeCls = isActive
+          ? "bg-white/20 text-white"
+          : st.attempted === 20
+            ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300"
+            : "bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-300";
+
+        return `
+          <button type="button" data-part="${sec.id}" class="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer ${cls}">
+            <span>${escapeHtml(sec.code)}: ${escapeHtml(sec.title)}</span>
+            <span class="px-1.5 py-0.5 rounded-md text-[10px] font-bold ${badgeCls}">${st.attempted}/20</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderHeaderStats() {
+      const sec = getActiveSection();
+      const st = getSectionStats(sec);
+      const ov = getOverallStats();
+
+      document.getElementById("partGroupBadge").textContent = sec.group;
+      document.getElementById("partRangeBadge").textContent = sec.range;
+      document.getElementById("partTitleHeading").textContent = sec.code + " · " + sec.title;
+
+      document.getElementById("partDoneVal").textContent = st.attempted + "/20";
+      document.getElementById("partMarksVal").textContent = st.marks.toFixed(2);
+      document.getElementById("partAccVal").textContent = st.acc + "%";
+
+      const overallPill = document.getElementById("overallScorePill");
+      overallPill.textContent = ov.attempted + "/200 Done · " + ov.marks.toFixed(2) + " Marks";
+
+      document.getElementById("partFooterCounter").textContent = "Part " + activePartId + " of " + DATA.sections.length;
+      document.getElementById("prevPartBtn").disabled = activePartId <= 1;
+      document.getElementById("nextPartBtn").disabled = activePartId >= DATA.sections.length;
+    }
+
+    function renderModeTabs() {
+      const conceptBtn = document.getElementById("modeConceptBtn");
+      const quizBtn = document.getElementById("modeQuizBtn");
+      const conceptPanel = document.getElementById("conceptPanel");
+      const quizPanel = document.getElementById("quizPanel");
+      const quizControls = document.getElementById("quizControls");
+
+      const activeCls = "px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs transition-all cursor-pointer";
+      const inactiveCls = "px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer";
+
+      if (activeMode === "concept") {
+        conceptBtn.className = activeCls;
+        quizBtn.className = inactiveCls;
+        conceptPanel.classList.remove("hidden");
+        quizPanel.classList.add("hidden");
+        quizControls.classList.add("hidden");
+      } else {
+        conceptBtn.className = inactiveCls;
+        quizBtn.className = activeCls;
+        conceptPanel.classList.add("hidden");
+        quizPanel.classList.remove("hidden");
+        quizControls.classList.remove("hidden");
+      }
+
+      document.querySelectorAll(".qfilter-btn").forEach((btn) => {
+        const on = btn.dataset.qfilter === activeQFilter;
+        btn.className = on
+          ? "qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow-xs cursor-pointer"
+          : "qfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+    }
+
+    function renderConceptClarity() {
+      const sec = getActiveSection();
+      const grid = document.getElementById("conceptGrid");
+      document.querySelectorAll("#noteLangGroup .nlang-btn").forEach((btn) => {
+        const on = btn.dataset.nlang === noteLang;
+        btn.className = on
+          ? "nlang-btn px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer"
+          : "nlang-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer";
+      });
+      grid.innerHTML = sec.concepts.map((c, idx) => {
+        const titleLine = noteLang === "hi"
+          ? escapeHtml(c.title_hi || c.title)
+          : noteLang === "en"
+            ? escapeHtml(c.title)
+            : `${escapeHtml(c.title)} <span class="block text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5">${escapeHtml(c.title_hi || "")}</span>`;
+        return `
+        <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-xs">
+          <div class="flex items-start gap-2.5 mb-3.5">
+            <span class="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">
+              0${idx + 1}
+            </span>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug">${titleLine}</h3>
+          </div>
+          <ul class="space-y-3 text-xs sm:text-sm leading-relaxed">
+            ${c.points.map((pt) => `
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0"></span>
+                <div class="space-y-1">
+                  ${noteLang !== "hi" ? `<p class="text-slate-700 dark:text-slate-200">${escapeHtml(pt.en)}</p>` : ""}
+                  ${noteLang !== "en" ? `<p class="text-slate-600 dark:text-slate-300 ${noteLang === "both" ? "text-[12px] bg-slate-50 dark:bg-slate-800/60 px-2.5 py-1.5 rounded-lg border-l-2 border-indigo-400" : ""}">${escapeHtml(pt.hi)}</p>` : ""}
+                </div>
+              </li>
+            `).join("")}
+          </ul>
+        </article>
+      `;
+      }).join("");
+    }
+
+
+    function getVisualSvgHtml(kind) {
+      if (kind === "DI_Q60") {
+        return `
+          <div class="my-3 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs">
+            <table class="w-full text-center border-collapse">
+              <thead class="bg-slate-100 dark:bg-slate-800">
+                <tr>
+                  <th class="p-2">Factory / कारखाना</th>
+                  <th class="p-2">Annual Production / वार्षिक उत्पादन</th>
+                  <th class="p-2">Next-Year Change</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tr><td class="p-1.5 font-semibold">P</td><td>1,000 units</td><td class="text-emerald-600 dark:text-emerald-400 font-semibold">+20%</td></tr>
+                <tr><td class="p-1.5 font-semibold">Q</td><td>1,000 units</td><td class="text-rose-600 dark:text-rose-400 font-semibold">−10%</td></tr>
+                <tr><td class="p-1.5 font-semibold">R</td><td>1,000 units</td><td class="text-emerald-600 dark:text-emerald-400 font-semibold">+25%</td></tr>
+                <tr><td class="p-1.5 font-semibold">S</td><td>2,000 units</td><td class="text-rose-600 dark:text-rose-400 font-semibold">−20%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+      return "";
+    }
+
+    function getWaterSvgHtml() {
+      return `
+        <div class="my-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex flex-col items-center">
+          <svg viewBox="0 0 180 140" class="w-44 h-36 text-slate-800 dark:text-slate-200" aria-label="Water reflection figure">
+            <circle cx="90" cy="52" r="42" fill="none" stroke="currentColor" stroke-width="3"/>
+            <line x1="90" y1="10" x2="64" y2="66" stroke="currentColor" stroke-width="3"/>
+            <polygon points="64,66 112,66 90,94" fill="currentColor"/>
+            <path d="M 35 112 Q 52 104 70 112 T 105 112 T 145 112" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+            <text x="20" y="118" font-size="13" font-weight="bold" fill="currentColor">X</text>
+            <text x="150" y="118" font-size="13" font-weight="bold" fill="currentColor">Y</text>
+          </svg>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">Water line X–Y placed below the circle</p>
+        </div>
+      `;
+    }
+
+    function renderQuizQuestions() {
+      const sec = getActiveSection();
+      const container = document.getElementById("questionsContainer");
+      const emptyBox = document.getElementById("emptyQuizFilter");
+
+      const filtered = sec.questions.filter((q) => {
+        const chosen = answers[q.id];
+        if (activeQFilter === "unanswered") return chosen === undefined;
+        if (activeQFilter === "wrong") return chosen !== undefined && chosen !== q.ans;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = "";
+        emptyBox.classList.remove("hidden");
+        return;
+      }
+      emptyBox.classList.add("hidden");
+
+      const shownPassages = new Set();
+      const optLetters = ["A", "B", "C", "D"];
+
+      container.innerHTML = filtered.map((q) => {
+        let passageHtml = "";
+        if (q.passage && !shownPassages.has(q.passage) && DATA.passages[q.passage]) {
+          shownPassages.add(q.passage);
+          const p = DATA.passages[q.passage];
+          passageHtml = `
+            <div class="rounded-2xl bg-amber-50/70 dark:bg-amber-950/25 border border-amber-200 dark:border-amber-800/60 p-4 sm:p-5 mb-4">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-2">${escapeHtml(p.title)}</div>
+              <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed whitespace-pre-line">${escapeHtml(p.text)}</p>
+            </div>
+          `;
+        }
+
+        const chosen = answers[q.id];
+        const isAnswered = chosen !== undefined;
+        const isCorrect = isAnswered && chosen === q.ans;
+
+        const statusBadge = !isAnswered
+          ? `<span class="px-2 py-0.5 rounded-lg text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">Unanswered</span>`
+          : isCorrect
+            ? `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">&check; Correct (+1.00)</span>`
+            : `<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300">&cross; Wrong (&minus;0.25)</span>`;
+
+        const codeHtml = q.code
+          ? `<pre class="code-block my-3 p-3.5 rounded-xl bg-slate-900 text-slate-100 border border-slate-800"><code>${escapeHtml(q.code)}</code></pre>`
+          : "";
+
+        const svgHtml = q.svg ? getVisualSvgHtml(q.svg) : "";
+
+        const optionsHtml = q.options.map((opt, idx) => {
+          let btnCls = "border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-800 dark:text-slate-200";
+          let letterCls = "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700";
+
+          if (isAnswered) {
+            if (idx === q.ans) {
+              btnCls = "border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 dark:text-emerald-200 font-semibold";
+              letterCls = "bg-emerald-600 text-white border-emerald-600";
+            } else if (idx === chosen) {
+              btnCls = "border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200";
+              letterCls = "bg-rose-600 text-white border-rose-600";
+            } else {
+              btnCls = "border-slate-200 dark:border-slate-800 opacity-65 text-slate-600 dark:text-slate-400";
+            }
+          }
+
+          return `
+            <button type="button" data-qid="${q.id}" data-opt="${idx}" class="opt-btn w-full text-left flex items-start gap-3 p-3 rounded-xl border text-xs sm:text-sm transition-all cursor-pointer ${btnCls}">
+              <span class="w-6 h-6 rounded-lg text-[11px] font-extrabold flex items-center justify-center shrink-0 mt-0.5 ${letterCls}">
+                ${optLetters[idx]}
+              </span>
+              <span class="leading-snug">${escapeHtml(opt)}</span>
+            </button>
+          `;
+        }).join("");
+
+        const expHtml = isAnswered
+          ? `
+            <div class="mt-4 p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/35 border border-indigo-200/80 dark:border-indigo-800/60">
+              <div class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 mb-1">
+                Explanation &bull; Correct Answer: Option ${optLetters[q.ans]}
+              </div>
+              <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed whitespace-pre-line">${escapeHtml(q.exp)}</p>
+            </div>
+          `
+          : "";
+
+        return `
+          ${passageHtml}
+          <article class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg bg-indigo-50 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold">Q${q.id}</span>
+                <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">${escapeHtml(q.topic)}</span>${q.exam ? `<span class="text-[11px] font-bold text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/40 px-2.5 py-0.5 rounded-full border border-amber-200 dark:border-amber-800">${escapeHtml(q.exam)}</span>` : ""}
+              </div>
+              ${statusBadge}
+            </div>
+
+            <div class="text-sm sm:text-[15px] font-semibold text-slate-900 dark:text-white leading-relaxed whitespace-pre-line mb-3">${escapeHtml(q.q)}</div>
+            ${codeHtml}
+            ${svgHtml}
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${optionsHtml}
+            </div>
+            ${expHtml}
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderAll() {
+      renderPartNav();
+      renderHeaderStats();
+      renderModeTabs();
+      renderConceptClarity();
+      renderQuizQuestions();
+    }
+
+    function switchPart(newId) {
+      if (newId < 1 || newId > DATA.sections.length) return;
+      activePartId = newId;
+      activeQFilter = "all";
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function bindEvents() {
+      document.getElementById("themeToggleBtn").addEventListener("click", () => {
+        const isDark = document.documentElement.classList.contains("dark");
+        setTheme(isDark ? "light" : "dark");
+      });
+
+      document.getElementById("partNav").addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-part]");
+        if (!btn) return;
+        switchPart(Number(btn.dataset.part));
+      });
+
+      document.getElementById("noteLangGroup").addEventListener("click", (e) => {
+        const btn = e.target.closest(".nlang-btn");
+        if (!btn) return;
+        noteLang = btn.dataset.nlang || "both";
+        renderConceptClarity();
+      });
+
+      document.getElementById("modeConceptBtn").addEventListener("click", () => {
+        activeMode = "concept";
+        renderModeTabs();
+      });
+
+      document.getElementById("modeQuizBtn").addEventListener("click", () => {
+        activeMode = "quiz";
+        renderModeTabs();
+      });
+
+      document.getElementById("startPartQuizBtn").addEventListener("click", () => {
+        activeMode = "quiz";
+        renderModeTabs();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      document.getElementById("quizControls").addEventListener("click", (e) => {
+        const btn = e.target.closest(".qfilter-btn");
+        if (!btn) return;
+        activeQFilter = btn.dataset.qfilter || "all";
+        renderModeTabs();
+        renderQuizQuestions();
+      });
+
+      document.getElementById("clearQFilterBtn").addEventListener("click", () => {
+        activeQFilter = "all";
+        renderModeTabs();
+        renderQuizQuestions();
+      });
+
+      document.getElementById("questionsContainer").addEventListener("click", (e) => {
+        const btn = e.target.closest(".opt-btn");
+        if (!btn) return;
+        const qid = Number(btn.dataset.qid);
+        const opt = Number(btn.dataset.opt);
+        answers[qid] = opt;
+        saveAnswers();
+        renderPartNav();
+        renderHeaderStats();
+        renderQuizQuestions();
+      });
+
+      document.getElementById("prevPartBtn").addEventListener("click", () => switchPart(activePartId - 1));
+      document.getElementById("nextPartBtn").addEventListener("click", () => switchPart(activePartId + 1));
+
+      const resetModal = document.getElementById("resetModal");
+      document.getElementById("resetPartBtn").addEventListener("click", () => {
+        resetModal.classList.remove("hidden");
+        resetModal.classList.add("flex");
+      });
+      document.getElementById("cancelResetBtn").addEventListener("click", () => {
+        resetModal.classList.add("hidden");
+        resetModal.classList.remove("flex");
+      });
+      document.getElementById("confirmResetBtn").addEventListener("click", () => {
+        const sec = getActiveSection();
+        sec.questions.forEach((q) => { delete answers[q.id]; });
+        saveAnswers();
+        resetModal.classList.add("hidden");
+        resetModal.classList.remove("flex");
+        renderAll();
+      });
+      resetModal.addEventListener("click", (e) => {
+        if (e.target === resetModal) {
+          resetModal.classList.add("hidden");
+          resetModal.classList.remove("flex");
+        }
+      });
+    }
+
+    if (safeGet(THEME_KEY) === "dark") setTheme("dark");
+    else setTheme("light");
+    loadAnswers();
+    bindEvents();
+    renderAll();
+  </script>
+</body>
+</html>
